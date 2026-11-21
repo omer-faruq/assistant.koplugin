@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>Manylion:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Yn lawrlwytho ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Ystorfa: </b>%2\n"
-"<b>Cangen/Tag: </b>%3"
+"<b>Yn llwytho i lawr ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Cangen/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Gwall:</b> Ni dderbyniwyd unrhyw gardiau fflach"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Gwall:</b> Ni dderbyniwyd ymateb"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Yn llwytho modelau...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL Github:</b>  %1\n"
-"<b>Ystorfa Ffynhonnell:</b>  %2\n"
-"\n"
-"- Fersiwn cyfredol: %3\n"
-"- Cangen datblygu: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL Github:</b>  %1\n"
-"<b>Ystorfa Ffynhonnell:</b>  %2\n"
-"\n"
-"- Fersiwn cyfredol: %3\n"
-"- Fersiwn diweddaraf: <b>%4</b>\n"
-"- Cangen datblygu: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Yn gosod %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Anodi"
 msgid "Annotation added successfully"
 msgstr "Nodiad wedi'i ychwanegu'n llwyddiannus"
 
+msgid "Answer"
+msgstr "Ateb"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Crynodeb o'r Llyfr ac Argymhellion"
 msgid "Book metadata updated."
 msgstr "Diweddarwyd metadata'r llyfr."
 
+msgid "Both Question and Answer are required."
+msgstr "Mae angen Cwestiwn ac Ateb ill dau."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ni ddaethpwyd o hyd i'r gangen/tag \"%1\"."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Canslo"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Cerdyn %1\n"
+"Cwestiwn: %2\n"
+"Ateb: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Prif Ddadleuon"
 msgid "Core Idea"
 msgstr "Prif Syniad"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Methu dewis enw ffeil unigryw ar gyfer allforio'r cardiau fflach."
+
 msgid "Could not close AI note file."
 msgstr "Methwyd cau ffeil nodyn AI."
 
@@ -583,8 +574,14 @@ msgstr "Methwyd creu nodyn AI."
 msgid "Could not create AI note: %1"
 msgstr "Methwyd creu nodyn AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Methu creu'r ffeil TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Methwyd echdynnu testun o'r llyfr hwn."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Methu gorffen ysgrifennu'r ffeil TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Methwyd rhestru plygell Nodiadau AI: %1"
@@ -620,6 +617,9 @@ msgstr "Arwyddocâd Diwylliannol"
 msgid "Current Chapter Only"
 msgstr "Pennod Gyfredol yn Unig"
 
+msgid "Current version:"
+msgstr "Fersiwn gyfredol:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Personol"
@@ -650,6 +650,9 @@ msgstr "Dileu darparwr %1?"
 
 msgid "Description: %1"
 msgstr "Disgrifiad: %1"
+
+msgid "Development branch:"
+msgstr "Cangen ddatblygu:"
 
 msgid "Device"
 msgstr "Dyfais"
@@ -702,6 +705,9 @@ msgstr "Golygu"
 msgid "Edit %1"
 msgstr "Golygu %1"
 
+msgid "Edit Card %1"
+msgstr "Golygu Cerdyn %1"
+
 msgid "Empty Error"
 msgstr "Gwall Gwag"
 
@@ -749,6 +755,9 @@ msgstr "Enghraifft"
 msgid "Explain"
 msgstr "Esbonio"
 
+msgid "Export to AnkiDroid"
+msgstr "Allforio i AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Methwyd â llwytho modelau"
 
@@ -782,6 +791,18 @@ msgstr "Canfod cyntaf"
 msgid "Find next"
 msgstr "Canfod nesaf"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Mae cwestiwn neu ateb ar goll o gerdyn fflach %1."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Nid yw cerdyn fflach %1 yn gerdyn cwestiwn-ac-ateb dilys."
+
+msgid "Flashcards"
+msgstr "Cardiau fflach"
+
+msgid "Flashcards exported to %1"
+msgstr "Cardiau fflach wedi'u hallforio i %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Am fanylion, ewch i dudalen wiki 'Configuration' ar github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Yn gyffredinol, <b>PEIDIWCH</b> â dewis mwy nag un - dewiswch baramedr sy'n cyd-fynd â'ch model a'ch platfform. Gall paramedr anghywir achosi gwallau API. \n"
 "\n"
 "Mae'r gwerth a ddewiswyd yn diystyru additional_parameters y ffurfweddiad. Os yw'r opsiynau a ddewiswyd yn rhannu'r un allwedd, dim ond yr olaf yn y rhestr a ddefnyddir."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Cynhyrchu cardiau fflach cwestiwn-ac-ateb cryno o'r testun a ddarparwyd."
 
 msgid "Genre"
 msgstr "Genre"
@@ -886,6 +910,9 @@ msgstr[2] "Darllenwyd ddiwethaf %1 awr yn ôl."
 msgstr[3] "Darllenwyd ddiwethaf %1 awr yn ôl."
 msgstr[4] "Darllenwyd ddiwethaf %1 awr yn ôl."
 msgstr[5] "Darllenwyd ddiwethaf %1 awr yn ôl."
+
+msgid "Latest version:"
+msgstr "Fersiwn ddiweddaraf:"
 
 msgid "Leave blank to use: %1"
 msgstr "Gadewch yn wag i ddefnyddio: %1"
@@ -971,8 +998,14 @@ msgstr "Nid oes llyfr ar agor."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nid oes llyfr ar agor. Gwasgwch yn hir ar lyfr yn y rheolwr ffeiliau a dewiswch 'Gwybodaeth am y Llyfr (AI)'."
 
+msgid "No cards remain. Close this preview."
+msgstr "Nid oes cardiau yn weddill. Caewch y rhagolwg hwn."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Model"
+
+msgid "No folder is available for the flashcard export."
+msgstr "Nid oes ffolder ar gael ar gyfer allforio'r cardiau fflach."
 
 msgid "No highlight to annotate"
 msgstr "Dim testun wedi'i amlygu i'w anodi"
@@ -1028,6 +1061,9 @@ msgstr "Diddymwyd y diweddariad OTA."
 
 msgid "OTA update failed: %1"
 msgstr "Methodd y diweddariad OTA: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Methodd diweddariad OTA: mewnbwn annilys %1. Defnyddiwch gangen, tag, user/repo neu user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1085,6 +1121,9 @@ msgstr "Rhestr ragosodedig o adrannau'r Geiriadur AI."
 msgid "Prevailing emotional state/tone:"
 msgstr "Cyflwr emosiynol/naws cyffredinol:"
 
+msgid "Pronunciation"
+msgstr "Ynganiad"
+
 msgid "Protagonist's current objective:"
 msgstr "Amcan cyfredol y prif gymeriad:"
 
@@ -1133,6 +1172,9 @@ msgstr "Clirio"
 msgid "Purge Settings"
 msgstr "Clirio Gosodiadau"
 
+msgid "Question"
+msgstr "Cwestiwn"
+
 msgid "Quick Note"
 msgstr "Nodyn Cyflym"
 
@@ -1163,6 +1205,9 @@ msgstr "Crynodeb (AI)"
 
 msgid "Remove"
 msgstr "Dileu"
+
+msgid "Remove Card %1?"
+msgstr "Dileu Cerdyn %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1376,6 +1421,9 @@ msgstr "Cymryd Nodiadau Cyflym"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Tynnwch nodiadau cyflym a gaiff eu cadw yn eich Nodiadau AI."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Tapiwch gerdyn i'w olygu neu ei ddileu."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray Term"
@@ -1398,6 +1446,18 @@ msgstr "Maint Testun: %1"
 msgid "Text copied to the clipboard"
 msgstr "Copïwyd y testun i'r clipfwrdd"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Roedd ymateb yr AI yn cynnwys JSON cardiau fflach annilys."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Roedd ymateb yr AI yn cynnwys gormod o gardiau fflach."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Nid oedd ymateb yr AI yn cynnwys unrhyw gardiau fflach."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Nid oedd ymateb yr AI yn cynnwys data cardiau fflach dilys."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ni chafwyd hyd i'r handler ar gyfer %1. Sicrhewch fod y handler yn bodoli yn y cyfeiriadur api_handlers."
 
@@ -1406,6 +1466,9 @@ msgstr "Ni allai'r model adnabod y llyfr hwn."
 
 msgid "Thinking ..."
 msgstr "Yn meddwl ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Ni ellir darllen testun y llyfr hwn o'r rheolwr ffeiliau. Agorwch y llyfr a defnyddiwch Adnabod y Llyfr Hwn."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Mae'r botwm hwn yn creu nodyn cyflym gyda'r testun sydd wedi'i amlygu."
@@ -1469,11 +1532,25 @@ msgstr "Mae'r cyfarwyddiad hwn yn cyfieithu'r testun sydd wedi'i amlygu i iaith 
 msgid "Timeline"
 msgstr "Llinell Amser"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Awgrym: rhowch user/repo ar gyfer fforc (cangen main) neu user/repo@branch ar gyfer cangen neu dag penodol."
+
 msgid "Title"
 msgstr "Teitl"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Mae metadata'r teitl neu'r awdur ar goll neu'n anghyflawn, felly gallai canlyniad yr AI fod yn annibynadwy. Defnyddiwch Adnabod (AI) i'w osod yn gyntaf."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"I fewnforio yn AnkiDroid, dewiswch y ffeil TSV yn:\n"
+"%1\n"
+"\n"
+"Gosodwch y gwahanuydd i Tab, dewiswch y math o nodyn Basic, mapiwch faes 1 i Front a maes 2 i Back, yna dewiswch becyn a mewnforio. Nid oes rhes bennawd gan y ffeil; mae pob rhes yn un cerdyn."
 
 msgid "To-Do / Action Items"
 msgstr "Tasgau / Eitemau Gweithredu"
@@ -1621,6 +1698,12 @@ msgstr "Ffurf Gair a Lemma"
 msgid "Word Origin"
 msgstr "Tarddiad y Gair"
 
+msgid "Write a question"
+msgstr "Ysgrifennwch gwestiwn"
+
+msgid "Write an answer"
+msgstr "Ysgrifennwch ateb"
+
 msgid "Write quick notes here"
 msgstr "Ysgrifennwch nodiadau cyflym yma"
 
@@ -1630,14 +1713,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ie"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Rydych newydd ddechrau'r llyfr hwn (llai na 3% wedi'i gwblhau). Efallai y byddai'n well dechrau darllen yn gyntaf. A ydych chi'n dal i fod eisiau crynodeb AI?"
+
 msgid "Your API key"
 msgstr "Eich allwedd API"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Eich prompts eich hun wedi'u diffinio yn y ffeil ffurfweddu."
 
-msgid "branch or tag name"
-msgstr "enw cangen neu dag"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "nid yw'r archif yn becyn assistant.koplugin dilys"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "cangen, tag, user/repo neu user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: mae darparwyr modelau yn annilys."
@@ -1647,3 +1736,6 @@ msgstr "e.e. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: methodd â pharsio'r data a ddychwelwyd"
+
+msgid "invalid repository or branch/tag"
+msgstr "ystorfa neu changen/tag annilys"

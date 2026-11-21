@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:59+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ಕನ್ನಡ (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>ವಿವರ:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>ಡೌನ್ಲೋಡ್ ಆಗುತ್ತಿದೆ ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>ಭಂಡಾರ: </b>%2\n"
-"<b>ಬ್ರಾಂಚ್/ಟ್ಯಾಗ್: </b>%3"
+"<b>ಡೌನ್‌ಲೋಡ್ ಆಗುತ್ತಿದೆ ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>ಶಾಖೆ/ಟ್ಯಾಗ್: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>ದೋಷ:</b> ಯಾವುದೇ ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್‌ಗಳು ಸಿಗಲಿಲ್ಲ"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>ದೋಷ:</b> ಪ್ರತಿಕ್ರಿಯೆ ಸ್ವೀಕರಿಸಲಾಗಿಲ್ಲ"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>ಮಾದರಿಗಳನ್ನು ಪಡೆಯಲಾಗುತ್ತಿದೆ...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>ಮೂಲ ರೆಪೊ:</b>  %2\n"
-"\n"
-"- ಪ್ರಸ್ತುತ ಆವೃತ್ತಿ: %3\n"
-"- ಅಭಿವೃದ್ಧಿ ಶಾಖೆ: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>ಮೂಲ ರೆಪೊ:</b>  %2\n"
-"\n"
-"- ಪ್ರಸ್ತುತ ಆವೃತ್ತಿ: %3\n"
-"- ಇತ್ತೀಚಿನ ಆವೃತ್ತಿ: <b>%4</b>\n"
-"- ಅಭಿವೃದ್ಧಿ ಶಾಖೆ: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 ಅನ್ನು ಸ್ಥಾಪಿಸಲಾಗುತ್ತಿದೆ...</b>"
@@ -364,6 +337,9 @@ msgstr "ಟಿಪ್ಪಣಿ ಮಾಡಿ"
 msgid "Annotation added successfully"
 msgstr "ಟಿಪ್ಪಣಿ ಯಶಸ್ವಿಯಾಗಿ ಸೇರಿಸಲಾಗಿದೆ"
 
+msgid "Answer"
+msgstr "ಉತ್ತರ"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "ಪುಸ್ತಕ ಸಾರಾಂಶ ಮತ್ತು ಶಿಫಾರಸ
 msgid "Book metadata updated."
 msgstr "ಪುಸ್ತಕದ ಮೆಟಾಡೇಟಾ ನವೀಕರಿಸಲಾಗಿದೆ."
 
+msgid "Both Question and Answer are required."
+msgstr "ಪ್ರಶ್ನೆ ಮತ್ತು ಉತ್ತರ ಎರಡೂ ಅಗತ್ಯವಿದೆ."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ಬ್ರಾಂಚ್/ಟ್ಯಾಗ್ \"%1\" ಕಂಡುಬಂದಿಲ್ಲ."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "ರದ್ದುಮಾಡು"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"ಕಾರ್ಡ್ %1\n"
+"ಪ್ರಶ್ನೆ: %2\n"
+"ಉತ್ತರ: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "ಮೂಲ ವಾದಗಳು"
 msgid "Core Idea"
 msgstr "ಮೂಲ ವಿಚಾರ"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ ರಫ್ತಿಗೆ ವಿಶಿಷ್ಟ ಫೈಲ್‌ಹೆಸರನ್ನು ಆಯ್ಕೆ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+
 msgid "Could not close AI note file."
 msgstr "AI ಟಿಪ್ಪಣಿ ಫೈಲ್ ಅನ್ನು ಮುಚ್ಚಲಾಗಲಿಲ್ಲ."
 
@@ -583,8 +574,14 @@ msgstr "AI ಟಿಪ್ಪಣಿ ರಚಿಸಲಾಗಲಿಲ್ಲ."
 msgid "Could not create AI note: %1"
 msgstr "AI ಟಿಪ್ಪಣಿ ರಚಿಸಲಾಗಲಿಲ್ಲ: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV ಫೈಲ್ ರಚಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: %1"
+
 msgid "Could not extract text from this book."
 msgstr "ಈ ಪುಸ್ತಕದಿಂದ ಪಠ್ಯವನ್ನು ಹೊರತೆಗೆಯಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV ಫೈಲ್ ಬರೆಯುವುದನ್ನು ಪೂರ್ಣಗೊಳಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI ಟಿಪ್ಪಣಿಗಳ ಫೋಲ್ಡರ್ ಪಟ್ಟಿ ಮಾಡಲಾಗಲಿಲ್ಲ: %1"
@@ -620,6 +617,9 @@ msgstr "ಸಾಂಸ್ಕೃತಿಕ ಮಹತ್ವ"
 msgid "Current Chapter Only"
 msgstr "ಪ್ರಸ್ತುತ ಅಧ್ಯಾಯ ಮಾತ್ರ"
 
+msgid "Current version:"
+msgstr "ಪ್ರಸ್ತುತ ಆವೃತ್ತಿ:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "ಕಸ್ಟಮ್"
@@ -650,6 +650,9 @@ msgstr "ಪ್ರೊವೈಡರ್ %1 ಅನ್ನು ಅಳಿಸುವುದ�
 
 msgid "Description: %1"
 msgstr "ವಿವರಣೆ: %1"
+
+msgid "Development branch:"
+msgstr "ಅಭಿವೃದ್ಧಿ ಶಾಖೆ:"
 
 msgid "Device"
 msgstr "ಸಾಧನ"
@@ -702,6 +705,9 @@ msgstr "ಸಂಪಾದಿಸಿ"
 msgid "Edit %1"
 msgstr "%1 ಅನ್ನು ಸಂಪಾದಿಸಿ"
 
+msgid "Edit Card %1"
+msgstr "ಕಾರ್ಡ್ %1 ಸಂಪಾದಿಸಿ"
+
 msgid "Empty Error"
 msgstr "ಖಾಲಿ ದೋಷ"
 
@@ -749,6 +755,9 @@ msgstr "ಉದಾಹರಣೆ"
 msgid "Explain"
 msgstr "ವಿವರಿಸು"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid ಗೆ ರಫ್ತು ಮಾಡಿ"
+
 msgid "Failed to fetch models"
 msgstr "ಮಾದರಿಗಳನ್ನು ಪಡೆಯಲು ವಿಫಲವಾಗಿದೆ"
 
@@ -782,6 +791,18 @@ msgstr "ಮೊದಲನೆಯದನ್ನು ಹುಡುಕಿ"
 msgid "Find next"
 msgstr "ಮುಂದಿನದನ್ನು ಹುಡುಕಿ"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ %1 ನಲ್ಲಿ ಪ್ರಶ್ನೆ ಅಥವಾ ಉತ್ತರ ಇಲ್ಲ."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ %1 ಮಾನ್ಯವಾದ ಪ್ರಶ್ನೆ-ಉತ್ತರ ಕಾರ್ಡ್ ಅಲ್ಲ."
+
+msgid "Flashcards"
+msgstr "ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್‌ಗಳು"
+
+msgid "Flashcards exported to %1"
+msgstr "ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್‌ಗಳನ್ನು %1 ಗೆ ರಫ್ತು ಮಾಡಲಾಗಿದೆ"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "ವಿವರಗಳಿಗಾಗಿ, github ನಲ್ಲಿ 'Configuration' ವಿಕಿ ಪುಟವನ್ನು ಭೇಟಿ ಮಾಡಿ."
 
@@ -805,6 +826,9 @@ msgstr ""
 "ಸಾಮಾನ್ಯವಾಗಿ ಒಂದಕ್ಕಿಂತ ಹೆಚ್ಚು ಆಯ್ಕೆಗಳನ್ನು <b>ಆಯ್ಕೆ ಮಾಡಬೇಡಿ</b> - ನಿಮ್ಮ ಮಾದರಿ ಮತ್ತು ವೇದಿಕೆಗೆ ಹೊಂದುವ ಒಂದು ಪ್ಯಾರಾಮೀಟರ್ ಆರಿಸಿ. ತಪ್ಪು ಪ್ಯಾರಾಮೀಟರ್ API ದೋಷಗಳಿಗೆ ಕಾರಣವಾಗಬಹುದು. \n"
 "\n"
 "ಆಯ್ಕೆ ಮಾಡಿದ ಮೌಲ್ಯವು ಕಾನ್ಫಿಗರೇಶನ್ನ additional_parameters ಅನ್ನು ಅತಿಕ್ರಮಿಸುತ್ತದೆ. ಆಯ್ಕೆ ಮಾಡಿದ ಆಯ್ಕೆಗಳು ಒಂದೇ ಕೀ ಹಂಚಿಕೊಂಡರೆ, ಪಟ್ಟಿಯಲ್ಲಿ ಕೊನೆಯದನ್ನು ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "ನೀಡಿದ ಪಠ್ಯದಿಂದ ಸಂಕ್ಷಿಪ್ತ ಪ್ರಶ್ನೆ-ಉತ್ತರ ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್‌ಗಳನ್ನು ರಚಿಸಿ."
 
 msgid "Genre"
 msgstr "ಪ್ರಕಾರ"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "ಒಂದು ಗಂಟೆಯ ಹಿಂದೆ ಕೊನೆಯದಾಗಿ ಓದಲಾಗಿದೆ."
 msgstr[1] "%1 ಗಂಟೆಗಳ ಹಿಂದೆ ಕೊನೆಯದಾಗಿ ಓದಲಾಗಿದೆ."
+
+msgid "Latest version:"
+msgstr "ಇತ್ತೀಚಿನ ಆವೃತ್ತಿ:"
 
 msgid "Leave blank to use: %1"
 msgstr "ಬಳಸಲು ಖಾಲಿ ಬಿಡಿ: %1"
@@ -967,8 +994,14 @@ msgstr "ಯಾವುದೇ ಪುಸ್ತಕ ತೆರೆದಿಲ್ಲ."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "ಯಾವುದೇ ಪುಸ್ತಕ ತೆರೆದಿಲ್ಲ. ಫೈಲ್ ಮ್ಯಾನೇಜರ್‌ನಲ್ಲಿ ಪುಸ್ತಕವನ್ನು ದೀರ್ಘವಾಗಿ ಒತ್ತಿ ನಂತರ ಪುಸ್ತಕ ಮಾಹಿತಿ (AI) ಆಯ್ಕೆಮಾಡಿ."
 
+msgid "No cards remain. Close this preview."
+msgstr "ಯಾವುದೇ ಕಾರ್ಡ್‌ಗಳು ಉಳಿದಿಲ್ಲ. ಈ ಮುನ್ನೋಟವನ್ನು ಮುಚ್ಚಿ."
+
 msgid "No common parameters are available for handler %1."
 msgstr "ಪೂರೈಕೆದಾರ"
+
+msgid "No folder is available for the flashcard export."
+msgstr "ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ ರಫ್ತಿಗೆ ಯಾವುದೇ ಫೋಲ್ಡರ್ ಲಭ್ಯವಿಲ್ಲ."
 
 msgid "No highlight to annotate"
 msgstr "ಟಿಪ್ಪಣಿ ಮಾಡಲು ಯಾವುದೇ ಹೈಲೈಟ್ ಇಲ್ಲ"
@@ -1024,6 +1057,9 @@ msgstr "OTA ಅಪ್ಡೇಟ್ ರದ್ದುಗೊಳಿಸಲಾಗಿದ�
 
 msgid "OTA update failed: %1"
 msgstr "OTA ಅಪ್ಡೇಟ್ ವಿಫಲವಾಗಿದೆ: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA ನವೀಕರಣ ವಿಫಲವಾಗಿದೆ: ಅಮಾನ್ಯ ಇನ್‌ಪುಟ್ %1. ಶಾಖೆ, ಟ್ಯಾಗ್, user/repo ಅಥವಾ user/repo@branch ಬಳಸಿ."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI ನಿಘಂಟಿನ ವಿಭಾಗಗಳ ಪೂರ್ವನಿಗ�
 msgid "Prevailing emotional state/tone:"
 msgstr "ಪ್ರಚಲಿತ ಭಾವನಾತ್ಮಕ ಸ್ಥಿತಿ/ಧ್ವನಿ:"
 
+msgid "Pronunciation"
+msgstr "ಉಚ್ಚಾರಣೆ"
+
 msgid "Protagonist's current objective:"
 msgstr "ಮುಖ್ಯ ಪಾತ್ರದ ಪ್ರಸ್ತುತ ಗುರಿ:"
 
@@ -1129,6 +1168,9 @@ msgstr "ಶುದ್ಧೀಕರಿಸಿ"
 msgid "Purge Settings"
 msgstr "ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ತೆರವುಗೊಳಿಸಿ"
 
+msgid "Question"
+msgstr "ಪ್ರಶ್ನೆ"
+
 msgid "Quick Note"
 msgstr "ತ್ವರಿತ ಟಿಪ್ಪಣಿ"
 
@@ -1159,6 +1201,9 @@ msgstr "ಸಾರಾಂಶ (AI)"
 
 msgid "Remove"
 msgstr "ತೆಗೆದುಹಾಕಿ"
+
+msgid "Remove Card %1?"
+msgstr "ಕಾರ್ಡ್ %1 ತೆಗೆದುಹಾಕಬೇಕೇ?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "ತ್ವರಿತ ಟಿಪ್ಪಣಿಗಳನ್ನು ತೆಗೆ�
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "ನಿಮ್ಮ AI ಟಿಪ್ಪಣಿಗಳಿಗೆ ಉಳಿಸಲಾಗುವ ತ್ವರಿತ ಟಿಪ್ಪಣಿಗಳನ್ನು ಬರೆಯಿರಿ."
 
+msgid "Tap a card to edit or remove it."
+msgstr "ಸಂಪಾದಿಸಲು ಅಥವಾ ತೆಗೆದುಹಾಕಲು ಕಾರ್ಡ್ ಅನ್ನು ಟ್ಯಾಪ್ ಮಾಡಿ."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "ಪದ X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "ಪಠ್ಯ ಗಾತ್ರ: %1"
 msgid "Text copied to the clipboard"
 msgstr "ಪಠ್ಯವನ್ನು ಕ್ಲಿಪ್ಬೋರ್ಡ್ಗೆ ನಕಲಿಸಲಾಗಿದೆ"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ಅಮಾನ್ಯ ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ JSON ಇತ್ತು."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ಅತಿ ಹೆಚ್ಚು ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್‌ಗಳಿದ್ದವು."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ಯಾವುದೇ ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ ಇರಲಿಲ್ಲ."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ಮಾನ್ಯ ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ ಡೇಟಾ ಇರಲಿಲ್ಲ."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 ಗಾಗಿ ಹ್ಯಾಂಡ್ಲರ್ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು api_handlers ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಹ್ಯಾಂಡ್ಲರ್ ಇದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."
 
@@ -1402,6 +1462,9 @@ msgstr "ಮಾದರಿಯು ಈ ಪುಸ್ತಕವನ್ನು ಗುರು
 
 msgid "Thinking ..."
 msgstr "ಯೋಚಿಸುತ್ತಿದೆ ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "ಈ ಪುಸ್ತಕದ ಪಠ್ಯವನ್ನು ಫೈಲ್ ಮ್ಯಾನೇಜರ್‌ನಿಂದ ಓದಲು ಸಾಧ್ಯವಿಲ್ಲ. ಪುಸ್ತಕವನ್ನು ತೆರೆದು Identify This Book ಬಳಸಿ."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "ಈ ಗುಂಡಿಯು ಹೈಲೈಟ್ ಮಾಡಿದ ಪಠ್ಯದೊಂದಿಗೆ ತ್ವರಿತ ಟಿಪ್ಪಣಿಯನ್ನು ರಚಿಸುತ್ತದೆ."
@@ -1465,11 +1528,25 @@ msgstr "ಈ ಪ್ರಾಂಪ್ಟ್ ಹೈಲೈಟ್ ಮಾಡಿದ ಪ�
 msgid "Timeline"
 msgstr "ಕಾಲರೇಖೆ"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "ಸೂಚನೆ: ಫೋರ್ಕ್‌ಗೆ (main ಶಾಖೆ) user/repo ನಮೂದಿಸಿ, ಅಥವಾ ನಿರ್ದಿಷ್ಟ ಶಾಖೆ ಅಥವಾ ಟ್ಯಾಗ್‌ಗೆ user/repo@branch ನಮೂದಿಸಿ."
+
 msgid "Title"
 msgstr "ಶೀರ್ಷಿಕೆ"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "ಶೀರ್ಷಿಕೆ ಅಥವಾ ಲೇಖಕರ ಮೆಟಾಡೇಟಾ ಕಾಣೆಯಾಗಿದೆ ಅಥವಾ ಅಪೂರ್ಣವಾಗಿದೆ, ಆದ್ದರಿಂದ AI ಫಲಿತಾಂಶವು ವಿಶ್ವಾಸಾರ್ಹವಾಗಿರದೇ ಇರಬಹುದು. ಮೊದಲು ಅದನ್ನು ಹೊಂದಿಸಲು ಗುರುತಿಸಿ (AI) ಬಳಸಿ."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid ನಲ್ಲಿ ಆಮದು ಮಾಡಲು, ಈ ಸ್ಥಳದಲ್ಲಿರುವ TSV ಫೈಲ್ ಆಯ್ಕೆಮಾಡಿ:\n"
+"%1\n"
+"\n"
+"ವಿಭಾಜಕವನ್ನು Tab ಗೆ ಇರಿಸಿ, Basic ನೋಟ್ ಪ್ರಕಾರವನ್ನು ಆಯ್ಕೆಮಾಡಿ, ಕ್ಷೇತ್ರ 1 ಅನ್ನು Front ಗೆ ಮತ್ತು ಕ್ಷೇತ್ರ 2 ಅನ್ನು Back ಗೆ ಮ್ಯಾಪ್ ಮಾಡಿ, ನಂತರ ಡೆಕ್ ಆಯ್ಕೆಮಾಡಿ ಆಮದು ಮಾಡಿ. ಫೈಲ್‌ನಲ್ಲಿ ಶೀರ್ಷಿಕೆ ಸಾಲಿಲ್ಲ; ಪ್ರತಿ ಸಾಲು ಒಂದು ಕಾರ್ಡ್."
 
 msgid "To-Do / Action Items"
 msgstr "ಮಾಡಬೇಕಾದ ಕಾರ್ಯಗಳು / ಕ್ರಿಯಾ ಐಟಂಗಳು"
@@ -1617,6 +1694,12 @@ msgstr "ಪದ ರೂಪ ಮತ್ತು ಲೆಮ್ಮ"
 msgid "Word Origin"
 msgstr "ಪದದ ಮೂಲ"
 
+msgid "Write a question"
+msgstr "ಪ್ರಶ್ನೆ ಬರೆಯಿರಿ"
+
+msgid "Write an answer"
+msgstr "ಉತ್ತರ ಬರೆಯಿರಿ"
+
 msgid "Write quick notes here"
 msgstr "ಇಲ್ಲಿ ತ್ವರಿತ ಟಿಪ್ಪಣಿಗಳನ್ನು ಬರೆಯಿರಿ"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "ಹೌದು"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "ನೀವು ಈ ಪುಸ್ತಕವನ್ನು ಈಗಷ್ಟೇ ಪ್ರಾರಂಭಿಸಿದ್ದೀರಿ (3% ಕ್ಕಿಂತ ಕಡಿಮೆ ಮುಗಿದಿದೆ). ಮೊದಲು ಓದಲು ಪ್ರಾರಂಭಿಸುವುದು ಉತ್ತಮವಾಗಿರಬಹುದು. ನೀವು ಇನ್ನೂ AI Recap ಬಯಸುತ್ತೀರಾ?"
+
 msgid "Your API key"
 msgstr "ನಿಮ್ಮ API ಕೀ"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "ಕಾನ್ಫಿಗರೇಶನ್ ಫೈಲ್ನಲ್ಲಿ ವ್ಯಾಖ್ಯಾನಿಸಲಾದ ನಿಮ್ಮ ಸ್ವಂತ ಪ್ರಾಂಪ್ಟ್ಗಳು"
 
-msgid "branch or tag name"
-msgstr "ಬ್ರಾಂಚ್ ಅಥವಾ ಟ್ಯಾಗ್ ಹೆಸರು"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archive ಮಾನ್ಯವಾದ assistant.koplugin ಪ್ಯಾಕೇಜ್ ಅಲ್ಲ"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ಶಾಖೆ, ಟ್ಯಾಗ್, user/repo ಅಥವಾ user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: ಮಾದರಿ ಪೂರೈಕೆದಾರರು ಅಮಾನ್ಯವಾಗಿದ್ದಾರೆ."
@@ -1643,3 +1732,6 @@ msgstr "ಉದಾ. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ಹಿಂದಿರುಗಿದ ಡೇಟಾವನ್ನು ಪಾರ್ಸ್ ಮಾಡಲು ವಿಫಲವಾಗಿದೆ"
+
+msgid "invalid repository or branch/tag"
+msgstr "ಅಮಾನ್ಯ ರೆಪೊಸಿಟರಿ ಅಥವಾ ಶಾಖೆ/ಟ್ಯಾಗ್"

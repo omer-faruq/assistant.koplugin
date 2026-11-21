@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>詳細：</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>ダウンロード中 ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>リポジトリ: </b>%2\n"
-"<b>ブランチ/タグ: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>ブランチ/タグ: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>エラー:</b> フラッシュカードを受信できませんでした"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>エラー:</b> 応答がありませんでした"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>モデルを取得中...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub URL:</b>  %1\n"
-"<b>ソースリポジトリ:</b>  %2\n"
-"\n"
-"- 現在のバージョン: %3\n"
-"- 開発ブランチ: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub URL:</b>  %1\n"
-"<b>ソースリポジトリ:</b>  %2\n"
-"\n"
-"- 現在のバージョン: %3\n"
-"- 最新バージョン: <b>%4</b>\n"
-"- 開発ブランチ: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 をインストール中...</b>"
@@ -364,6 +337,9 @@ msgstr "注記"
 msgid "Annotation added successfully"
 msgstr "注記を追加しました"
 
+msgid "Answer"
+msgstr "解答"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "書籍の要約とおすすめ"
 msgid "Book metadata updated."
 msgstr "本のメタデータを更新しました。"
 
+msgid "Both Question and Answer are required."
+msgstr "問題と解答の両方が必要です。"
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "ブランチ/タグ \"%1\" が見つかりませんでした。"
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "キャンセル"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"カード %1\n"
+"問題: %2\n"
+"解答: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "中心となる主張"
 msgid "Core Idea"
 msgstr "核となるアイデア"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "フラッシュカードのエクスポート用に一意のファイル名を決定できませんでした。"
+
 msgid "Could not close AI note file."
 msgstr "AIノートファイルを閉じられませんでした。"
 
@@ -583,8 +574,14 @@ msgstr "AIノートを作成できませんでした。"
 msgid "Could not create AI note: %1"
 msgstr "AIノートを作成できませんでした: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSVファイルを作成できませんでした: %1"
+
 msgid "Could not extract text from this book."
 msgstr "この本からテキストを抽出できませんでした。"
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSVファイルの書き込みを完了できませんでした: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AIノートフォルダの一覧を取得できませんでした: %1"
@@ -620,6 +617,9 @@ msgstr "文化的意義"
 msgid "Current Chapter Only"
 msgstr "現在の章のみ"
 
+msgid "Current version:"
+msgstr "現在のバージョン:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "カスタム"
@@ -650,6 +650,9 @@ msgstr "プロバイダー%1を削除しますか？"
 
 msgid "Description: %1"
 msgstr "説明: %1"
+
+msgid "Development branch:"
+msgstr "開発ブランチ:"
 
 msgid "Device"
 msgstr "デバイス"
@@ -702,6 +705,9 @@ msgstr "編集"
 msgid "Edit %1"
 msgstr "%1を編集"
 
+msgid "Edit Card %1"
+msgstr "カード %1 を編集"
+
 msgid "Empty Error"
 msgstr "空のエラー"
 
@@ -749,6 +755,9 @@ msgstr "例文"
 msgid "Explain"
 msgstr "説明"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid にエクスポート"
+
 msgid "Failed to fetch models"
 msgstr "モデルの取得に失敗しました"
 
@@ -782,6 +791,18 @@ msgstr "最初を検索"
 msgid "Find next"
 msgstr "次を検索"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "フラッシュカード %1 に問題または解答がありません。"
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "フラッシュカード %1 は有効な問題・解答形式のカードではありません。"
+
+msgid "Flashcards"
+msgstr "フラッシュカード"
+
+msgid "Flashcards exported to %1"
+msgstr "フラッシュカードを %1 にエクスポートしました"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "詳細は、GitHubの「Configuration」wikiページを参照してください。"
 
@@ -805,6 +826,9 @@ msgstr ""
 "一般的に、複数を選択することは<b>避けて</b>ください。お使いのモデルとプラットフォームに合ったパラメータを1つ選んでください。誤ったパラメータはAPIエラーを引き起こす可能性があります。 \n"
 "\n"
 "選択した値は設定の additional_parameters を上書きします。選択したオプションが同じキーを共有している場合、リスト内の最後のものだけが使用されます。"
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "指定されたテキストから簡潔な問題・解答形式のフラッシュカードを生成します。"
 
 msgid "Genre"
 msgstr "ジャンル"
@@ -881,6 +905,9 @@ msgstr "大きなストリーミングウィンドウ"
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "%1時間前に最後に読んだ。"
+
+msgid "Latest version:"
+msgstr "最新バージョン:"
 
 msgid "Leave blank to use: %1"
 msgstr "空欄の場合は%1を使用します"
@@ -966,8 +993,14 @@ msgstr "本が開かれていません。"
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "本が開かれていません。ファイルマネージャーで本を長押しし、「ブック情報 (AI)」を選択してください。"
 
+msgid "No cards remain. Close this preview."
+msgstr "残っているカードはありません。このプレビューを閉じてください。"
+
 msgid "No common parameters are available for handler %1."
 msgstr "ハンドラ %1 に利用可能な共通パラメータはありません。"
+
+msgid "No folder is available for the flashcard export."
+msgstr "フラッシュカードのエクスポート先となるフォルダがありません。"
 
 msgid "No highlight to annotate"
 msgstr "注釈を付けるハイライトがありません"
@@ -1023,6 +1056,9 @@ msgstr "OTAアップデートはキャンセルされました。"
 
 msgid "OTA update failed: %1"
 msgstr "OTAアップデートに失敗しました: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTAアップデートに失敗しました: 入力 %1 が無効です。ブランチ、タグ、user/repo、または user/repo@branch を指定してください。"
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1080,6 +1116,9 @@ msgstr "AI辞書のセクションのプリセットリスト。"
 msgid "Prevailing emotional state/tone:"
 msgstr "支配的な感情状態・トーン："
 
+msgid "Pronunciation"
+msgstr "発音"
+
 msgid "Protagonist's current objective:"
 msgstr "主人公の現在の目的："
 
@@ -1128,6 +1167,9 @@ msgstr "消去"
 msgid "Purge Settings"
 msgstr "設定を消去"
 
+msgid "Question"
+msgstr "質問"
+
 msgid "Quick Note"
 msgstr "クイックノート"
 
@@ -1158,6 +1200,9 @@ msgstr "あらすじ (AI)"
 
 msgid "Remove"
 msgstr "削除"
+
+msgid "Remove Card %1?"
+msgstr "カード %1 を削除しますか?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1370,6 +1415,9 @@ msgstr "クイックノートを取る"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "クイックノートを作成すると、AIノートに保存されます。"
 
+msgid "Tap a card to edit or remove it."
+msgstr "カードをタップすると編集または削除できます。"
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "用語X-Ray"
@@ -1392,6 +1440,18 @@ msgstr "テキストサイズ: %1"
 msgid "Text copied to the clipboard"
 msgstr "テキストをクリップボードにコピーしました"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AIの応答に無効なフラッシュカードJSONが含まれていました。"
+
+msgid "The AI response contained too many flashcards."
+msgstr "AIの応答に含まれるフラッシュカードが多すぎます。"
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AIの応答にフラッシュカードが含まれていませんでした。"
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AIの応答に有効なフラッシュカードデータが含まれていませんでした。"
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 のハンドラーが見つかりませんでした。api_handlers ディレクトリにハンドラーが存在することを確認してください。"
 
@@ -1400,6 +1460,9 @@ msgstr "モデルはこの本を特定できませんでした。"
 
 msgid "Thinking ..."
 msgstr "思考中..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "この書籍の本文はファイルマネージャーから読み取れません。書籍を開いて「この書籍を識別」を使用してください。"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "このボタンは、選択したテキストを含むクイックノートを作成します。"
@@ -1463,11 +1526,25 @@ msgstr "このプロンプトは、選択したテキストを別の言語に翻
 msgid "Timeline"
 msgstr "タイムライン"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "ヒント: フォーク(メインブランチ)の場合は user/repo を、特定のブランチまたはタグの場合は user/repo@branch を入力してください。"
+
 msgid "Title"
 msgstr "タイトル"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "タイトルまたは著者のメタデータが欠落しているか不完全なため、AIの結果は信頼できない可能性があります。先に「特定 (AI)」で設定してください。"
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid でインポートするには、次の場所にある TSV ファイルを選択してください:\n"
+"%1\n"
+"\n"
+"区切り文字をタブに設定し、ノートタイプとして「Basic」を選択し、フィールド1を「Front」、フィールド2を「Back」に割り当ててから、デッキを選んでインポートします。このファイルにはヘッダー行がなく、各行が1枚のカードです。"
 
 msgid "To-Do / Action Items"
 msgstr "やること / アクション項目"
@@ -1615,6 +1692,12 @@ msgstr "語形と見出し語"
 msgid "Word Origin"
 msgstr "語源"
 
+msgid "Write a question"
+msgstr "質問を入力"
+
+msgid "Write an answer"
+msgstr "回答を入力"
+
 msgid "Write quick notes here"
 msgstr "ここにクイックノートを入力してください"
 
@@ -1624,14 +1707,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "はい"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "この書籍は読み始めたばかりです(読了率3%未満)。まずは本文を読み進めることをおすすめします。それでも AI Recap を生成しますか?"
+
 msgid "Your API key"
 msgstr "あなたのAPIキー"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "設定ファイルに定義された独自のプロンプト"
 
-msgid "branch or tag name"
-msgstr "ブランチ名またはタグ名"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archive は有効な assistant.koplugin パッケージではありません"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ブランチ、タグ、user/repo、または user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: モデルプロバイダーが無効です。"
@@ -1641,3 +1730,6 @@ msgstr "例: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: 返されたデータの解析に失敗しました"
+
+msgid "invalid repository or branch/tag"
+msgstr "リポジトリまたはブランチ/タグが無効です"

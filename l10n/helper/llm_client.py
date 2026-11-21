@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import logging
 import os
+import re
 import secrets
 import sys
 import threading
@@ -207,7 +208,8 @@ class Config:
         )
         # JSON Schema strict-mode control:
         #   auto (default): send json_schema, fall back to json_object once
-        #     on HTTP 400 mentioning response_format/json_schema/unsupported.
+        #     on HTTP 400 mentioning response_format/json_schema/unsupported
+        #     (including paraphrased "not [yet] supported" gateway errors).
         #   off: send {"type": "json_object"} directly.
         #   on: force json_schema; a rejection raises without fallback.
         # AI_JSON_MODE=0 still disables the format entirely (escape hatch).
@@ -463,6 +465,12 @@ def _responses_result(response: Any) -> dict[str, Any]:
     return {"finish_reason": "stop", "content": text, "raw": response}
 
 
+# Gateways often paraphrase the upstream refusal ("this feature is not yet
+# supported by <model>"), which contains neither "unsupported" nor the exact
+# "not supported" — allow a few words between "not" and "supported".
+_NOT_SUPPORTED_RE = re.compile(r"not(\s+\w+){0,3}\s+supported")
+
+
 def _is_schema_rejection(exc: BaseException) -> bool:
     """True for an HTTP 400 that blames json_schema/response_format."""
     if getattr(exc, "status_code", None) != 400:
@@ -472,7 +480,7 @@ def _is_schema_rejection(exc: BaseException) -> bool:
         "response_format" in body
         or "json_schema" in body
         or "unsupported" in body
-        or "not supported" in body
+        or _NOT_SUPPORTED_RE.search(body) is not None
     )
 
 

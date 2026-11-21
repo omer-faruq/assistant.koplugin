@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detalj:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Preuzimanje ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repozitorij: </b>%2\n"
-"<b>Grana/Oznaka: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Grana/oznaka: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Pogreška:</b> Nijedna kartica nije primljena"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Pogreška:</b> Nije primljen odgovor"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Dohvaćanje modela...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Izvorni repozitorij:</b>  %2\n"
-"\n"
-"- Trenutačna verzija: %3\n"
-"- Razvojna grana: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Izvorni repozitorij:</b>  %2\n"
-"\n"
-"- Trenutačna verzija: %3\n"
-"- Najnovija verzija: <b>%4</b>\n"
-"- Razvojna grana: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Instaliranje %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Anotiraj"
 msgid "Annotation added successfully"
 msgstr "Anotacija je uspješno dodana"
 
+msgid "Answer"
+msgstr "Odgovor"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Sažetak knjige i preporuke"
 msgid "Book metadata updated."
 msgstr "Metapodaci knjige ažurirani."
 
+msgid "Both Question and Answer are required."
+msgstr "Potrebni su i pitanje i odgovor."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Grana/Oznaka \"%1\" nije pronađena."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Odustani"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kartica %1\n"
+"Pitanje: %2\n"
+"Odgovor: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Ključni argumenti"
 msgid "Core Idea"
 msgstr "Ključna ideja"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Nije bilo moguće odabrati jedinstveno ime datoteke za izvoz kartica."
+
 msgid "Could not close AI note file."
 msgstr "Nije bilo moguće zatvoriti datoteku AI bilješke."
 
@@ -583,8 +574,14 @@ msgstr "Nije bilo moguće stvoriti AI bilješku."
 msgid "Could not create AI note: %1"
 msgstr "Nije bilo moguće stvoriti AI bilješku: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Nije bilo moguće stvoriti TSV datoteku: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Nije bilo moguće izvući tekst iz ove knjige."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Nije bilo moguće dovršiti pisanje TSV datoteke: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nije bilo moguće izlistati mapu AI bilješki: %1"
@@ -620,6 +617,9 @@ msgstr "Kulturni značaj"
 msgid "Current Chapter Only"
 msgstr "Samo trenutno poglavlje"
 
+msgid "Current version:"
+msgstr "Trenutačna verzija:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Prilagođeno"
@@ -650,6 +650,9 @@ msgstr "Obrisati pružatelja usluga %1?"
 
 msgid "Description: %1"
 msgstr "Opis: %1"
+
+msgid "Development branch:"
+msgstr "Razvojna grana:"
 
 msgid "Device"
 msgstr "Uređaj"
@@ -702,6 +705,9 @@ msgstr "Uredi"
 msgid "Edit %1"
 msgstr "Uredi %1"
 
+msgid "Edit Card %1"
+msgstr "Uredi karticu %1"
+
 msgid "Empty Error"
 msgstr "Prazna greška"
 
@@ -749,6 +755,9 @@ msgstr "Primjer"
 msgid "Explain"
 msgstr "Objasni"
 
+msgid "Export to AnkiDroid"
+msgstr "Izvezi u AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Dohvaćanje modela nije uspjelo."
 
@@ -782,6 +791,18 @@ msgstr "Nađi prvo"
 msgid "Find next"
 msgstr "Nađi sljedeće"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Kartici %1 nedostaje pitanje ili odgovor."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Kartica %1 nije valjana kartica s pitanjem i odgovorom."
+
+msgid "Flashcards"
+msgstr "Kartice"
+
+msgid "Flashcards exported to %1"
+msgstr "Kartice izvezene u %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Za detalje posjetite wiki stranicu 'Configuration' na GitHubu."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Općenito <b>NE</b> odaberite više od jednog - odaberite parametar koji odgovara vašem modelu i platformi. Pogrešan parametar može uzrokovati API pogreške. \n"
 "\n"
 "Odabrana vrijednost nadjačava additional_parameters konfiguracije. Ako odabrane opcije dijele isti ključ, koristi se samo posljednja u popisu."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Generiraj sažete kartice s pitanjima i odgovorima iz dostavljenog teksta."
 
 msgid "Genre"
 msgstr "Žanr"
@@ -883,6 +907,9 @@ msgid_plural "Last read %1 hours ago."
 msgstr[0] "Pročitano prije %1 sat."
 msgstr[1] "Pročitano prije %1 sata."
 msgstr[2] "Pročitano prije %1 sati."
+
+msgid "Latest version:"
+msgstr "Najnovija verzija:"
 
 msgid "Leave blank to use: %1"
 msgstr "Ostavite prazno za korištenje: %1"
@@ -968,8 +995,14 @@ msgstr "Nijedna knjiga nije otvorena."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Nijedna knjiga nije otvorena. Pritisnite i držite knjigu u upravitelju datoteka i odaberite Informacije o knjizi (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Nema više kartica. Zatvorite ovaj pregled."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Nisu dostupni zajednički parametri za rukovatelja %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Nije dostupna nijedna mapa za izvoz kartica."
 
 msgid "No highlight to annotate"
 msgstr "Nema označenog teksta za bilježenje"
@@ -1025,6 +1058,9 @@ msgstr "OTA ažuriranje otkazano."
 
 msgid "OTA update failed: %1"
 msgstr "OTA ažuriranje nije uspjelo: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA ažuriranje nije uspjelo: neispravan unos %1. Upotrijebite granu, oznaku, korisnik/repo ili korisnik/repo@grana."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1082,6 +1118,9 @@ msgstr "Unaprijed postavljen popis odjeljaka AI rječnika."
 msgid "Prevailing emotional state/tone:"
 msgstr "Prevladavajuće emocionalno stanje/ton:"
 
+msgid "Pronunciation"
+msgstr "Izgovor"
+
 msgid "Protagonist's current objective:"
 msgstr "Trenutačni cilj protagonista:"
 
@@ -1130,6 +1169,9 @@ msgstr "Očisti"
 msgid "Purge Settings"
 msgstr "Očisti postavke"
 
+msgid "Question"
+msgstr "Pitanje"
+
 msgid "Quick Note"
 msgstr "Brza bilješka"
 
@@ -1160,6 +1202,9 @@ msgstr "Rekapitulacija (AI)"
 
 msgid "Remove"
 msgstr "Ukloni"
+
+msgid "Remove Card %1?"
+msgstr "Ukloniti karticu %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1373,6 +1418,9 @@ msgstr "Zapiši brze bilješke"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Zabilježite brze bilješke koje će se spremiti u vaše AI bilješke."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Dodirnite karticu da biste je uredili ili uklonili."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray pojma"
@@ -1395,6 +1443,18 @@ msgstr "Veličina teksta: %1"
 msgid "Text copied to the clipboard"
 msgstr "Tekst kopiran u međuspremnik"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI odgovor sadržavao je neispravan JSON za kartice za učenje."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI odgovor sadržavao je previše kartica za učenje."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI odgovor nije sadržavao nijednu karticu za učenje."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI odgovor nije sadržavao ispravne podatke o karticama za učenje."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler za %1 nije pronađen. Provjerite da handler postoji u api_handlers direktoriju."
 
@@ -1403,6 +1463,9 @@ msgstr "Model nije mogao prepoznati ovu knjigu."
 
 msgid "Thinking ..."
 msgstr "Razmišljam ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Tekst ove knjige nije moguće čitati iz upravitelja datotekama. Otvorite knjigu i upotrijebite Identificiraj ovu knjigu."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Ovaj gumb stvara brzu bilješku s označenim tekstom."
@@ -1466,11 +1529,25 @@ msgstr "Ovaj upit prevodi označeni tekst na drugi jezik."
 msgid "Timeline"
 msgstr "Vremenska crta"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Savjet: unesite korisnik/repo za fork (glavna grana) ili korisnik/repo@grana za određenu granu ili oznaku."
+
 msgid "Title"
 msgstr "Naslov"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Metapodaci o naslovu ili autoru nedostaju ili su nepotpuni pa rezultat AI-ja može biti nepouzdan. Najprije upotrijebite Prepoznaj (AI) da ih postavite."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Za uvoz u AnkiDroid odaberite TSV datoteku na:\n"
+"%1\n"
+"\n"
+"Postavite razdjelnik na Tab, odaberite vrstu bilješke Basic, mapirajte polje 1 na Front i polje 2 na Back, zatim odaberite špil i uvezite. Datoteka nema redak zaglavlja; svaki redak je jedna kartica."
 
 msgid "To-Do / Action Items"
 msgstr "Zadaci / akcijske stavke"
@@ -1618,6 +1695,12 @@ msgstr "Oblik riječi i lema"
 msgid "Word Origin"
 msgstr "Podrijetlo riječi"
 
+msgid "Write a question"
+msgstr "Napišite pitanje"
+
+msgid "Write an answer"
+msgstr "Napišite odgovor"
+
 msgid "Write quick notes here"
 msgstr "Ovdje napišite brze bilješke"
 
@@ -1627,14 +1710,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Da"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Upravo ste počeli čitati ovu knjigu (manje od 3 % pročitano). Možda je bolje prvo početi čitati. Želite li ipak AI sažetak?"
+
 msgid "Your API key"
 msgstr "Vaš API ključ"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Vaši vlastiti upiti definirani u konfiguracijskoj datoteci"
 
-msgid "branch or tag name"
-msgstr "naziv grane ili oznake"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arhiva nije valjan paket assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "grana, oznaka, korisnik/repo ili korisnik/repo@grana"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: pružatelji modela su nevažeći."
@@ -1644,3 +1733,6 @@ msgstr "npr. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nije uspjelo parsiranje vraćenih podataka"
+
+msgid "invalid repository or branch/tag"
+msgstr "neispravan repozitorij ili grana/oznaka"

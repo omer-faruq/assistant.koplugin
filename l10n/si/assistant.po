@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 04:37+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: සිංහල (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>විස්තර:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>බාගත වෙමින් ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>බාගනිමින් ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>ශාඛාව/ටැගය: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>දෝෂය:</b> ෆ්ලෑෂ් කාඩ්පත් ලැබුණේ නැත"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>දෝෂය:</b> ප්රතිචාරයක් ලැබුණේ නැත"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>මාදිලි ලබා ගනිමින්...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>මූලාශ්‍ර ගබඩාව:</b>  %2\n"
-"\n"
-"- වත්මන් අනුවාදය: %3\n"
-"- සංවර්ධන ශාඛාව: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>මූලාශ්‍ර ගබඩාව:</b>  %2\n"
-"\n"
-"- වත්මන් අනුවාදය: %3\n"
-"- නවතම අනුවාදය: <b>%4</b>\n"
-"- සංවර්ධන ශාඛාව: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 ස්ථාපනය වෙමින්...</b>"
@@ -364,6 +337,9 @@ msgstr "සටහන් කරන්න"
 msgid "Annotation added successfully"
 msgstr "සටහන සාර්ථකව එකතු කරන ලදි"
 
+msgid "Answer"
+msgstr "පිළිතුර"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "පොත් සාරාංශය සහ නිර්දේශ"
 msgid "Book metadata updated."
 msgstr "පොතේ මෙටාදත්ත යාවත්කාලීන කරන ලදී."
 
+msgid "Both Question and Answer are required."
+msgstr "ප්‍රශ්නය සහ පිළිතුර යන දෙකම අවශ්‍යයි."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/Tag \"%1\" හමු නොවීය."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "අවලංගු කරන්න"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"කාඩ්පත %1\n"
+"ප්‍රශ්නය: %2\n"
+"පිළිතුර: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "මූලික තර්ක"
 msgid "Core Idea"
 msgstr "මූලික අදහස"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "ෆ්ලෑෂ් කාඩ්පත් නිර්යාතය සඳහා අනන්‍ය ගොනු නාමයක් තෝරාගත නොහැකි විය."
+
 msgid "Could not close AI note file."
 msgstr "AI සටහන් ගොනුව වැසීමට නොහැකි විය."
 
@@ -583,8 +574,14 @@ msgstr "AI සටහන සෑදීමට නොහැකි විය."
 msgid "Could not create AI note: %1"
 msgstr "AI සටහන සෑදීමට නොහැකි විය: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV ගොනුව සෑදිය නොහැකි විය: %1"
+
 msgid "Could not extract text from this book."
 msgstr "මෙම පොතෙන් පෙළ උපුටා ගැනීමට නොහැකි විය."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV ගොනුව ලිවීම අවසන් කළ නොහැකි විය: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI සටහන් ෆෝල්ඩරය ලැයිස්තුගත කිරීමට නොහැකි විය: %1"
@@ -620,6 +617,9 @@ msgstr "සංස්කෘතික වැදගත්කම"
 msgid "Current Chapter Only"
 msgstr "වත්මන් පරිච්ඡේදය පමණක්"
 
+msgid "Current version:"
+msgstr "වර්තමාන අනුවාදය:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "අභිරුචි"
@@ -650,6 +650,9 @@ msgstr "%1 සැපයුම්කරු මකන්නද?"
 
 msgid "Description: %1"
 msgstr "විස්තරය: %1"
+
+msgid "Development branch:"
+msgstr "සංවර්ධන ශාඛාව:"
 
 msgid "Device"
 msgstr "උපාංගය"
@@ -702,6 +705,9 @@ msgstr "සංස්කරණය"
 msgid "Edit %1"
 msgstr "%1 සංස්කරණය කරන්න"
 
+msgid "Edit Card %1"
+msgstr "කාඩ්පත %1 සංස්කරණය කරන්න"
+
 msgid "Empty Error"
 msgstr "හිස් දෝෂය"
 
@@ -749,6 +755,9 @@ msgstr "උදාහරණය"
 msgid "Explain"
 msgstr "පැහැදිලි කරන්න"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid වෙත නිර්යාත කරන්න"
+
 msgid "Failed to fetch models"
 msgstr "මාදිලි ලබා ගැනීම අසාර්ථක විය"
 
@@ -782,6 +791,18 @@ msgstr "පළමුවැන්න සොයන්න"
 msgid "Find next"
 msgstr "ඊළඟ සොයන්න"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "ෆ්ලෑෂ් කාඩ්පත %1 හි ප්‍රශ්නයක් හෝ පිළිතුරක් නොමැත."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "ෆ්ලෑෂ් කාඩ්පත %1 වලංගු ප්‍රශ්න-පිළිතුරු කාඩ්පතක් නොවේ."
+
+msgid "Flashcards"
+msgstr "ෆ්ලෑෂ් කාඩ්පත්"
+
+msgid "Flashcards exported to %1"
+msgstr "ෆ්ලෑෂ් කාඩ්පත් %1 වෙත නිර්යාත කරන ලදී"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "විස්තර සඳහා, github හි 'Configuration' විකි පිටුවට පිවිසෙන්න."
 
@@ -805,6 +826,9 @@ msgstr ""
 "සාමාන්‍යයෙන් එකකට වඩා තේරීම <b>නොකරන්න</b> - ඔබේ ආකෘතියට සහ වේදිකාවට ගැළපෙන පරාමිතියක් තෝරන්න. වැරදි පරාමිතියක් API දෝෂ ඇති කළ හැක. \n"
 "\n"
 "තෝරාගත් අගය වින්‍යාසයේ additional_parameters අභිබවා යයි. තෝරාගත් විකල්ප එකම යතුර බෙදා ගන්නේ නම්, ලැයිස්තුවේ අවසාන එක පමණක් භාවිතා වේ."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "සපයා ඇති පෙළින් සංක්ෂිප්ත ප්‍රශ්න-පිළිතුරු ෆ්ලෑෂ් කාඩ්පත් ජනනය කරන්න."
 
 msgid "Genre"
 msgstr "ප්රභේදය"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "පැයකට පෙර අවසන් වරට කියවන ලදී."
 msgstr[1] "පැය %1 කට පෙර අවසන් වරට කියවන ලදී."
+
+msgid "Latest version:"
+msgstr "නවතම අනුවාදය:"
 
 msgid "Leave blank to use: %1"
 msgstr "භාවිතා කිරීමට හිස්ව තබන්න: %1"
@@ -967,8 +994,14 @@ msgstr "විවෘත පොතක් නොමැත."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "කිසිදු පොතක් විවෘතව නොමැත. ගොනු කළමනාකරු තුළ පොතක් මත දිගු එබීමක් කර, පොත් තොරතුරු (AI) තෝරන්න."
 
+msgid "No cards remain. Close this preview."
+msgstr "තවත් කාඩ්පත් නොමැත. මෙම පෙරදසුන වසන්න."
+
 msgid "No common parameters are available for handler %1."
 msgstr "සාමාන්‍ය පරාමිතීන් %1 හසුරුවන්නා සඳහා නොමැත."
+
+msgid "No folder is available for the flashcard export."
+msgstr "ෆ්ලෑෂ් කාඩ්පත් නිර්යාතය සඳහා ෆෝල්ඩරයක් නොමැත."
 
 msgid "No highlight to annotate"
 msgstr "සටහන් කිරීමට ඉස්මතු කිරීමක් නැත"
@@ -1024,6 +1057,9 @@ msgstr "OTA යාවත්කාලීනය අවලංගු කරන ල�
 
 msgid "OTA update failed: %1"
 msgstr "OTA යාවත්කාලීනය අසාර්ථකයි: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA යාවත්කාලීන කිරීම අසාර්ථක විය: වලංගු නොවන ආදානය %1. ශාඛාවක්, ටැගයක්, user/repo හෝ user/repo@branch භාවිත කරන්න."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI ශබ්දකෝෂ කොටස්වල පෙරසිටුව�
 msgid "Prevailing emotional state/tone:"
 msgstr "පවතින චිත්තවේගීය තත්ත්වය/ස්වරය:"
 
+msgid "Pronunciation"
+msgstr "උච්චාරණය"
+
 msgid "Protagonist's current objective:"
 msgstr "ප්රධාන චරිතයේ වර්තමාන ඉලක්කය:"
 
@@ -1129,6 +1168,9 @@ msgstr "ඉවත් කරන්න"
 msgid "Purge Settings"
 msgstr "සැකසුම් හිස් කරන්න"
 
+msgid "Question"
+msgstr "ප්‍රශ්නය"
+
 msgid "Quick Note"
 msgstr "ඉක්මන් සටහන"
 
@@ -1159,6 +1201,9 @@ msgstr "සාරාංශය (AI)"
 
 msgid "Remove"
 msgstr "ඉවත් කරන්න"
+
+msgid "Remove Card %1?"
+msgstr "කාඩ්පත %1 ඉවත් කරන්නද?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "ඉක්මන් සටහන් ගන්න"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "ඔබේ AI සටහන්වලට සුරැකෙන ඉක්මන් සටහන් ගන්න."
 
+msgid "Tap a card to edit or remove it."
+msgstr "කාඩ්පතක් සංස්කරණය කිරීමට හෝ ඉවත් කිරීමට එය තට්ටු කරන්න."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "පද X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "අකුරු ප්‍රමාණය: %1"
 msgid "Text copied to the clipboard"
 msgstr "පෙළ ක්ලිප්බෝඩ් එකට පිටපත් කරන ලදී"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI ප්‍රතිචාරයේ වලංගු නොවන flashcard JSON අඩංගු විය."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI ප්‍රතිචාරයේ ඉතා වැඩි flashcard ගණනක් අඩංගු විය."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI ප්‍රතිචාරයේ කිසිදු flashcard එකක් අඩංගු නොවීය."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI ප්‍රතිචාරයේ වලංගු flashcard දත්ත අඩංගු නොවීය."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 සඳහා හැන්ඩ්ලරය හමු නොවීය. කරුණාකර api_handlers ඩිරෙක්ටරියේ හැන්ඩ්ලරය පවතින බවට සහතික වන්න."
 
@@ -1402,6 +1462,9 @@ msgstr "මෙම පොත හඳුනා ගැනීමට ආකෘති�
 
 msgid "Thinking ..."
 msgstr "සිතමින් ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "මෙම පොතේ පෙළ ගොනු කළමනාකරුවෙන් කියවිය නොහැක. පොත විවෘත කර 'මෙම පොත හඳුනාගන්න' භාවිත කරන්න."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "මෙම බොත්තම උද්දීපනය කළ පාඨය සමඟ ඉක්මන් සටහනක් නිර්මාණය කරයි."
@@ -1465,11 +1528,25 @@ msgstr "මෙම ප්රොම්ප්ටය උද්දීපනය කළ
 msgid "Timeline"
 msgstr "කාලරේඛාව"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "ඉඟිය: fork එකක් (ප්‍රධාන ශාඛාව) සඳහා user/repo ද, නිශ්චිත ශාඛාවක් හෝ ටැගයක් සඳහා user/repo@branch ද ඇතුළත් කරන්න."
+
 msgid "Title"
 msgstr "ශීර්ෂය"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "මාතෘකාව හෝ කර්තෘ මෙටාදත්ත අස්ථානගත හෝ අසම්පූර්ණ බැවින්, AI ප්‍රතිඵලය විශ්වාසදායක නොවිය හැක. එය පළමුව සැකසීමට හඳුනා ගන්න (AI) භාවිත කරන්න."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid තුළ ආයාත කිරීමට, පහත TSV ගොනුව තෝරන්න:\n"
+"%1\n"
+"\n"
+"වෙන්කරනය Tab ලෙස සකසන්න, Basic සටහන් වර්ගය තෝරන්න, ක්ෂේත්‍රය 1 Front ට ද ක්ෂේත්‍රය 2 Back ට ද සිතියම් කරන්න, පසුව ඩෙක් එකක් තෝරා ආයාත කරන්න. ගොනුවේ ශීර්ෂ පේළියක් නොමැත; සෑම පේළියක්ම එක් කාඩ්පතකි."
 
 msgid "To-Do / Action Items"
 msgstr "කළ යුතු දේ / ක්රියාකාරී අයිතම"
@@ -1617,6 +1694,12 @@ msgstr "වචන ස්වරූපය සහ මූල පදය"
 msgid "Word Origin"
 msgstr "වචනයේ මූලාරම්භය"
 
+msgid "Write a question"
+msgstr "ප්‍රශ්නයක් ලියන්න"
+
+msgid "Write an answer"
+msgstr "පිළිතුරක් ලියන්න"
+
 msgid "Write quick notes here"
 msgstr "ඉක්මන් සටහන් මෙහි ලියන්න"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "ඔව්"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "ඔබ මෙම පොත ආරම්භ කළේ දැන්ය (3% ටත් අඩුවෙන් නිමයි). මුලින්ම කියවීම ආරම්භ කිරීම වඩා හොඳ විය හැක. ඔබට තවමත් AI සාරාංශයක් අවශ්‍යද?"
+
 msgid "Your API key"
 msgstr "ඔබේ API යතුර"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "වින්‍යාස ගොනුවේ අර්ථ දක්වා ඇති ඔබේම ප්‍රොම්ප්ට්"
 
-msgid "branch or tag name"
-msgstr "branch හෝ tag නම"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "මෙම සංරක්ෂිතය වලංගු assistant.koplugin පැකේජයක් නොවේ"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ශාඛාව, ටැගය, user/repo හෝ user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: මාදිලි සැපයුම්කරුවන් වලංගු නොවේ."
@@ -1643,3 +1732,6 @@ msgstr "උදා: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: ලැබුණු දත්ත විග්‍රහ කිරීම අසාර්ථකයි"
+
+msgid "invalid repository or branch/tag"
+msgstr "වලංගු නොවන ගබඩාවක් හෝ ශාඛාව/ටැගයක්"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Подробности:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Загрузка ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Репозиторий: </b>%2\n"
-"<b>Ветка/Тег: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Ветка/тег: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Ошибка:</b> Карточки не получены"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Ошибка:</b> Ответ не получен"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Загрузка моделей...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL GitHub:</b>  %1\n"
-"<b>Исходный репозиторий:</b>  %2\n"
-"\n"
-"- Текущая версия: %3\n"
-"- Ветка разработки: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL GitHub:</b>  %1\n"
-"<b>Исходный репозиторий:</b>  %2\n"
-"\n"
-"- Текущая версия: %3\n"
-"- Последняя версия: <b>%4</b>\n"
-"- Ветка разработки: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Установка %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Добавить примечание"
 msgid "Annotation added successfully"
 msgstr "Примечание успешно добавлено"
 
+msgid "Answer"
+msgstr "Ответ"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Краткое содержание книги и рекомендаци
 msgid "Book metadata updated."
 msgstr "Метаданные книги обновлены."
 
+msgid "Both Question and Answer are required."
+msgstr "Необходимо указать и вопрос, и ответ."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ветка/тег \"%1\" не найдены."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Отмена"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Карточка %1\n"
+"Вопрос: %2\n"
+"Ответ: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Основные аргументы"
 msgid "Core Idea"
 msgstr "Основная идея"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Не удалось подобрать уникальное имя файла для экспорта карточек."
+
 msgid "Could not close AI note file."
 msgstr "Не удалось закрыть файл ИИ-заметки."
 
@@ -583,8 +574,14 @@ msgstr "Не удалось создать ИИ-заметку."
 msgid "Could not create AI note: %1"
 msgstr "Не удалось создать ИИ-заметку: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Не удалось создать файл TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Не удалось извлечь текст из этой книги."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Не удалось завершить запись файла TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Не удалось получить список содержимого папки ИИ-заметок: %1"
@@ -620,6 +617,9 @@ msgstr "Культурная значимость"
 msgid "Current Chapter Only"
 msgstr "Только текущая глава"
 
+msgid "Current version:"
+msgstr "Текущая версия:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Пользовательский"
@@ -650,6 +650,9 @@ msgstr "Удалить провайдера %1?"
 
 msgid "Description: %1"
 msgstr "Описание: %1"
+
+msgid "Development branch:"
+msgstr "Ветка разработки:"
 
 msgid "Device"
 msgstr "Устройство"
@@ -702,6 +705,9 @@ msgstr "Редактировать"
 msgid "Edit %1"
 msgstr "Изменить %1"
 
+msgid "Edit Card %1"
+msgstr "Редактировать карточку %1"
+
 msgid "Empty Error"
 msgstr "Пустая ошибка"
 
@@ -749,6 +755,9 @@ msgstr "Пример"
 msgid "Explain"
 msgstr "Объяснить"
 
+msgid "Export to AnkiDroid"
+msgstr "Экспорт в AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Не удалось загрузить модели"
 
@@ -782,6 +791,18 @@ msgstr "Найти первое"
 msgid "Find next"
 msgstr "Найти следующее"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "В карточке %1 отсутствует вопрос или ответ."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Карточка %1 не является корректной карточкой «вопрос — ответ»."
+
+msgid "Flashcards"
+msgstr "Карточки"
+
+msgid "Flashcards exported to %1"
+msgstr "Карточки экспортированы в %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Подробнее см. на странице вики «Configuration» на GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Как правило, <b>НЕ</b> выбирайте больше одного — выберите параметр, соответствующий вашей модели и платформе. Неверный параметр может вызвать ошибки API. \n"
 "\n"
 "Выбранное значение переопределяет additional_parameters конфигурации. Если у выбранных параметров совпадает ключ, используется только последний в списке."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Создавать краткие карточки «вопрос — ответ» из предоставленного текста."
 
 msgid "Genre"
 msgstr "Жанр"
@@ -884,6 +908,9 @@ msgstr[0] "Последнее чтение: %1 час назад."
 msgstr[1] "Последнее чтение: %1 часа назад."
 msgstr[2] "Последнее чтение: %1 часов назад."
 msgstr[3] "Последнее чтение: %1 часа назад."
+
+msgid "Latest version:"
+msgstr "Последняя версия:"
 
 msgid "Leave blank to use: %1"
 msgstr "Оставьте пустым, чтобы использовать: %1"
@@ -969,8 +996,14 @@ msgstr "Книга не открыта."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Книга не открыта. Нажмите и удерживайте книгу в файловом менеджере и выберите «Информация о книге (AI)»."
 
+msgid "No cards remain. Close this preview."
+msgstr "Карточек не осталось. Закройте этот предпросмотр."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Для обработчика %1 общие параметры недоступны."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Нет доступной папки для экспорта карточек."
 
 msgid "No highlight to annotate"
 msgstr "Нет выделения для аннотации"
@@ -1026,6 +1059,9 @@ msgstr "OTA-обновление отменено."
 
 msgid "OTA update failed: %1"
 msgstr "OTA-обновление не удалось: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Не удалось обновить по OTA: недопустимый ввод %1. Используйте ветку, тег, user/repo или user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1083,6 +1119,9 @@ msgstr "Предустановленный список разделов ИИ-с
 msgid "Prevailing emotional state/tone:"
 msgstr "Преобладающее эмоциональное состояние/тон:"
 
+msgid "Pronunciation"
+msgstr "Произношение"
+
 msgid "Protagonist's current objective:"
 msgstr "Текущая цель главного героя:"
 
@@ -1131,6 +1170,9 @@ msgstr "Очистить"
 msgid "Purge Settings"
 msgstr "Очистить настройки"
 
+msgid "Question"
+msgstr "Вопрос"
+
 msgid "Quick Note"
 msgstr "Быстрая заметка"
 
@@ -1161,6 +1203,9 @@ msgstr "Пересказ (AI)"
 
 msgid "Remove"
 msgstr "Удалить"
+
+msgid "Remove Card %1?"
+msgstr "Удалить карточку %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1373,6 +1418,9 @@ msgstr "Быстрые заметки"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Делайте быстрые заметки, которые будут сохраняться в ваши ИИ-заметки."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Нажмите на карточку, чтобы изменить или удалить её."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray термина"
@@ -1395,6 +1443,18 @@ msgstr "Размер шрифта: %1"
 msgid "Text copied to the clipboard"
 msgstr "Текст скопирован в буфер обмена"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Ответ ИИ содержал некорректный JSON карточек."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Ответ ИИ содержал слишком много карточек."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Ответ ИИ не содержал ни одной карточки."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Ответ ИИ не содержал корректных данных карточек."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчик для %1 не найден. Убедитесь, что обработчик существует в каталоге api_handlers."
 
@@ -1403,6 +1463,9 @@ msgstr "Модель не смогла определить эту книгу."
 
 msgid "Thinking ..."
 msgstr "Размышление ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Текст этой книги нельзя прочитать из файлового менеджера. Откройте книгу и используйте «Определить эту книгу»."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Эта кнопка создаёт быструю заметку с выделенным текстом."
@@ -1466,11 +1529,25 @@ msgstr "Этот промпт переводит выделенный текст
 msgid "Timeline"
 msgstr "Хронология"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Совет: укажите user/repo для форка (ветка main) или user/repo@branch для конкретной ветки или тега."
+
 msgid "Title"
 msgstr "Название"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Метаданные названия или автора отсутствуют или неполны, поэтому результат ИИ может быть ненадёжным. Сначала задайте их с помощью «Определить (ИИ)»."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Чтобы импортировать в AnkiDroid, выберите файл TSV:\n"
+"%1\n"
+"\n"
+"Установите разделитель «Tab», выберите тип заметки Basic, сопоставьте поле 1 с Front и поле 2 с Back, затем выберите колоду и импортируйте. В файле нет строки заголовка; каждая строка — одна карточка."
 
 msgid "To-Do / Action Items"
 msgstr "Задачи / Действия"
@@ -1618,6 +1695,12 @@ msgstr "Словоформа и лемма"
 msgid "Word Origin"
 msgstr "Происхождение слова"
 
+msgid "Write a question"
+msgstr "Напишите вопрос"
+
+msgid "Write an answer"
+msgstr "Напишите ответ"
+
 msgid "Write quick notes here"
 msgstr "Введите быстрые заметки здесь"
 
@@ -1627,14 +1710,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Да"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Вы только начали эту книгу (прочитано менее 3%). Возможно, сначала стоит начать читать. Вы всё ещё хотите получить краткий пересказ от ИИ?"
+
 msgid "Your API key"
 msgstr "Ваш API-ключ"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Ваши собственные промпты, определённые в файле конфигурации"
 
-msgid "branch or tag name"
-msgstr "имя ветки или тега"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "архив не является допустимым пакетом assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "ветка, тег, user/repo или user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: провайдеры моделей некорректны."
@@ -1644,3 +1733,6 @@ msgstr "например, google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: не удалось разобрать возвращённые данные"
+
+msgid "invalid repository or branch/tag"
+msgstr "недопустимый репозиторий или ветка/тег"

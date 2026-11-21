@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:19+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: فارسی (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>جزئیات:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>در حال دانلود ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>مخزن: </b>%2\n"
-"<b>شاخه/تگ: </b>%3"
+"<b>در حال دانلود...</b>\n"
+"<b>نشانی: </b>%1\n"
+"<b>شاخه/برچسب: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>خطا:</b> هیچ فلش‌کارتی دریافت نشد"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>خطا:</b> پاسخی دریافت نشد"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>در حال دریافت مدلها...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>آدرس گیت‌هاب:</b>  %1\n"
-"<b>مخزن منبع:</b>  %2\n"
-"\n"
-"- نسخه فعلی: %3\n"
-"- شاخه توسعه: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>آدرس گیت‌هاب:</b>  %1\n"
-"<b>مخزن منبع:</b>  %2\n"
-"\n"
-"- نسخه فعلی: %3\n"
-"- آخرین نسخه: <b>%4</b>\n"
-"- شاخه توسعه: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>در حال نصب %1...</b>"
@@ -364,6 +337,9 @@ msgstr "یادداشت‌گذاری"
 msgid "Annotation added successfully"
 msgstr "یادداشت با موفقیت افزوده شد"
 
+msgid "Answer"
+msgstr "پاسخ"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "خلاصه کتاب و پیشنهادها"
 msgid "Book metadata updated."
 msgstr "فرادادهٔ کتاب به‌روزرسانی شد."
 
+msgid "Both Question and Answer are required."
+msgstr "هم پرسش و هم پاسخ لازم است."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "شاخه/تگ \"%1\" یافت نشد."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "لغو"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"کارت %1\n"
+"پرسش: %2\n"
+"پاسخ: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "استدلال‌های اصلی"
 msgid "Core Idea"
 msgstr "ایده اصلی"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "امکان انتخاب نام فایلی یکتا برای برون‌بری فلش‌کارت‌ها فراهم نشد."
+
 msgid "Could not close AI note file."
 msgstr "بستن فایل یادداشت هوش مصنوعی ممکن نشد."
 
@@ -583,8 +574,14 @@ msgstr "ایجاد یادداشت هوش مصنوعی ممکن نشد."
 msgid "Could not create AI note: %1"
 msgstr "ایجاد یادداشت هوش مصنوعی ممکن نشد: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "امکان ایجاد فایل TSV فراهم نشد: %1"
+
 msgid "Could not extract text from this book."
 msgstr "استخراج متن از این کتاب ممکن نشد."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "نوشتن فایل TSV به پایان نرسید: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "فهرست کردن پوشه یادداشت‌های هوش مصنوعی ممکن نشد: %1"
@@ -620,6 +617,9 @@ msgstr "اهمیت فرهنگی"
 msgid "Current Chapter Only"
 msgstr "فقط فصل جاری"
 
+msgid "Current version:"
+msgstr "نسخهٔ کنونی:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "سفارشی"
@@ -650,6 +650,9 @@ msgstr "ارائهدهنده %1 حذف شود؟"
 
 msgid "Description: %1"
 msgstr "توضیح: %1"
+
+msgid "Development branch:"
+msgstr "شاخهٔ توسعه:"
 
 msgid "Device"
 msgstr "دستگاه"
@@ -702,6 +705,9 @@ msgstr "ویرایش"
 msgid "Edit %1"
 msgstr "ویرایش %1"
 
+msgid "Edit Card %1"
+msgstr "ویرایش کارت %1"
+
 msgid "Empty Error"
 msgstr "خطای خالی"
 
@@ -749,6 +755,9 @@ msgstr "مثال"
 msgid "Explain"
 msgstr "توضیح"
 
+msgid "Export to AnkiDroid"
+msgstr "برون‌بری به AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "دریافت مدلها ناموفق بود"
 
@@ -782,6 +791,18 @@ msgstr "یافتن اولین"
 msgid "Find next"
 msgstr "یافتن بعدی"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "فلش‌کارت %1 پرسش یا پاسخ ندارد."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "فلش‌کارت %1 کارت پرسش‌وپاسخ معتبری نیست."
+
+msgid "Flashcards"
+msgstr "فلش‌کارت‌ها"
+
+msgid "Flashcards exported to %1"
+msgstr "فلش‌کارت‌ها در %1 برون‌بری شدند"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "برای جزئیات، به صفحه ویکی «پیکربندی» در گیتهاب مراجعه کنید."
 
@@ -805,6 +826,9 @@ msgstr ""
 "عموماً <b>نباید</b> بیش از یک گزینه را انتخاب کنید — پارامتری را برگزینید که با مدل و پلتفرم شما سازگار باشد. پارامتر نادرست ممکن است باعث خطاهای API شود. \n"
 "\n"
 "مقدار انتخاب‌شده روی additional_parameters پیکربندی اولویت دارد. اگر گزینه‌های انتخاب‌شده کلید یکسانی داشته باشند، فقط آخرین مورد در فهرست استفاده می‌شود."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "از متن داده‌شده، فلش‌کارت‌های مختصر پرسش‌وپاسخ بسازید."
 
 msgid "Genre"
 msgstr "ژانر"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "یک ساعت پیش آخرین بار خوانده شد."
 msgstr[1] "%1 ساعت پیش آخرین بار خوانده شد."
+
+msgid "Latest version:"
+msgstr "آخرین نسخه:"
 
 msgid "Leave blank to use: %1"
 msgstr "برای استفاده از %1 خالی بگذارید"
@@ -967,8 +994,14 @@ msgstr "هیچ کتابی باز نیست."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "هیچ کتابی باز نیست. در مدیر فایل، روی یک کتاب فشار طولانی دهید و «اطلاعات کتاب (AI)» را انتخاب کنید."
 
+msgid "No cards remain. Close this preview."
+msgstr "کارتی باقی نمانده است. این پیش‌نمایش را ببندید."
+
 msgid "No common parameters are available for handler %1."
 msgstr "هیچ پارامتر مشترکی برای هندلر %1 در دسترس نیست."
+
+msgid "No folder is available for the flashcard export."
+msgstr "هیچ پوشه‌ای برای برون‌بری فلش‌کارت‌ها در دسترس نیست."
 
 msgid "No highlight to annotate"
 msgstr "هایلایتی برای حاشیهنویسی وجود ندارد"
@@ -1024,6 +1057,9 @@ msgstr "به‌روزرسانی OTA لغو شد."
 
 msgid "OTA update failed: %1"
 msgstr "به‌روزرسانی OTA ناموفق بود: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "به‌روزرسانی OTA ناموفق بود: ورودی نامعتبر %1. از یک شاخه، برچسب، user/repo یا user/repo@branch استفاده کنید."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "فهرست از پیش تعیین‌شده بخش‌های واژه‌ن
 msgid "Prevailing emotional state/tone:"
 msgstr "حال‌وهوای عاطفی غالب:"
 
+msgid "Pronunciation"
+msgstr "تلفظ"
+
 msgid "Protagonist's current objective:"
 msgstr "هدف فعلی شخصیت اصلی:"
 
@@ -1129,6 +1168,9 @@ msgstr "پاکسازی"
 msgid "Purge Settings"
 msgstr "پاکسازی تنظیمات"
 
+msgid "Question"
+msgstr "پرسش"
+
 msgid "Quick Note"
 msgstr "یادداشت سریع"
 
@@ -1159,6 +1201,9 @@ msgstr "خلاصه (AI)"
 
 msgid "Remove"
 msgstr "حذف"
+
+msgid "Remove Card %1?"
+msgstr "کارت %1 حذف شود؟"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "یادداشت سریع"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "یادداشت‌برداری سریع کنید تا در یادداشت‌های هوش مصنوعی شما ذخیره شود."
 
+msgid "Tap a card to edit or remove it."
+msgstr "برای ویرایش یا حذف کارت، روی آن ضربه بزنید."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray واژه"
@@ -1394,6 +1442,18 @@ msgstr "اندازه قلم: %1"
 msgid "Text copied to the clipboard"
 msgstr "متن در کلیپ‌بورد کپی شد."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "پاسخ هوش مصنوعی شامل JSON نامعتبر برای فلش‌کارت بود."
+
+msgid "The AI response contained too many flashcards."
+msgstr "پاسخ هوش مصنوعی شامل فلش‌کارت‌های بیش از حد بود."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "پاسخ هوش مصنوعی هیچ فلش‌کارتی نداشت."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "پاسخ هوش مصنوعی دادهٔ معتبر فلش‌کارت نداشت."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "هندلر برای %1 یافت نشد. لطفاً مطمئن شوید هندلر در پوشه api_handlers وجود دارد."
 
@@ -1402,6 +1462,9 @@ msgstr "مدل نتوانست این کتاب را شناسایی کند."
 
 msgid "Thinking ..."
 msgstr "در حال تفکر ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "متن این کتاب از طریق مدیر فایل قابل خواندن نیست. کتاب را باز کنید و از «شناسایی این کتاب» استفاده کنید."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "این دکمه یک یادداشت سریع با متن هایلایت‌شده ایجاد می‌کند."
@@ -1465,11 +1528,25 @@ msgstr "این پرامپت متن هایلایت‌شده را به زبان د
 msgid "Timeline"
 msgstr "خط زمانی"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "نکته: برای یک فورک (شاخهٔ main) عبارت user/repo یا برای یک شاخه یا برچسب مشخص عبارت user/repo@branch را وارد کنید."
+
 msgid "Title"
 msgstr "عنوان"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "فرادادهٔ عنوان یا نویسنده موجود یا کامل نیست، بنابراین نتیجهٔ هوش مصنوعی ممکن است غیرقابل‌اعتماد باشد. ابتدا با «شناسایی (هوش مصنوعی)» آن را تنظیم کنید."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"برای درون‌ریزی در AnkiDroid، فایل TSV را در این مسیر انتخاب کنید:\n"
+"%1\n"
+"\n"
+"جداکننده را روی Tab بگذارید، نوع یادداشت Basic را انتخاب کنید، فیلد ۱ را به Front و فیلد ۲ را به Back نگاشت کنید، سپس یک دسته انتخاب کرده و درون‌ریزی کنید. این فایل ردیف سرستون ندارد؛ هر ردیف یک کارت است."
 
 msgid "To-Do / Action Items"
 msgstr "کارها / اقدامات"
@@ -1617,6 +1694,12 @@ msgstr "صورت واژه و بُن‌واژه"
 msgid "Word Origin"
 msgstr "ریشه واژه"
 
+msgid "Write a question"
+msgstr "یک پرسش بنویسید"
+
+msgid "Write an answer"
+msgstr "یک پاسخ بنویسید"
+
 msgid "Write quick notes here"
 msgstr "یادداشتهای سریع را اینجا بنویسید"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "بله"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "شما همین تازگی این کتاب را شروع کرده‌اید (کمتر از ۳٪ آن خوانده شده). شاید بهتر باشد اول شروع به خواندن کنید. آیا همچنان خلاصهٔ هوش مصنوعی می‌خواهید؟"
+
 msgid "Your API key"
 msgstr "کلید API شما"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "پرامپتهای شخصی شما که در فایل پیکربندی تعریف شدهاند."
 
-msgid "branch or tag name"
-msgstr "نام شاخه یا تگ"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "آرشیو، بستهٔ معتبر assistant.koplugin نیست"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "شاخه، برچسب، user/repo یا user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: ارائه‌دهنده‌های مدل نامعتبر هستند."
@@ -1643,3 +1732,6 @@ msgstr "مثلاً google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: تجزیه داده‌های بازگشتی ناموفق بود"
+
+msgid "invalid repository or branch/tag"
+msgstr "مخزن یا شاخه/برچسب نامعتبر"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 中文（台灣) (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>詳細資訊：</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>正在下載 ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>儲存庫: </b>%2\n"
-"<b>分支/標籤: </b>%3"
+"<b>下載中 ...</b>\n"
+"<b>URL：</b>%1\n"
+"<b>分支/標籤：</b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>錯誤：</b>未收到任何閃卡"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>錯誤：</b>未收到回應"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>正在取得模型...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub 網址：</b>  %1\n"
-"<b>原始碼儲存庫：</b>  %2\n"
-"\n"
-"- 目前版本：%3\n"
-"- 開發分支：main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>GitHub 網址：</b>  %1\n"
-"<b>原始碼儲存庫：</b>  %2\n"
-"\n"
-"- 目前版本：%3\n"
-"- 最新版本：<b>%4</b>\n"
-"- 開發分支：main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>正在安裝 %1...</b>"
@@ -364,6 +337,9 @@ msgstr "註記"
 msgid "Annotation added successfully"
 msgstr "已成功新增註記"
 
+msgid "Answer"
+msgstr "答案"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "書籍摘要與推薦"
 msgid "Book metadata updated."
 msgstr "書籍中繼資料已更新。"
 
+msgid "Both Question and Answer are required."
+msgstr "問題與答案皆為必填。"
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "找不到分支/標籤「%1」。"
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "取消"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"卡片 %1\n"
+"問題：%2\n"
+"答案：%3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "核心論點"
 msgid "Core Idea"
 msgstr "核心概念"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "無法為閃卡匯出選擇唯一的檔案名稱。"
+
 msgid "Could not close AI note file."
 msgstr "無法關閉 AI 筆記檔案。"
 
@@ -583,8 +574,14 @@ msgstr "無法建立 AI 筆記。"
 msgid "Could not create AI note: %1"
 msgstr "無法建立 AI 筆記：%1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "無法建立 TSV 檔案：%1"
+
 msgid "Could not extract text from this book."
 msgstr "無法從這本書擷取文字。"
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "無法完成寫入 TSV 檔案：%1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "無法列出 AI 筆記資料夾：%1"
@@ -620,6 +617,9 @@ msgstr "文化意義"
 msgid "Current Chapter Only"
 msgstr "僅目前章節"
 
+msgid "Current version:"
+msgstr "目前版本："
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "自訂"
@@ -650,6 +650,9 @@ msgstr "刪除供應商 %1？"
 
 msgid "Description: %1"
 msgstr "說明：%1"
+
+msgid "Development branch:"
+msgstr "開發分支："
 
 msgid "Device"
 msgstr "裝置"
@@ -702,6 +705,9 @@ msgstr "編輯"
 msgid "Edit %1"
 msgstr "編輯 %1"
 
+msgid "Edit Card %1"
+msgstr "編輯卡片 %1"
+
 msgid "Empty Error"
 msgstr "錯誤為空"
 
@@ -749,6 +755,9 @@ msgstr "例句"
 msgid "Explain"
 msgstr "解釋"
 
+msgid "Export to AnkiDroid"
+msgstr "匯出至 AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "取得模型失敗"
 
@@ -782,6 +791,18 @@ msgstr "尋找第一個"
 msgid "Find next"
 msgstr "尋找下一個"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "閃卡 %1 缺少問題或答案。"
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "閃卡 %1 不是有效的問答卡片。"
+
+msgid "Flashcards"
+msgstr "閃卡"
+
+msgid "Flashcards exported to %1"
+msgstr "閃卡已匯出至 %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "詳情請參閱 GitHub 上的「Configuration」Wiki 頁面。"
 
@@ -805,6 +826,9 @@ msgstr ""
 "一般而言<b>請勿</b>選取超過一個 - 請挑選符合你的模型與平台的參數。選錯參數可能導致 API 錯誤。\n"
 "\n"
 "選取的值會覆寫設定中的 additional_parameters。若選取的選項含有相同的鍵，只會採用清單中的最後一個。"
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "根據提供的文字產生精簡的問答閃卡。"
 
 msgid "Genre"
 msgstr "類型"
@@ -881,6 +905,9 @@ msgstr "大型串流視窗"
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "最後閱讀於 %1 小時前。"
+
+msgid "Latest version:"
+msgstr "最新版本："
 
 msgid "Leave blank to use: %1"
 msgstr "留空以使用：%1"
@@ -966,8 +993,14 @@ msgstr "沒有開啟任何書籍。"
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "目前沒有開啟的書籍。請在檔案管理中長按一本書，然後選擇「書籍資訊 (AI)」。"
 
+msgid "No cards remain. Close this preview."
+msgstr "已無卡片。請關閉此預覽。"
+
 msgid "No common parameters are available for handler %1."
 msgstr "處理器 %1 沒有可用的通用參數。"
+
+msgid "No folder is available for the flashcard export."
+msgstr "沒有可用於閃卡匯出的資料夾。"
 
 msgid "No highlight to annotate"
 msgstr "沒有可註解的標記"
@@ -1023,6 +1056,9 @@ msgstr "OTA 更新已取消。"
 
 msgid "OTA update failed: %1"
 msgstr "OTA 更新失敗：%1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA 更新失敗：輸入无效 %1。請使用分支、標籤、user/repo 或 user/repo@branch。"
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1080,6 +1116,9 @@ msgstr "AI 字典區段的預設清單。"
 msgid "Prevailing emotional state/tone:"
 msgstr "主要情緒狀態／基調："
 
+msgid "Pronunciation"
+msgstr "發音"
+
 msgid "Protagonist's current objective:"
 msgstr "主角目前的目標："
 
@@ -1128,6 +1167,9 @@ msgstr "清除"
 msgid "Purge Settings"
 msgstr "清除設定"
 
+msgid "Question"
+msgstr "問題"
+
 msgid "Quick Note"
 msgstr "快速筆記"
 
@@ -1158,6 +1200,9 @@ msgstr "前情提要 (AI)"
 
 msgid "Remove"
 msgstr "移除"
+
+msgid "Remove Card %1?"
+msgstr "要移除卡片 %1 嗎？"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1371,6 +1416,9 @@ msgstr "快速記筆記"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "快速記下筆記，將儲存至你的 AI 筆記。"
 
+msgid "Tap a card to edit or remove it."
+msgstr "點選卡片即可編輯或移除。"
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "詞彙 X-Ray"
@@ -1393,6 +1441,18 @@ msgstr "文字大小：%1"
 msgid "Text copied to the clipboard"
 msgstr "文字已複製到剪貼簿"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI 回應含有无效的閃卡 JSON。"
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI 回應含有過多閃卡。"
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI 回應未包含任何閃卡。"
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI 回應未包含有效的閃卡資料。"
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "找不到 %1 的處理常式。請確認該處理常式存在於 api_handlers 目錄中。"
 
@@ -1401,6 +1461,9 @@ msgstr "模型無法辨識這本書。"
 
 msgid "Thinking ..."
 msgstr "思考中…"
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "無法從檔案管理員讀取此書的文字。請開啟此書並使用「識別此書」。"
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "此按鈕會以反白文字建立快速筆記。"
@@ -1464,11 +1527,25 @@ msgstr "此提示詞會將反白文字翻譯成另一種語言。"
 msgid "Timeline"
 msgstr "時間軸"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "提示：輸入 user/repo 表示使用分支（main 分支），或輸入 user/repo@branch 指定特定分支或標籤。"
+
 msgid "Title"
 msgstr "標題"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "書名或作者的中繼資料缺失或不完整，因此 AI 結果可能不可靠。請先使用「辨識（AI）」設定。"
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"若要在 AnkiDroid 匯入，請選取下列位置的 TSV 檔案：\n"
+"%1\n"
+"\n"
+"將分隔符號設為 Tab，選擇 Basic 筆記類型，將欄位 1 對應至 Front、欄位 2 對應至 Back，接著選擇牌組並匯入。此檔案沒有標題列，每一列代表一張卡片。"
 
 msgid "To-Do / Action Items"
 msgstr "待辦事項／行動項目"
@@ -1616,6 +1693,12 @@ msgstr "詞形與詞元"
 msgid "Word Origin"
 msgstr "詞源"
 
+msgid "Write a question"
+msgstr "輸入問題"
+
+msgid "Write an answer"
+msgstr "輸入答案"
+
 msgid "Write quick notes here"
 msgstr "在此寫下快速筆記"
 
@@ -1625,14 +1708,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "是"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "你才剛開始閱讀這本書（完成度不到 3%）。或許先讀一些內容會比較好。你還想讓 AI 進行回顧嗎？"
+
 msgid "Your API key"
 msgstr "您的 API 金鑰"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "您在設定檔中定義的自訂提示"
 
-msgid "branch or tag name"
-msgstr "分支或標籤名稱"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "壓縮檔不是有效的 assistant.koplugin 套件"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch、tag、user/repo 或 user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua：模型提供者無效。"
@@ -1642,3 +1731,6 @@ msgstr "例如：google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON：無法解析回傳的資料"
+
+msgid "invalid repository or branch/tag"
+msgstr "無效的儲存庫或分支/標籤"

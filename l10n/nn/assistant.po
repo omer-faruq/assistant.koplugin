@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detalj:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Lastar ned ...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Arkiv: </b>%2\n"
-"<b>Grein/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Grein/tagg: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Feil:</b> Fekk ingen flashcards"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Feil:</b> Fekk ikkje noko svar"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Hentar modellar...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github-URL:</b>  %1\n"
-"<b>Kjelde-repo:</b>  %2\n"
-"\n"
-"- Gjeldande versjon: %3\n"
-"- Utviklingsgrein: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github-URL:</b>  %1\n"
-"<b>Kjelde-repo:</b>  %2\n"
-"\n"
-"- Gjeldande versjon: %3\n"
-"- Nyaste versjon: <b>%4</b>\n"
-"- Utviklingsgrein: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installerer %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Merk"
 msgid "Annotation added successfully"
 msgstr "Merknaden vart lagt til"
 
+msgid "Answer"
+msgstr "Svar"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Boksamandrag og tilrådingar"
 msgid "Book metadata updated."
 msgstr "Bokmetadata er oppdaterte."
 
+msgid "Both Question and Answer are required."
+msgstr "Både spørsmål og svar er påkravde."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Grein/Tag \"%1\" vart ikkje funnen."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Avbryt"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kort %1\n"
+"Spørsmål: %2\n"
+"Svar: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Kjerneargument"
 msgid "Core Idea"
 msgstr "Kjerneidé"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Fann ikkje eit unikt filnamn for flashcard-eksporten."
+
 msgid "Could not close AI note file."
 msgstr "Klarte ikkje å lukke AI-notat-fila."
 
@@ -583,8 +574,14 @@ msgstr "Klarte ikkje å opprette AI-notat."
 msgid "Could not create AI note: %1"
 msgstr "Klarte ikkje å opprette AI-notat: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Klarte ikkje å opprette TSV-fila: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Klarte ikkje å hente ut tekst frå denne boka."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Klarte ikkje å fullføre skrivinga til TSV-fila: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Klarte ikkje å liste opp AI-notat-mappa: %1"
@@ -620,6 +617,9 @@ msgstr "Kulturell tyding"
 msgid "Current Chapter Only"
 msgstr "Berre noverande kapittel"
 
+msgid "Current version:"
+msgstr "Gjeldande versjon:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Tilpassa"
@@ -650,6 +650,9 @@ msgstr "Slette leverandøren %1?"
 
 msgid "Description: %1"
 msgstr "Skildring: %1"
+
+msgid "Development branch:"
+msgstr "Utviklingsgrein:"
 
 msgid "Device"
 msgstr "Eining"
@@ -702,6 +705,9 @@ msgstr "Rediger"
 msgid "Edit %1"
 msgstr "Rediger %1"
 
+msgid "Edit Card %1"
+msgstr "Rediger kort %1"
+
 msgid "Empty Error"
 msgstr "Tom feilmelding"
 
@@ -749,6 +755,9 @@ msgstr "Døme"
 msgid "Explain"
 msgstr "Forklar"
 
+msgid "Export to AnkiDroid"
+msgstr "Eksporter til AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Klarte ikkje hente modellar"
 
@@ -782,6 +791,18 @@ msgstr "Finn fyrste"
 msgid "Find next"
 msgstr "Finn neste"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Flashcard %1 manglar eit spørsmål eller eit svar."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Flashcard %1 er ikkje eit gyldig spørsmål-og-svar-kort."
+
+msgid "Flashcards"
+msgstr "Flashcards"
+
+msgid "Flashcards exported to %1"
+msgstr "Flashcards eksporterte til %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "For detaljar, sjå 'Configuration'-wikisida på GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Som regel bør du <b>IKKJE</b> velje meir enn éin - vel ein parameter som passar til modellen og plattforma di. Ein feil parameter kan føre til API-feil. \n"
 "\n"
 "Den valde verdien overstyrer additional_parameters i konfigurasjonen. Dersom valde alternativ deler same nøkkel, blir berre det siste i lista brukt."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Generer konsise spørsmål-og-svar-flashcards frå teksten som er oppgjeven."
 
 msgid "Genre"
 msgstr "Sjanger"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Sist lese for ein time sidan."
 msgstr[1] "Sist lese for %1 timar sidan."
+
+msgid "Latest version:"
+msgstr "Nyaste versjon:"
 
 msgid "Leave blank to use: %1"
 msgstr "Lat feltet stå tomt for å bruke: %1"
@@ -967,8 +994,14 @@ msgstr "Inga bok er open."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Inga bok er open. Hald inne på ei bok i filhandsamaren og vel Bokinfo (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Ingen kort att. Lat att denne førehandsvisinga."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Ingen vanlege parametrar er tilgjengelege for handterar %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Ingen mappe er tilgjengeleg for flashcard-eksporten."
 
 msgid "No highlight to annotate"
 msgstr "Inga utheving å kommentere"
@@ -1024,6 +1057,9 @@ msgstr "OTA-oppdateringa vart kansellert."
 
 msgid "OTA update failed: %1"
 msgstr "OTA-oppdateringa mislukkast: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA-oppdatering mislukkast: ugyldig inndata %1. Bruk ein branch, tag, user/repo eller user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Førehandsinnstilt liste over seksjonar i AI-ordboka."
 msgid "Prevailing emotional state/tone:"
 msgstr "Rådande kjensletilstand/tone:"
 
+msgid "Pronunciation"
+msgstr "Uttale"
+
 msgid "Protagonist's current objective:"
 msgstr "Hovudpersonen sitt noverande mål:"
 
@@ -1129,6 +1168,9 @@ msgstr "Tøm"
 msgid "Purge Settings"
 msgstr "Tøm innstillingar"
 
+msgid "Question"
+msgstr "Spørsmål"
+
 msgid "Quick Note"
 msgstr "Snøggnotat"
 
@@ -1159,6 +1201,9 @@ msgstr "Resyme (AI)"
 
 msgid "Remove"
 msgstr "Fjern"
+
+msgid "Remove Card %1?"
+msgstr "Fjerne kortet %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Ta snøggnotat"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Ta raske notat som blir lagra i AI-notata dine."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Trykk på eit kort for å redigere eller fjerne det."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Skriftstorleik: %1"
 msgid "Text copied to the clipboard"
 msgstr "Teksten vart kopiert til utklippstavla."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI-svaret inneheldt ugyldig JSON for flashkort."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI-svaret inneheldt for mange flashkort."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI-svaret inneheldt ingen flashkort."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI-svaret inneheldt ikkje gyldige flashkortdata."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Fann ikkje handteraren for %1. Kontroller at handteraren finst i api_handlers-katalogen."
 
@@ -1402,6 +1462,9 @@ msgstr "Modellen klarte ikkje å identifisere denne boka."
 
 msgid "Thinking ..."
 msgstr "Tenkjer ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Teksten i denne boka kan ikkje lesast frå filhandsamaren. Opne boka og bruk «Identifiser denne boka»."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knappen lagar eit snøggnotat med markert tekst."
@@ -1465,11 +1528,25 @@ msgstr "Denne prompten omset den markerte teksten til eit anna språk."
 msgid "Timeline"
 msgstr "Tidslinje"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Tips: skriv user/repo for ein fork (main-greina) eller user/repo@branch for ei bestemd grein eller tag."
+
 msgid "Title"
 msgstr "Tittel"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Metadata for tittel eller forfattar manglar eller er ufullstendige, så AI-resultatet kan vere upåliteleg. Bruk «Identifiser (AI)» til å setje dei først."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"For å importere i AnkiDroid, vel TSV-fila på:\n"
+"%1\n"
+"\n"
+"Set skiljeteiknet til Tab, vel notattypen Basic, knyt felt 1 til Front og felt 2 til Back, og vel deretter ein kortstokk og importer. Fila har ingen overskriftsrad; kvar rad er eitt kort."
 
 msgid "To-Do / Action Items"
 msgstr "Gjeremål / tiltak"
@@ -1617,6 +1694,12 @@ msgstr "Ordform og lemma"
 msgid "Word Origin"
 msgstr "Ordopphav"
 
+msgid "Write a question"
+msgstr "Skriv eit spørsmål"
+
+msgid "Write an answer"
+msgstr "Skriv eit svar"
+
 msgid "Write quick notes here"
 msgstr "Skriv snøggnotat her"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ja"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Du har nett byrja på denne boka (mindre enn 3 % lese). Det kan vere betre å byrje å lese fyrst. Vil du likevel ha eit AI-Recap?"
+
 msgid "Your API key"
 msgstr "API-nøkkelen din"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Dine eigne promptar definerte i konfigurasjonsfila."
 
-msgid "branch or tag name"
-msgstr "grein- eller tag-namn"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arkivet er ikkje ein gyldig assistant.koplugin-pakke"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch, tag, user/repo eller user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: modellleverandørar er ugyldige."
@@ -1643,3 +1732,6 @@ msgstr "t.d. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: klarte ikkje å tolke returnerte data"
+
+msgid "invalid repository or branch/tag"
+msgstr "ugyldig repositorium eller grein/tag"

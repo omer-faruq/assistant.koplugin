@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Λεπτομέρεια:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Λήψη ...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Αποθετήριο: </b>%2\n"
-"<b>Κλάδος/Ετικέτα: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Διακλάδωση/Ετικέτα: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Σφάλμα:</b> Δεν ελήφθησαν κάρτες"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Σφάλμα:</b> Δεν λήφθηκε απάντηση"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Φόρτωση μοντέλων...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Διεύθυνση GitHub:</b>  %1\n"
-"<b>Αποθετήριο πηγής:</b>  %2\n"
-"\n"
-"- Τρέχουσα έκδοση: %3\n"
-"- Κλάδος ανάπτυξης: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Διεύθυνση GitHub:</b>  %1\n"
-"<b>Αποθετήριο πηγής:</b>  %2\n"
-"\n"
-"- Τρέχουσα έκδοση: %3\n"
-"- Τελευταία έκδοση: <b>%4</b>\n"
-"- Κλάδος ανάπτυξης: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Εγκατάσταση %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Σχολιασμός"
 msgid "Annotation added successfully"
 msgstr "Ο σχολιασμός προστέθηκε με επιτυχία"
 
+msgid "Answer"
+msgstr "Απάντηση"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Περίληψη Βιβλίου & Προτάσεις"
 msgid "Book metadata updated."
 msgstr "Τα μεταδεδομένα του βιβλίου ενημερώθηκαν."
 
+msgid "Both Question and Answer are required."
+msgstr "Απαιτούνται και η ερώτηση και η απάντηση."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Ο κλάδος/η ετικέτα \"%1\" δεν βρέθηκε."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Ακύρωση"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Κάρτα %1\n"
+"Ερώτηση: %2\n"
+"Απάντηση: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Βασικά επιχειρήματα"
 msgid "Core Idea"
 msgstr "Βασική ιδέα"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Δεν ήταν δυνατή η επιλογή μοναδικού ονόματος αρχείου για την εξαγωγή καρτών."
+
 msgid "Could not close AI note file."
 msgstr "Δεν ήταν δυνατό το κλείσιμο του αρχείου σημείωσης AI."
 
@@ -583,8 +574,14 @@ msgstr "Δεν ήταν δυνατή η δημιουργία σημείωσης 
 msgid "Could not create AI note: %1"
 msgstr "Δεν ήταν δυνατή η δημιουργία σημείωσης AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Δεν ήταν δυνατή η δημιουργία του αρχείου TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Δεν ήταν δυνατή η εξαγωγή κειμένου από αυτό το βιβλίο."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Δεν ήταν δυνατή η ολοκλήρωση της εγγραφής του αρχείου TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Δεν ήταν δυνατή η καταγραφή του φακέλου Σημειώσεων AI: %1"
@@ -620,6 +617,9 @@ msgstr "Πολιτιστική σημασία"
 msgid "Current Chapter Only"
 msgstr "Μόνο το τρέχον κεφάλαιο"
 
+msgid "Current version:"
+msgstr "Τρέχουσα έκδοση:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Προσαρμοσμένο"
@@ -650,6 +650,9 @@ msgstr "Διαγραφή παρόχου %1;"
 
 msgid "Description: %1"
 msgstr "Περιγραφή: %1"
+
+msgid "Development branch:"
+msgstr "Διακλάδωση ανάπτυξης:"
 
 msgid "Device"
 msgstr "Συσκευή"
@@ -702,6 +705,9 @@ msgstr "Επεξεργασία"
 msgid "Edit %1"
 msgstr "Επεξεργασία %1"
 
+msgid "Edit Card %1"
+msgstr "Επεξεργασία κάρτας %1"
+
 msgid "Empty Error"
 msgstr "Κενό σφάλμα"
 
@@ -749,6 +755,9 @@ msgstr "Παράδειγμα"
 msgid "Explain"
 msgstr "Εξήγηση"
 
+msgid "Export to AnkiDroid"
+msgstr "Εξαγωγή στο AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Απέτυχε η φόρτωση μοντέλων"
 
@@ -782,6 +791,18 @@ msgstr "Εύρεση πρώτου"
 msgid "Find next"
 msgstr "Εύρεση επόμενου"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Η κάρτα %1 δεν έχει ερώτηση ή απάντηση."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Η κάρτα %1 δεν είναι έγκυρη κάρτα ερώτησης-απάντησης."
+
+msgid "Flashcards"
+msgstr "Κάρτες"
+
+msgid "Flashcards exported to %1"
+msgstr "Οι κάρτες εξήχθησαν στο %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Για λεπτομέρειες, επισκεφθείτε τη σελίδα wiki «Configuration» στο github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Γενικά <b>ΜΗΝ</b> επιλέγετε περισσότερα από ένα - επιλέξτε μια παράμετρο που ταιριάζει με το μοντέλο και την πλατφόρμα σας. Μια λανθασμένη παράμετρος μπορεί να προκαλέσει σφάλματα API. \n"
 "\n"
 "Η επιλεγμένη τιμή υπερισχύει του additional_parameters της διαμόρφωσης. Αν οι επιλεγμένες επιλογές μοιράζονται το ίδιο κλειδί, χρησιμοποιείται μόνο η τελευταία στη λίστα."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Δημιουργήστε συνοπτικές κάρτες ερώτησης-απάντησης από το παρεχόμενο κείμενο."
 
 msgid "Genre"
 msgstr "Είδος"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Τελευταία ανάγνωση πριν από μία ώρα."
 msgstr[1] "Τελευταία ανάγνωση πριν από %1 ώρες."
+
+msgid "Latest version:"
+msgstr "Τελευταία έκδοση:"
 
 msgid "Leave blank to use: %1"
 msgstr "Αφήστε κενό για χρήση: %1"
@@ -967,8 +994,14 @@ msgstr "Δεν υπάρχει ανοιχτό βιβλίο."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Δεν υπάρχει ανοιχτό βιβλίο. Κρατήστε πατημένο ένα βιβλίο στη διαχείριση αρχείων και επιλέξτε Πληροφορίες βιβλίου (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Δεν απομένουν κάρτες. Κλείστε αυτή την προεπισκόπηση."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Δεν υπάρχουν διαθέσιμες κοινές παράμετροι για τον χειριστή %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Δεν υπάρχει διαθέσιμος φάκελος για την εξαγωγή καρτών."
 
 msgid "No highlight to annotate"
 msgstr "Δεν υπάρχει επισήμανση για σχολιασμό"
@@ -1024,6 +1057,9 @@ msgstr "Η ενημέρωση OTA ακυρώθηκε."
 
 msgid "OTA update failed: %1"
 msgstr "Η ενημέρωση OTA απέτυχε: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Η ενημέρωση OTA απέτυχε: μη έγκυρη είσοδος %1. Χρησιμοποιήστε κλάδο, tag, user/repo ή user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Προκαθορισμένη λίστα ενοτήτων του Λεξι
 msgid "Prevailing emotional state/tone:"
 msgstr "Επικρατούσα συναισθηματική κατάσταση/τόνος:"
 
+msgid "Pronunciation"
+msgstr "Προφορά"
+
 msgid "Protagonist's current objective:"
 msgstr "Τρέχων στόχος του πρωταγωνιστή:"
 
@@ -1129,6 +1168,9 @@ msgstr "Εκκαθάριση"
 msgid "Purge Settings"
 msgstr "Εκκαθάριση Ρυθμίσεων"
 
+msgid "Question"
+msgstr "Ερώτηση"
+
 msgid "Quick Note"
 msgstr "Γρήγορη σημείωση"
 
@@ -1159,6 +1201,9 @@ msgstr "Σύνοψη (AI)"
 
 msgid "Remove"
 msgstr "Αφαίρεση"
+
+msgid "Remove Card %1?"
+msgstr "Αφαίρεση κάρτας %1;"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1371,6 +1416,9 @@ msgstr "Γρήγορες σημειώσεις"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Κρατήστε γρήγορες σημειώσεις που θα αποθηκευτούν στις σημειώσεις AI σας."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Πατήστε μια κάρτα για να την επεξεργαστείτε ή να την αφαιρέσετε."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray Όρου"
@@ -1393,6 +1441,18 @@ msgstr "Μέγεθος κειμένου: %1"
 msgid "Text copied to the clipboard"
 msgstr "Το κείμενο αντιγράφηκε στο πρόχειρο"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Η απάντηση του AI περιείχε μη έγκυρο JSON καρτών."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Η απάντηση του AI περιείχε πάρα πολλές κάρτες."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Η απάντηση του AI δεν περιείχε καμία κάρτα."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Η απάντηση του AI δεν περιείχε έγκυρα δεδομένα καρτών."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ο χειριστής για το %1 δεν βρέθηκε. Βεβαιωθείτε ότι ο χειριστής υπάρχει στον κατάλογο api_handlers."
 
@@ -1401,6 +1461,9 @@ msgstr "Το μοντέλο δεν μπόρεσε να αναγνωρίσει α
 
 msgid "Thinking ..."
 msgstr "Σκέφτομαι ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Το κείμενο αυτού του βιβλίου δεν μπορεί να διαβαστεί από τη διαχείριση αρχείων. Ανοίξτε το βιβλίο και χρησιμοποιήστε την επιλογή «Ταυτοποίηση αυτού του βιβλίου»."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Αυτό το κουμπί δημιουργεί μια γρήγορη σημείωση με το επισημασμένο κείμενο."
@@ -1464,11 +1527,25 @@ msgstr "Αυτό το prompt μεταφράζει το επισημασμένο 
 msgid "Timeline"
 msgstr "Χρονολόγιο"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Συμβουλή: εισαγάγετε user/repo για ένα fork (κύριος κλάδος) ή user/repo@branch για συγκεκριμένο κλάδο ή tag."
+
 msgid "Title"
 msgstr "Τίτλος"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Τα μεταδεδομένα τίτλου ή συγγραφέα λείπουν ή είναι ελλιπή, οπότε το αποτέλεσμα της AI μπορεί να μην είναι αξιόπιστο. Χρησιμοποιήστε την Αναγνώριση (AI) για να τα ορίσετε πρώτα."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Για εισαγωγή στο AnkiDroid, επιλέξτε το αρχείο TSV στο:\n"
+"%1\n"
+"\n"
+"Ορίστε τον διαχωριστικό σε Tab, επιλέξτε τον τύπο σημείωσης Basic, αντιστοιχίστε το πεδίο 1 στο Front και το πεδίο 2 στο Back, και έπειτα επιλέξτε μια τράπουλα και κάντε εισαγωγή. Το αρχείο δεν έχει γραμμή κεφαλίδας· κάθε γραμμή είναι μία κάρτα."
 
 msgid "To-Do / Action Items"
 msgstr "Εργασίες / Σημεία Δράσης"
@@ -1616,6 +1693,12 @@ msgstr "Μορφή λέξης & Λήμμα"
 msgid "Word Origin"
 msgstr "Προέλευση Λέξης"
 
+msgid "Write a question"
+msgstr "Γράψτε μια ερώτηση"
+
+msgid "Write an answer"
+msgstr "Γράψτε μια απάντηση"
+
 msgid "Write quick notes here"
 msgstr "Γράψτε γρήγορες σημειώσεις εδώ"
 
@@ -1625,14 +1708,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ναι"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Μόλις ξεκινήσατε αυτό το βιβλίο (έχετε ολοκληρώσει λιγότερο από 3%). Ίσως είναι καλύτερα να ξεκινήσετε πρώτα το διάβασμα. Θέλετε ακόμα μια ανακεφαλαίωση AI;"
+
 msgid "Your API key"
 msgstr "Το κλειδί API σας"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Τα δικά σας prompts που ορίζονται στο αρχείο διαμόρφωσης"
 
-msgid "branch or tag name"
-msgstr "όνομα κλάδου ή ετικέτας"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "το αρχείο δεν είναι έγκυρο πακέτο assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "κλάδος, tag, user/repo ή user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: οι πάροχοι μοντέλων δεν είναι έγκυροι."
@@ -1642,3 +1731,6 @@ msgstr "π.χ. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: απέτυχε η ανάλυση των επιστρεφόμενων δεδομένων"
+
+msgid "invalid repository or branch/tag"
+msgstr "μη έγκυρο αποθετήριο ή κλάδος/tag"

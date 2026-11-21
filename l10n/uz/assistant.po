@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Oʻzbekcha (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>Tafsilot:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Yuklab olinmoqda ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>Yuklanmoqda ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Tarmoq/Teg: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Xatolik:</b> Fleş-kartalar olinmadi"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Xato:</b> Javob olinmadi"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Modellar yuklanmoqda...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Manba Repo:</b>  %2\n"
-"\n"
-"- Joriy versiya: %3\n"
-"- Ishlab chiqish tarmog'i: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github URL:</b>  %1\n"
-"<b>Manba Repo:</b>  %2\n"
-"\n"
-"- Joriy versiya: %3\n"
-"- So'nggi versiya: <b>%4</b>\n"
-"- Ishlab chiqish tarmog'i: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>%1 oʻrnatilmoqda...</b>"
@@ -364,6 +337,9 @@ msgstr "Izoh qoʻshish"
 msgid "Annotation added successfully"
 msgstr "Izoh muvaffaqiyatli qoʻshildi"
 
+msgid "Answer"
+msgstr "Javob"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Kitob xulosasi va tavsiyalar"
 msgid "Book metadata updated."
 msgstr "Kitob metamaʼlumotlari yangilandi."
 
+msgid "Both Question and Answer are required."
+msgstr "Savol ham, javob ham kiritilishi shart."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "\"%1\" branch/tag topilmadi."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Bekor qilish"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Karta %1\n"
+"Savol: %2\n"
+"Javob: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Asosiy dalillar"
 msgid "Core Idea"
 msgstr "Asosiy gʻoya"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Fleş-karta eksporti uchun noyob fayl nomini tanlab boʻlmadi."
+
 msgid "Could not close AI note file."
 msgstr "AI eslatma faylini yopib boʻlmadi."
 
@@ -583,8 +574,14 @@ msgstr "AI eslatma yaratib boʻlmadi."
 msgid "Could not create AI note: %1"
 msgstr "AI eslatma yaratib boʻlmadi: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "TSV faylini yaratib boʻlmadi: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Bu kitobdan matn ajratib boʻlmadi."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "TSV faylini yozib tugatib boʻlmadi: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "AI eslatmalari jildini roʻyxatlab boʻlmadi: %1"
@@ -620,6 +617,9 @@ msgstr "Madaniy ahamiyat"
 msgid "Current Chapter Only"
 msgstr "Faqat joriy bob"
 
+msgid "Current version:"
+msgstr "Joriy versiya:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Maxsus"
@@ -650,6 +650,9 @@ msgstr "%1 provayderini oʻchirish?"
 
 msgid "Description: %1"
 msgstr "Tavsif: %1"
+
+msgid "Development branch:"
+msgstr "Ishlab chiqish tarmogʻi:"
 
 msgid "Device"
 msgstr "Qurilma"
@@ -702,6 +705,9 @@ msgstr "Tahrirlash"
 msgid "Edit %1"
 msgstr "%1ni tahrirlash"
 
+msgid "Edit Card %1"
+msgstr "Karta %1ni tahrirlash"
+
 msgid "Empty Error"
 msgstr "Boʻsh xato"
 
@@ -749,6 +755,9 @@ msgstr "Misol"
 msgid "Explain"
 msgstr "Tushuntirish"
 
+msgid "Export to AnkiDroid"
+msgstr "AnkiDroid'ga eksport qilish"
+
 msgid "Failed to fetch models"
 msgstr "Modellarni yuklab olish muvaffaqiyatsiz bo'ldi"
 
@@ -782,6 +791,18 @@ msgstr "Birinchisini topish"
 msgid "Find next"
 msgstr "Keyingisini topish"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Fleş-karta %1da savol yoki javob yoʻq."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Fleş-karta %1 toʻgʻri savol-javob kartasi emas."
+
+msgid "Flashcards"
+msgstr "Fleş-kartalar"
+
+msgid "Flashcards exported to %1"
+msgstr "Fleş-kartalar %1ga eksport qilindi"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Tafsilotlar uchun github'dagi 'Configuration' wiki sahifasiga tashrif buyuring."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Odatda birdan ortiq parametrni <b>TANLAMANG</b> - modelingiz va platformangizga mos keladigan parametrni tanlang. Notoʻgʻri parametr API xatolariga olib kelishi mumkin. \n"
 "\n"
 "Tanlangan qiymat konfiguratsiyadagi additional_parameters ni bekor qiladi. Agar tanlangan variantlar bir xil kalitga ega boʻlsa, roʻyxatdagi faqat oxirgisi ishlatiladi."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Taqdim etilgan matndan qisqa savol-javob fleş-kartalarini yarating."
 
 msgid "Genre"
 msgstr "Janr"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Oxirgi o'qish: bir soat oldin."
 msgstr[1] "Oxirgi o'qish: %1 soat oldin."
+
+msgid "Latest version:"
+msgstr "Eng soʻnggi versiya:"
 
 msgid "Leave blank to use: %1"
 msgstr "Boʻsh qoldiring, %1 ishlatiladi"
@@ -967,8 +994,14 @@ msgstr "Hech qanday kitob ochiq emas."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Hech qanday kitob ochilmagan. Fayl menejerida kitobni uzoq bosib, «Kitob maʼlumotlari (AI)» ni tanlang."
 
+msgid "No cards remain. Close this preview."
+msgstr "Kartalar qolmadi. Bu koʻrib chiqishni yoping."
+
 msgid "No common parameters are available for handler %1."
 msgstr "%1 ishlovchisi uchun umumiy parametrlar mavjud emas."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Fleş-karta eksporti uchun papka mavjud emas."
 
 msgid "No highlight to annotate"
 msgstr "Izohlash uchun belgilangan matn yoʻq"
@@ -1024,6 +1057,9 @@ msgstr "OTA yangilash bekor qilindi."
 
 msgid "OTA update failed: %1"
 msgstr "OTA yangilash muvaffaqiyatsiz tugadi: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA yangilanishi bajarilmadi: notoʻgʻri kiritma %1. Shoxobcha, teg, user/repo yoki user/repo@branch dan foydalaning."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "AI lugʻati boʻlimlarining tayyor roʻyxati."
 msgid "Prevailing emotional state/tone:"
 msgstr "Hukmron hissiy holat/ohang:"
 
+msgid "Pronunciation"
+msgstr "Talaffuz"
+
 msgid "Protagonist's current objective:"
 msgstr "Bosh qahramonning hozirgi maqsadi:"
 
@@ -1129,6 +1168,9 @@ msgstr "Tozalash"
 msgid "Purge Settings"
 msgstr "Sozlamalarni tozalash"
 
+msgid "Question"
+msgstr "Savol"
+
 msgid "Quick Note"
 msgstr "Tezkor eslatma"
 
@@ -1159,6 +1201,9 @@ msgstr "Xulosa (AI)"
 
 msgid "Remove"
 msgstr "Olib tashlash"
+
+msgid "Remove Card %1?"
+msgstr "%1 kartasini oʻchirish?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1371,6 +1416,9 @@ msgstr "Tezkor eslatma olish"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "AI eslatmalaringizga saqlanadigan tezkor eslatmalar oling."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Kartani tahrirlash yoki oʻchirish uchun unga bosing."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1393,6 +1441,18 @@ msgstr "Matn oʻlchami: %1"
 msgid "Text copied to the clipboard"
 msgstr "Matn almashish buferiga nusxalandi"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI javobida yaroqsiz fleshkarta JSON maʼlumotlari bor edi."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI javobida fleshkartalar juda koʻp edi."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI javobida hech qanday fleshkarta yoʻq edi."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI javobida yaroqli fleshkarta maʼlumotlari yoʻq edi."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 uchun handler topilmadi. Iltimos, handler api_handlers katalogida mavjudligiga ishonch hosil qiling."
 
@@ -1401,6 +1461,9 @@ msgstr "Model bu kitobni aniqlay olmadi."
 
 msgid "Thinking ..."
 msgstr "Oʻylanmoqda ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Bu kitob matnini fayl menejeridan oʻqib boʻlmaydi. Kitobni oching va «Bu kitobni aniqlash» dan foydalaning."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Bu tugma ajratilgan matn bilan tezkor eslatma yaratadi."
@@ -1464,11 +1527,25 @@ msgstr "Bu prompt ajratilgan matnni boshqa tilga tarjima qiladi."
 msgid "Timeline"
 msgstr "Vaqt chizigʻi"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Maslahat: fork (asosiy shoxobcha) uchun user/repo yoki muayyan shoxobcha yoki teg uchun user/repo@branch kiriting."
+
 msgid "Title"
 msgstr "Sarlavha"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Sarlavha yoki muallif metamaʼlumotlari yoʻq yoki toʻliq emas, shuning uchun AI natijasi ishonchsiz boʻlishi mumkin. Avval ularni oʻrnatish uchun Aniqlash (AI) dan foydalaning."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"AnkiDroid’da import qilish uchun quyidagi joydagi TSV faylini tanlang:\n"
+"%1\n"
+"\n"
+"Ajratgichni Tab qilib belgilang, Basic eslatma turini tanlang, 1-maydonni Front va 2-maydonni Back ga moslang, soʻngra karta toʻplamini tanlab import qiling. Faylda sarlavha qatori yoʻq; har bir qator bitta karta."
 
 msgid "To-Do / Action Items"
 msgstr "Vazifalar / Harakatlar"
@@ -1616,6 +1693,12 @@ msgstr "So'z shakli va lemma"
 msgid "Word Origin"
 msgstr "Soʻzning kelib chiqishi"
 
+msgid "Write a question"
+msgstr "Savol yozing"
+
+msgid "Write an answer"
+msgstr "Javob yozing"
+
 msgid "Write quick notes here"
 msgstr "Tezkor eslatmalarni shu yerga yozing"
 
@@ -1625,14 +1708,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ha"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Siz bu kitobni endigina boshladingiz (3% dan kam oʻqilgan). Avval oʻqishni boshlagan maʼqul boʻlishi mumkin. Baribir AI Recap olishni xohlaysizmi?"
+
 msgid "Your API key"
 msgstr "Sizning API kalitingiz"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Konfiguratsiya faylida aniqlangan oʻzingizning promptlaringiz"
 
-msgid "branch or tag name"
-msgstr "branch yoki tag nomi"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arxiv assistant.koplugin uchun yaroqli paket emas"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "shoxobcha, teg, user/repo yoki user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: model provayderlari yaroqsiz."
@@ -1642,3 +1731,6 @@ msgstr "Masalan: google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: qaytarilgan maʼlumotlarni tahlil qilib boʻlmadi"
+
+msgid "invalid repository or branch/tag"
+msgstr "yaroqsiz repozitoriy yoki shoxobcha/teg"

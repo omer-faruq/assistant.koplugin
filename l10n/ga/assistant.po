@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Sonraí:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
-"<b>Ag íoslódáil ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Stór: </b>%2\n"
-"<b>Brainse/Clib: </b>%3"
+"<b>Á íoslódáil ...</b>\n"
+"<b>URL: </b>%1\n"
+"<b>Brainse/Clib: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Earráid:</b> Ní bhfuarthas aon chártaí flash"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Earráid:</b> Ní bhfuarthas aon fhreagra"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Ag fáil na samhlacha...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL Github:</b>  %1\n"
-"<b>Stór Foinse:</b>  %2\n"
-"\n"
-"- Leagan reatha: %3\n"
-"- Brainse forbartha: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL Github:</b>  %1\n"
-"<b>Stór Foinse:</b>  %2\n"
-"\n"
-"- Leagan reatha: %3\n"
-"- Leagan is déanaí: <b>%4</b>\n"
-"- Brainse forbartha: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Ag suiteáil %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Anótaigh"
 msgid "Annotation added successfully"
 msgstr "Anóta curtha leis go rathúil"
 
+msgid "Answer"
+msgstr "Freagra"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Achoimre Leabhar & Moltaí"
 msgid "Book metadata updated."
 msgstr "Nuashonraíodh meiteashonraí an leabhair."
 
+msgid "Both Question and Answer are required."
+msgstr "Tá gá leis an gCeist agus leis an bhFreagra araon."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Níor aimsíodh Brainse/Clib \"%1\"."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Cealaigh"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Cárta %1\n"
+"Ceist: %2\n"
+"Freagra: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Croí-argóintí"
 msgid "Core Idea"
 msgstr "Croí-smaoineamh"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Níorbh fhéidir ainm comhaid uathúil a roghnú le haghaidh onnmhairiú na gcártaí flash."
+
 msgid "Could not close AI note file."
 msgstr "Níorbh fhéidir comhad an nóta AI a dhúnadh."
 
@@ -583,8 +574,14 @@ msgstr "Níorbh fhéidir nóta AI a chruthú."
 msgid "Could not create AI note: %1"
 msgstr "Níorbh fhéidir nóta AI a chruthú: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Níorbh fhéidir an comhad TSV a chruthú: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Níorbh fhéidir téacs a bhaint as an leabhar seo."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Níorbh fhéidir scríobh an chomhaid TSV a chríochnú: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Níorbh fhéidir fillteán Nótaí AI a liostú: %1"
@@ -620,6 +617,9 @@ msgstr "Tábhacht Chultúrtha"
 msgid "Current Chapter Only"
 msgstr "Caibidil Reatha Amháin"
 
+msgid "Current version:"
+msgstr "Leagan reatha:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Saincheaptha"
@@ -650,6 +650,9 @@ msgstr "Scrios an soláthraí %1?"
 
 msgid "Description: %1"
 msgstr "Cur síos: %1"
+
+msgid "Development branch:"
+msgstr "Brainse forbartha:"
 
 msgid "Device"
 msgstr "Gléas"
@@ -702,6 +705,9 @@ msgstr "Cuir in eagar"
 msgid "Edit %1"
 msgstr "Cuir in eagar %1"
 
+msgid "Edit Card %1"
+msgstr "Cuir Cárta %1 in eagar"
+
 msgid "Empty Error"
 msgstr "Earráid Fholamh"
 
@@ -749,6 +755,9 @@ msgstr "Sampla"
 msgid "Explain"
 msgstr "Mínigh"
 
+msgid "Export to AnkiDroid"
+msgstr "Onnmhairigh go AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Theip ar na samhlacha a fháil"
 
@@ -782,6 +791,18 @@ msgstr "Aimsigh an chéad cheann"
 msgid "Find next"
 msgstr "Aimsigh an chéad cheann eile"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Tá ceist nó freagra ar iarraidh i gcárta flash %1."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Ní cárta bailí ceiste-agus-freagra é cárta flash %1."
+
+msgid "Flashcards"
+msgstr "Cártaí Flash"
+
+msgid "Flashcards exported to %1"
+msgstr "Onnmhairíodh na cártaí flash go %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Le haghaidh sonraí, tabhair cuairt ar leathanach wiki 'Configuration' ar github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Go ginearálta, <b>NÁ</b> roghnaigh níos mó ná ceann amháin - roghnaigh paraiméadar a oireann do do mhúnla agus do d'ardán. D'fhéadfadh paraiméadar micheart earráidí API a chruthú. \n"
 "\n"
 "Sáraíonn an luach roghnaithe additional_parameters na cumraíochta. Má roinneann roghanna roghnaithe an eochair chéanna, ní úsáidtear ach an ceann deireanach sa liosta."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Gin cártaí flash gonta ceiste-agus-freagra ón téacs a sholáthraítear."
 
 msgid "Genre"
 msgstr "Seánra"
@@ -885,6 +909,9 @@ msgstr[1] "Léite %1 uair an chloig ó shin."
 msgstr[2] "Léite %1 huaire an chloig ó shin."
 msgstr[3] "Léite %1 n-uaire an chloig ó shin."
 msgstr[4] "Léite %1 uair an chloig ó shin."
+
+msgid "Latest version:"
+msgstr "An leagan is déanaí:"
 
 msgid "Leave blank to use: %1"
 msgstr "Fág bán le húsáid: %1"
@@ -970,8 +997,14 @@ msgstr "Níl aon leabhar oscailte."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Níl aon leabhar oscailte. Brúigh go fada ar leabhar sa bhainisteoir comhad agus roghnaigh Eolas Leabhair (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Níl aon chárta fágtha. Dún an réamhamharc seo."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Níl aon pharaiméadair choitianta ar fáil don láimhseálaí %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Níl aon fhillteán ar fáil le haghaidh onnmhairiú na gcártaí flash."
 
 msgid "No highlight to annotate"
 msgstr "Níl aon aibhsiú le hanóta a chur leis"
@@ -1027,6 +1060,9 @@ msgstr "Cealaíodh an nuashonrú OTA."
 
 msgid "OTA update failed: %1"
 msgstr "Theip ar an nuashonrú OTA: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Theip ar nuashonrú OTA: ionchur neamhbhailí %1. Úsáid brainse, clib, user/repo nó user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1084,6 +1120,9 @@ msgstr "Liosta réamhshocraithe de ranna Foclóir AI."
 msgid "Prevailing emotional state/tone:"
 msgstr "Staid mhothúchánach/ton atá i réim:"
 
+msgid "Pronunciation"
+msgstr "Fuaimniú"
+
 msgid "Protagonist's current objective:"
 msgstr "Cuspóir reatha an phríomhcharachtair:"
 
@@ -1132,6 +1171,9 @@ msgstr "Glan"
 msgid "Purge Settings"
 msgstr "Glan Socruithe"
 
+msgid "Question"
+msgstr "Ceist"
+
 msgid "Quick Note"
 msgstr "Nóta Tapa"
 
@@ -1162,6 +1204,9 @@ msgstr "Achoimre (AI)"
 
 msgid "Remove"
 msgstr "Bain"
+
+msgid "Remove Card %1?"
+msgstr "Bain Cárta %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1373,6 +1418,9 @@ msgstr "Tóg Nótaí Tapa"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Tóg nótaí tapa a shábhálfar i do Nótaí AI."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Tapáil cárta chun é a chur in eagar nó a bhaint."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray Téarma"
@@ -1395,6 +1443,18 @@ msgstr "Méid Téacs: %1"
 msgid "Text copied to the clipboard"
 msgstr "Cóipeáladh an téacs chuig an ngearrthaisce."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Bhí JSON neamhbhailí de chártaí splanc sa fhreagra AI."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Bhí an iomarca cártaí splanc sa fhreagra AI."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Ní raibh aon chárta splanc sa fhreagra AI."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Ní raibh sonraí bailí cártaí splanc sa fhreagra AI."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Níor aimsíodh an láimhseálaí do %1. Déan cinnte go bhfuil an láimhseálaí san eolaire api_handlers."
 
@@ -1403,6 +1463,9 @@ msgstr "Níorbh fhéidir leis an tsamhail an leabhar seo a aithint."
 
 msgid "Thinking ..."
 msgstr "Ag smaoineamh ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Ní féidir téacs an leabhair seo a léamh ón mbainisteoir comhad. Oscail an leabhar agus úsáid Aithin an Leabhar Seo."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Cruthaíonn an cnaipe seo nóta tapa leis an téacs aibhsithe."
@@ -1466,11 +1529,25 @@ msgstr "Aistríonn an pras seo an téacs aibhsithe go teanga eile."
 msgid "Timeline"
 msgstr "Amlíne"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Leid: cuir isteach user/repo le haghaidh forc (an phríomhbhrainse) nó user/repo@branch le haghaidh brainse nó clib ar leith."
+
 msgid "Title"
 msgstr "Teideal"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Tá meiteashonraí an teidil nó an údair ar iarraidh nó neamhiomlán, mar sin b'fhéidir nach mbeadh toradh an AI iontaofa. Úsáid Aithin (AI) chun iad a shocrú ar dtús."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Chun é a iompórtáil in AnkiDroid, roghnaigh an comhad TSV ag:\n"
+"%1\n"
+"\n"
+"Socraigh an deighilteoir ar Tab, roghnaigh an cineál nóta Basic, mapáil réimse 1 go Front agus réimse 2 go Back, ansin roghnaigh deic agus iompórtáil. Níl aon ró ceannteidil sa chomhad; is cárta amháin gach ró."
 
 msgid "To-Do / Action Items"
 msgstr "Le Déanamh / Gníomhartha"
@@ -1618,6 +1695,12 @@ msgstr "Foirm Fhocail & Leama"
 msgid "Word Origin"
 msgstr "Bunús an Fhocail"
 
+msgid "Write a question"
+msgstr "Scríobh ceist"
+
+msgid "Write an answer"
+msgstr "Scríobh freagra"
+
 msgid "Write quick notes here"
 msgstr "Scríobh nótaí tapa anseo"
 
@@ -1627,14 +1710,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Tá"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Tá tú díreach tar éis tosú ar an leabhar seo (níos lú ná 3% críochnaithe). B'fhéidir gur fearr duit tosú ag léamh ar dtús. An dteastaíonn achoimre AI uait fós?"
+
 msgid "Your API key"
 msgstr "Do eochair API"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Do phrómpaí féin atá sainithe sa chomhad cumraíochta"
 
-msgid "branch or tag name"
-msgstr "ainm brainse nó clibe"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "Ní pacáiste bailí assistant.koplugin í an chartlann"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "brainse, clib, user/repo nó user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: tá na soláthraithe múnla neamhbhailí."
@@ -1644,3 +1733,6 @@ msgstr "m.sh. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: theip ar na sonraí a tugadh ar ais a pharsáil"
+
+msgid "invalid repository or branch/tag"
+msgstr "stórlann neamhbhailí nó brainse/clib neamhbhailí"

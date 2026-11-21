@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detail:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Stahování ...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Repozitář: </b>%2\n"
-"<b>Větev/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Větev/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Chyba:</b> Nebyly přijaty žádné kartičky"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Chyba:</b> Nebyla přijata žádná odpověď"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Načítání modelů...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Adresa GitHub:</b>  %1\n"
-"<b>Zdrojové úložiště:</b>  %2\n"
-"\n"
-"- Aktuální verze: %3\n"
-"- Vývojová větev: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Adresa GitHub:</b>  %1\n"
-"<b>Zdrojové úložiště:</b>  %2\n"
-"\n"
-"- Aktuální verze: %3\n"
-"- Nejnovější verze: <b>%4</b>\n"
-"- Vývojová větev: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Instaluji %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Anotovat"
 msgid "Annotation added successfully"
 msgstr "Anotace byla úspěšně přidána"
 
+msgid "Answer"
+msgstr "Odpověď"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Shrnutí knihy a doporučení"
 msgid "Book metadata updated."
 msgstr "Metadata knihy byla aktualizována."
 
+msgid "Both Question and Answer are required."
+msgstr "Otázka i odpověď jsou povinné."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Větev/Tag „%1“ nebyl nalezen."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Zrušit"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kartička %1\n"
+"Otázka: %2\n"
+"Odpověď: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Hlavní argumenty"
 msgid "Core Idea"
 msgstr "Hlavní myšlenka"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Nepodařilo se zvolit jedinečný název souboru pro export kartiček."
+
 msgid "Could not close AI note file."
 msgstr "Nepodařilo se zavřít soubor AI poznámky."
 
@@ -583,8 +574,14 @@ msgstr "Nepodařilo se vytvořit AI poznámku."
 msgid "Could not create AI note: %1"
 msgstr "Nepodařilo se vytvořit AI poznámku: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Nepodařilo se vytvořit soubor TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Z této knihy se nepodařilo extrahovat text."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Nepodařilo se dokončit zápis do souboru TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Nepodařilo se vypsat obsah složky AI poznámek: %1"
@@ -620,6 +617,9 @@ msgstr "Kulturní význam"
 msgid "Current Chapter Only"
 msgstr "Pouze aktuální kapitola"
 
+msgid "Current version:"
+msgstr "Aktuální verze:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Vlastní"
@@ -650,6 +650,9 @@ msgstr "Smazat poskytovatele %1?"
 
 msgid "Description: %1"
 msgstr "Popis: %1"
+
+msgid "Development branch:"
+msgstr "Vývojová větev:"
 
 msgid "Device"
 msgstr "Zařízení"
@@ -702,6 +705,9 @@ msgstr "Upravit"
 msgid "Edit %1"
 msgstr "Upravit %1"
 
+msgid "Edit Card %1"
+msgstr "Upravit kartičku %1"
+
 msgid "Empty Error"
 msgstr "Prázdná chyba"
 
@@ -749,6 +755,9 @@ msgstr "Příklad"
 msgid "Explain"
 msgstr "Vysvětlit"
 
+msgid "Export to AnkiDroid"
+msgstr "Exportovat do AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Nepodařilo se načíst modely"
 
@@ -782,6 +791,18 @@ msgstr "Najít první"
 msgid "Find next"
 msgstr "Najít další"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Kartičce %1 chybí otázka nebo odpověď."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Kartička %1 není platnou kartičkou s otázkou a odpovědí."
+
+msgid "Flashcards"
+msgstr "Kartičky"
+
+msgid "Flashcards exported to %1"
+msgstr "Kartičky exportovány do %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Podrobnosti najdete na wiki stránce 'Configuration' na GitHubu."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Obecně <b>NEVYBÍREJTE</b> více než jednu možnost – zvolte parametr, který odpovídá vašemu modelu a platformě. Nesprávný parametr může způsobit chyby API. \n"
 "\n"
 "Vybraná hodnota přepíše additional_parameters konfigurace. Pokud mají vybrané možnosti stejný klíč, použije se pouze poslední z nich v seznamu."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Vygenerujte stručné kartičky s otázkami a odpověďmi z dodaného textu."
 
 msgid "Genre"
 msgstr "Žánr"
@@ -883,6 +907,9 @@ msgid_plural "Last read %1 hours ago."
 msgstr[0] "Naposledy přečteno před hodinou."
 msgstr[1] "Naposledy přečteno před %1 hodinami."
 msgstr[2] "Naposledy přečteno před %1 hodinami."
+
+msgid "Latest version:"
+msgstr "Nejnovější verze:"
 
 msgid "Leave blank to use: %1"
 msgstr "Ponechte prázdné pro použití: %1"
@@ -968,8 +995,14 @@ msgstr "Není otevřená žádná kniha."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Není otevřená žádná kniha. Dlouze stiskněte knihu ve správci souborů a zvolte Informace o knize (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Nezůstaly žádné kartičky. Zavřete tento náhled."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Pro handlera %1 nejsou k dispozici žádné běžné parametry."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Pro export kartiček není k dispozici žádná složka."
 
 msgid "No highlight to annotate"
 msgstr "Žádné zvýraznění k anotaci"
@@ -1025,6 +1058,9 @@ msgstr "OTA aktualizace zrušena."
 
 msgid "OTA update failed: %1"
 msgstr "OTA aktualizace se nezdařila: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Aktualizace OTA selhala: neplatný vstup %1. Zadejte větev, tag, user/repo nebo user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1082,6 +1118,9 @@ msgstr "Předvolený seznam sekcí AI slovníku."
 msgid "Prevailing emotional state/tone:"
 msgstr "Převládající emocionální stav/tón:"
 
+msgid "Pronunciation"
+msgstr "Výslovnost"
+
 msgid "Protagonist's current objective:"
 msgstr "Aktuální cíl protagonisty:"
 
@@ -1130,6 +1169,9 @@ msgstr "Vymazat"
 msgid "Purge Settings"
 msgstr "Vymazat nastavení"
 
+msgid "Question"
+msgstr "Otázka"
+
 msgid "Quick Note"
 msgstr "Rychlá poznámka"
 
@@ -1160,6 +1202,9 @@ msgstr "Rekapitulace (AI)"
 
 msgid "Remove"
 msgstr "Odebrat"
+
+msgid "Remove Card %1?"
+msgstr "Odstranit kartu %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1373,6 +1418,9 @@ msgstr "Rychlé poznámky"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Dělejte si rychlé poznámky, které se uloží do vašich AI poznámek."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Klepnutím na kartu ji upravíte nebo odstraníte."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "X-Ray pojmu"
@@ -1395,6 +1443,18 @@ msgstr "Velikost textu: %1"
 msgid "Text copied to the clipboard"
 msgstr "Text byl zkopírován do schránky."
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Odpověď AI obsahovala neplatný JSON kartiček."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Odpověď AI obsahovala příliš mnoho kartiček."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Odpověď AI neobsahovala žádné kartičky."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Odpověď AI neobsahovala platná data kartiček."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler pro %1 nebyl nalezen. Ujistěte se, že handler existuje v adresáři api_handlers."
 
@@ -1403,6 +1463,9 @@ msgstr "Model tuto knihu nedokázal identifikovat."
 
 msgid "Thinking ..."
 msgstr "Přemýšlím ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Text této knihy nelze načíst ze správce souborů. Otevřete knihu a použijte funkci Identifikovat tuto knihu."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Toto tlačítko vytvoří rychlou poznámku se zvýrazněným textem."
@@ -1466,11 +1529,25 @@ msgstr "Tento prompt přeloží zvýrazněný text do jiného jazyka."
 msgid "Timeline"
 msgstr "Časová osa"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Tip: zadejte user/repo pro fork (hlavní větev) nebo user/repo@branch pro konkrétní větev nebo tag."
+
 msgid "Title"
 msgstr "Název"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Metadata názvu nebo autora chybí nebo jsou neúplná, takže výsledek AI může být nespolehlivý. Nejprve je nastavte pomocí Identifikovat (AI)."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Pro import v AnkiDroid vyberte soubor TSV v:\n"
+"%1\n"
+"\n"
+"Nastavte oddělovač na Tab, zvolte typ poznámky Basic, přiřaďte pole 1 k Front a pole 2 k Back, poté zvolte balíček a importujte. Soubor nemá řádek se záhlavím; každý řádek je jedna kartička."
 
 msgid "To-Do / Action Items"
 msgstr "Úkoly / Akční položky"
@@ -1618,6 +1695,12 @@ msgstr "Tvar slova a lemma"
 msgid "Word Origin"
 msgstr "Původ slova"
 
+msgid "Write a question"
+msgstr "Napište otázku"
+
+msgid "Write an answer"
+msgstr "Napište odpověď"
+
 msgid "Write quick notes here"
 msgstr "Sem napište rychlé poznámky"
 
@@ -1627,14 +1710,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ano"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Tuto knihu jste právě začali (přečteno méně než 3 %). Možná by bylo lepší nejprve začít číst. Přejete si přesto shrnutí od AI?"
+
 msgid "Your API key"
 msgstr "Váš API klíč"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Vaše vlastní prompty definované v konfiguračním souboru"
 
-msgid "branch or tag name"
-msgstr "název větve nebo tagu"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "archiv není platný balíček assistant.koplugin"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "větev, tag, user/repo nebo user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: poskytovatelé modelů jsou neplatní."
@@ -1644,3 +1733,6 @@ msgstr "např. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: nepodařilo se zpracovat vrácená data"
+
+msgid "invalid repository or branch/tag"
+msgstr "neplatný repozitář nebo větev/tag"

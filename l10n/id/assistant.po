@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Indonesia (AI translation)\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detail:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Mengunduh ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Cabang/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Cabang/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Kesalahan:</b> Tidak ada flashcard yang diterima"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Kesalahan:</b> Tidak ada respons yang diterima"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Mengambil model...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL Github:</b>  %1\n"
-"<b>Repo Sumber:</b>  %2\n"
-"\n"
-"- Versi saat ini: %3\n"
-"- Cabang pengembangan: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>URL Github:</b>  %1\n"
-"<b>Repo Sumber:</b>  %2\n"
-"\n"
-"- Versi saat ini: %3\n"
-"- Versi terbaru: <b>%4</b>\n"
-"- Cabang pengembangan: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Menginstal %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Beri anotasi"
 msgid "Annotation added successfully"
 msgstr "Anotasi berhasil ditambahkan"
 
+msgid "Answer"
+msgstr "Jawaban"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Ringkasan Buku & Rekomendasi"
 msgid "Book metadata updated."
 msgstr "Metadata buku diperbarui."
 
+msgid "Both Question and Answer are required."
+msgstr "Pertanyaan dan Jawaban wajib diisi."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Cabang/Tag \"%1\" tidak ditemukan."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Batal"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kartu %1\n"
+"Pertanyaan: %2\n"
+"Jawaban: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Argumen Inti"
 msgid "Core Idea"
 msgstr "Ide Inti"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Tidak dapat memilih nama berkas yang unik untuk ekspor flashcard."
+
 msgid "Could not close AI note file."
 msgstr "Tidak dapat menutup berkas catatan AI."
 
@@ -583,8 +574,14 @@ msgstr "Tidak dapat membuat catatan AI."
 msgid "Could not create AI note: %1"
 msgstr "Tidak dapat membuat catatan AI: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Tidak dapat membuat berkas TSV: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Tidak dapat mengekstrak teks dari buku ini."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Tidak dapat menyelesaikan penulisan berkas TSV: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Tidak dapat menampilkan isi folder Catatan AI: %1"
@@ -620,6 +617,9 @@ msgstr "Signifikansi Budaya"
 msgid "Current Chapter Only"
 msgstr "Hanya Bab Saat Ini"
 
+msgid "Current version:"
+msgstr "Versi saat ini:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Kustom"
@@ -650,6 +650,9 @@ msgstr "Hapus penyedia %1?"
 
 msgid "Description: %1"
 msgstr "Deskripsi: %1"
+
+msgid "Development branch:"
+msgstr "Cabang pengembangan:"
 
 msgid "Device"
 msgstr "Perangkat"
@@ -702,6 +705,9 @@ msgstr "Sunting"
 msgid "Edit %1"
 msgstr "Edit %1"
 
+msgid "Edit Card %1"
+msgstr "Edit Kartu %1"
+
 msgid "Empty Error"
 msgstr "Kesalahan Kosong"
 
@@ -749,6 +755,9 @@ msgstr "Contoh"
 msgid "Explain"
 msgstr "Jelaskan"
 
+msgid "Export to AnkiDroid"
+msgstr "Ekspor ke AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Gagal mengambil model"
 
@@ -782,6 +791,18 @@ msgstr "Cari pertama"
 msgid "Find next"
 msgstr "Cari berikutnya"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Flashcard %1 tidak memiliki pertanyaan atau jawaban."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Flashcard %1 bukan kartu pertanyaan-dan-jawaban yang valid."
+
+msgid "Flashcards"
+msgstr "Flashcard"
+
+msgid "Flashcards exported to %1"
+msgstr "Flashcard diekspor ke %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "Untuk detail, kunjungi halaman wiki 'Configuration' di github."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Umumnya <b>JANGAN</b> memilih lebih dari satu - pilih parameter yang sesuai dengan model dan platform Anda. Parameter yang salah dapat menyebabkan error API. \n"
 "\n"
 "Nilai yang dipilih akan menimpa additional_parameters pada konfigurasi. Jika opsi yang dipilih memiliki kunci yang sama, hanya opsi terakhir dalam daftar yang digunakan."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Buat flashcard pertanyaan-dan-jawaban yang ringkas dari teks yang diberikan."
 
 msgid "Genre"
 msgstr "Genre"
@@ -881,6 +905,9 @@ msgstr "Jendela Streaming Besar"
 msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Terakhir dibaca %1 jam yang lalu."
+
+msgid "Latest version:"
+msgstr "Versi terbaru:"
 
 msgid "Leave blank to use: %1"
 msgstr "Kosongkan untuk menggunakan: %1"
@@ -966,8 +993,14 @@ msgstr "Tidak ada buku yang terbuka."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Tidak ada buku yang terbuka. Tekan lama sebuah buku di pengelola berkas lalu pilih Info Buku (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Tidak ada kartu yang tersisa. Tutup pratinjau ini."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Tidak ada parameter umum yang tersedia untuk handler %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Tidak ada folder yang tersedia untuk ekspor flashcard."
 
 msgid "No highlight to annotate"
 msgstr "Tidak ada sorotan untuk dianotasi"
@@ -1023,6 +1056,9 @@ msgstr "Pembaruan OTA dibatalkan."
 
 msgid "OTA update failed: %1"
 msgstr "Pembaruan OTA gagal: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "Pembaruan OTA gagal: input %1 tidak valid. Gunakan branch, tag, user/repo, atau user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1080,6 +1116,9 @@ msgstr "Daftar prasetel bagian Kamus AI."
 msgid "Prevailing emotional state/tone:"
 msgstr "Keadaan emosional/nada yang dominan:"
 
+msgid "Pronunciation"
+msgstr "Pengucapan"
+
 msgid "Protagonist's current objective:"
 msgstr "Tujuan protagonis saat ini:"
 
@@ -1128,6 +1167,9 @@ msgstr "Bersihkan"
 msgid "Purge Settings"
 msgstr "Bersihkan Pengaturan"
 
+msgid "Question"
+msgstr "Pertanyaan"
+
 msgid "Quick Note"
 msgstr "Catatan Cepat"
 
@@ -1158,6 +1200,9 @@ msgstr "Rekap (AI)"
 
 msgid "Remove"
 msgstr "Hapus"
+
+msgid "Remove Card %1?"
+msgstr "Hapus Kartu %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1371,6 +1416,9 @@ msgstr "Buat Catatan Singkat"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Buat catatan cepat yang akan disimpan ke Catatan AI Anda."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Ketuk kartu untuk mengedit atau menghapusnya."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1393,6 +1441,18 @@ msgstr "Ukuran Teks: %1"
 msgid "Text copied to the clipboard"
 msgstr "Teks disalin ke papan klip"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "Respons AI berisi JSON kartu hafalan yang tidak valid."
+
+msgid "The AI response contained too many flashcards."
+msgstr "Respons AI berisi terlalu banyak kartu hafalan."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "Respons AI tidak berisi kartu hafalan apa pun."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "Respons AI tidak berisi data kartu hafalan yang valid."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handler untuk %1 tidak ditemukan. Pastikan handler tersebut ada di direktori api_handlers."
 
@@ -1401,6 +1461,9 @@ msgstr "Model tidak dapat mengidentifikasi buku ini."
 
 msgid "Thinking ..."
 msgstr "Sedang berpikir ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Teks buku ini tidak dapat dibaca dari pengelola berkas. Buka buku dan gunakan Identifikasi Buku Ini."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Tombol ini membuat catatan cepat dengan teks yang disorot."
@@ -1464,11 +1527,25 @@ msgstr "Prompt ini menerjemahkan teks yang disorot ke bahasa lain."
 msgid "Timeline"
 msgstr "Linimasa"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Tip: masukkan user/repo untuk fork (branch main) atau user/repo@branch untuk branch atau tag tertentu."
+
 msgid "Title"
 msgstr "Judul"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Metadata judul atau penulis tidak ada atau tidak lengkap, sehingga hasil AI mungkin tidak dapat diandalkan. Gunakan Identifikasi (AI) untuk menyetelnya terlebih dahulu."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"Untuk mengimpor di AnkiDroid, pilih berkas TSV di:\n"
+"%1\n"
+"\n"
+"Atur pemisah ke Tab, pilih jenis catatan Basic, petakan kolom 1 ke Front dan kolom 2 ke Back, lalu pilih dek dan impor. Berkas ini tidak memiliki baris header; setiap baris adalah satu kartu."
 
 msgid "To-Do / Action Items"
 msgstr "Tugas / Rencana Aksi"
@@ -1616,6 +1693,12 @@ msgstr "Bentuk Kata & Lema"
 msgid "Word Origin"
 msgstr "Asal Kata"
 
+msgid "Write a question"
+msgstr "Tulis pertanyaan"
+
+msgid "Write an answer"
+msgstr "Tulis jawaban"
+
 msgid "Write quick notes here"
 msgstr "Tulis catatan singkat di sini"
 
@@ -1625,14 +1708,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ya"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Anda baru saja mulai membaca buku ini (kurang dari 3% selesai). Sebaiknya mulai membaca terlebih dahulu. Apakah Anda tetap ingin Recap AI?"
+
 msgid "Your API key"
 msgstr "Kunci API Anda"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Prompt Anda sendiri yang didefinisikan di file konfigurasi"
 
-msgid "branch or tag name"
-msgstr "nama cabang atau tag"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arsip bukan paket assistant.koplugin yang valid"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch, tag, user/repo, atau user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: penyedia model tidak valid."
@@ -1642,3 +1731,6 @@ msgstr "mis. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: gagal mengurai data yang dikembalikan"
+
+msgid "invalid repository or branch/tag"
+msgstr "repositori atau branch/tag tidak valid"

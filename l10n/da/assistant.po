@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-15 17:10+0800\n"
+"POT-Creation-Date: 2026-11-05 17:53+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -111,48 +111,21 @@ msgstr "<b>Detalje:</b>"
 
 msgid ""
 "<b>Downloading ...</b>\n"
-"<b>Github: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
 msgstr ""
 "<b>Downloader ...</b>\n"
-"<b>GitHub: </b>%1\n"
-"<b>Repo: </b>%2\n"
-"<b>Branch/Tag: </b>%3"
+"<b>URL: </b>%1\n"
+"<b>Branch/Tag: </b>%2"
+
+msgid "<b>Error:</b> No flashcards received"
+msgstr "<b>Fejl:</b> Ingen flashcards modtaget"
 
 msgid "<b>Error:</b> No response received"
 msgstr "<b>Fejl:</b> Intet svar modtaget"
 
 msgid "<b>Fetching models...</b>"
 msgstr "<b>Henter modeller...</b>"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github-URL:</b>  %1\n"
-"<b>Kilde-lager:</b>  %2\n"
-"\n"
-"- Nuværende version: %3\n"
-"- Udviklingsgren: main"
-
-msgid ""
-"<b>Github URL:</b>  %1\n"
-"<b>Source Repo:</b>  %2\n"
-"\n"
-"- Current version: %3\n"
-"- Latest version: <b>%4</b>\n"
-"- Development branch: main"
-msgstr ""
-"<b>Github-URL:</b>  %1\n"
-"<b>Kilde-lager:</b>  %2\n"
-"\n"
-"- Nuværende version: %3\n"
-"- Seneste version: <b>%4</b>\n"
-"- Udviklingsgren: main"
 
 msgid "<b>Installing %1...</b>"
 msgstr "<b>Installerer %1...</b>"
@@ -364,6 +337,9 @@ msgstr "Annotér"
 msgid "Annotation added successfully"
 msgstr "Annotation tilføjet"
 
+msgid "Answer"
+msgstr "Svar"
+
 msgid "Anthropic Messages API"
 msgstr "Anthropic Messages API"
 
@@ -469,6 +445,9 @@ msgstr "Bogsammendrag og anbefalinger"
 msgid "Book metadata updated."
 msgstr "Bogens metadata er opdateret."
 
+msgid "Both Question and Answer are required."
+msgstr "Både spørgsmål og svar er påkrævet."
+
 msgid "Branch/Tag \"%1\" was not found."
 msgstr "Branch/tag \"%1\" blev ikke fundet."
 
@@ -491,6 +470,15 @@ msgstr ""
 
 msgid "Cancel"
 msgstr "Annuller"
+
+msgid ""
+"Card %1\n"
+"Question: %2\n"
+"Answer: %3"
+msgstr ""
+"Kort %1\n"
+"Spørgsmål: %2\n"
+"Svar: %3"
 
 #. @translators xray section headers
 msgid "Characters"
@@ -571,6 +559,9 @@ msgstr "Kerneargumenter"
 msgid "Core Idea"
 msgstr "Kerneidé"
 
+msgid "Could not choose a unique filename for the flashcard export."
+msgstr "Kunne ikke vælge et unikt filnavn til flashcard-eksporten."
+
 msgid "Could not close AI note file."
 msgstr "Kunne ikke lukke AI-notefilen."
 
@@ -583,8 +574,14 @@ msgstr "Kunne ikke oprette AI-note."
 msgid "Could not create AI note: %1"
 msgstr "Kunne ikke oprette AI-note: %1"
 
+msgid "Could not create the TSV file: %1"
+msgstr "Kunne ikke oprette TSV-filen: %1"
+
 msgid "Could not extract text from this book."
 msgstr "Kunne ikke udtrække tekst fra denne bog."
+
+msgid "Could not finish writing the TSV file: %1"
+msgstr "Kunne ikke afslutte skrivningen af TSV-filen: %1"
 
 msgid "Could not list AI Notes folder: %1"
 msgstr "Kunne ikke opliste AI-notermappen: %1"
@@ -620,6 +617,9 @@ msgstr "Kulturel betydning"
 msgid "Current Chapter Only"
 msgstr "Kun nuværende kapitel"
 
+msgid "Current version:"
+msgstr "Nuværende version:"
+
 #. @translators Button text: means custom input, keep translation short
 msgid "Custom"
 msgstr "Brugerdefineret"
@@ -650,6 +650,9 @@ msgstr "Slet udbyder %1?"
 
 msgid "Description: %1"
 msgstr "Beskrivelse: %1"
+
+msgid "Development branch:"
+msgstr "Udviklingsbranch:"
 
 msgid "Device"
 msgstr "Enhed"
@@ -702,6 +705,9 @@ msgstr "Rediger"
 msgid "Edit %1"
 msgstr "Rediger %1"
 
+msgid "Edit Card %1"
+msgstr "Rediger kort %1"
+
 msgid "Empty Error"
 msgstr "Tom fejl"
 
@@ -749,6 +755,9 @@ msgstr "Eksempel"
 msgid "Explain"
 msgstr "Forklar"
 
+msgid "Export to AnkiDroid"
+msgstr "Eksportér til AnkiDroid"
+
 msgid "Failed to fetch models"
 msgstr "Kunne ikke hente modeller"
 
@@ -782,6 +791,18 @@ msgstr "Find første"
 msgid "Find next"
 msgstr "Find næste"
 
+msgid "Flashcard %1 is missing a question or answer."
+msgstr "Flashcard %1 mangler et spørgsmål eller et svar."
+
+msgid "Flashcard %1 is not a valid question-and-answer card."
+msgstr "Flashcard %1 er ikke et gyldigt spørgsmål-og-svar-kort."
+
+msgid "Flashcards"
+msgstr "Flashcards"
+
+msgid "Flashcards exported to %1"
+msgstr "Flashcards eksporteret til %1"
+
 msgid "For details, visit the 'Configuration' wiki page on github."
 msgstr "For detaljer, besøg wiki-siden 'Configuration' på GitHub."
 
@@ -805,6 +826,9 @@ msgstr ""
 "Vælg generelt <b>IKKE</b> mere end én – vælg en parameter, der passer til din model og platform. En forkert parameter kan give API-fejl. \n"
 "\n"
 "Den valgte værdi tilsidesætter additional_parameters i konfigurationen. Hvis de valgte indstillinger deler samme nøgle, bruges kun den sidste i listen."
+
+msgid "Generate concise question-and-answer flashcards from the supplied text."
+msgstr "Generér korte spørgsmål-og-svar-flashcards ud fra den angivne tekst."
 
 msgid "Genre"
 msgstr "Genre"
@@ -882,6 +906,9 @@ msgid "Last read an hour ago."
 msgid_plural "Last read %1 hours ago."
 msgstr[0] "Sidst læst for en time siden."
 msgstr[1] "Sidst læst for %1 timer siden."
+
+msgid "Latest version:"
+msgstr "Nyeste version:"
 
 msgid "Leave blank to use: %1"
 msgstr "Lad stå tom for at bruge: %1"
@@ -967,8 +994,14 @@ msgstr "Ingen bog er åben."
 msgid "No book is open. Long-press a book in the file manager and choose Book Info (AI)."
 msgstr "Der er ikke åbnet nogen bog. Langtryk på en bog i filhåndteringen, og vælg Boginfo (AI)."
 
+msgid "No cards remain. Close this preview."
+msgstr "Der er ikke flere kort tilbage. Luk denne forhåndsvisning."
+
 msgid "No common parameters are available for handler %1."
 msgstr "Der er ingen fælles parametre tilgængelige for handler %1."
+
+msgid "No folder is available for the flashcard export."
+msgstr "Der er ingen mappe tilgængelig til flashcard-eksporten."
 
 msgid "No highlight to annotate"
 msgstr "Ingen markering at annotere"
@@ -1024,6 +1057,9 @@ msgstr "OTA-opdatering annulleret."
 
 msgid "OTA update failed: %1"
 msgstr "OTA-opdatering mislykkedes: %1"
+
+msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
+msgstr "OTA-opdatering mislykkedes: ugyldigt input %1. Brug en branch, tag, user/repo eller user/repo@branch."
 
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
@@ -1081,6 +1117,9 @@ msgstr "Forudindstillet liste over afsnit i AI-ordbogen."
 msgid "Prevailing emotional state/tone:"
 msgstr "Dominerende følelsesmæssig tilstand/tone:"
 
+msgid "Pronunciation"
+msgstr "Udtale"
+
 msgid "Protagonist's current objective:"
 msgstr "Protagonistens nuværende mål:"
 
@@ -1129,6 +1168,9 @@ msgstr "Ryd"
 msgid "Purge Settings"
 msgstr "Ryd indstillinger"
 
+msgid "Question"
+msgstr "Spørgsmål"
+
 msgid "Quick Note"
 msgstr "Hurtig note"
 
@@ -1159,6 +1201,9 @@ msgstr "Opsummering (AI)"
 
 msgid "Remove"
 msgstr "Fjern"
+
+msgid "Remove Card %1?"
+msgstr "Fjern kort %1?"
 
 #, lua-format
 msgid "Remove [%s] from Highlight Menu?"
@@ -1372,6 +1417,9 @@ msgstr "Tag hurtige noter"
 msgid "Take quick notes that will be saved to your AI Notes."
 msgstr "Skriv hurtige noter, der gemmes i dine AI-noter."
 
+msgid "Tap a card to edit or remove it."
+msgstr "Tryk på et kort for at redigere eller fjerne det."
+
 #. @translators Button label. "Term X-Ray" explains the selected word by scanning every occurrence across the whole book (like an X-ray revealing hidden details). It is about one term, not the book-level "X-Ray". Translate "Term" and adapt "X-Ray" naturally; transliterate "X-Ray" if there is no natural equivalent. Keep it short.
 msgid "Term X-Ray"
 msgstr "Term X-Ray"
@@ -1394,6 +1442,18 @@ msgstr "Tekststørrelse: %1"
 msgid "Text copied to the clipboard"
 msgstr "Tekst kopieret til udklipsholderen"
 
+msgid "The AI response contained invalid flashcard JSON."
+msgstr "AI-svaret indeholdt ugyldig flashcard-JSON."
+
+msgid "The AI response contained too many flashcards."
+msgstr "AI-svaret indeholdt for mange flashcards."
+
+msgid "The AI response did not contain any flashcards."
+msgstr "AI-svaret indeholdt ingen flashcards."
+
+msgid "The AI response did not contain valid flashcard data."
+msgstr "AI-svaret indeholdt ikke gyldige flashcard-data."
+
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Handleren for %1 blev ikke fundet. Sørg for, at handleren findes i api_handlers-mappen."
 
@@ -1402,6 +1462,9 @@ msgstr "Modellen kunne ikke identificere denne bog."
 
 msgid "Thinking ..."
 msgstr "Tænker ..."
+
+msgid "This book's text cannot be read from the file manager. Open the book and use Identify This Book."
+msgstr "Denne bogs tekst kan ikke læses fra filhåndteringen. Åbn bogen, og brug Identify This Book."
 
 msgid "This button creates a quick note with highlighted text."
 msgstr "Denne knap opretter en hurtig note med markeret tekst."
@@ -1465,11 +1528,25 @@ msgstr "Denne prompt oversætter den markerede tekst til et andet sprog."
 msgid "Timeline"
 msgstr "Tidslinje"
 
+msgid "Tip: enter user/repo for a fork (main branch) or user/repo@branch for a specific branch or tag."
+msgstr "Tip: indtast user/repo for en fork (main-branch) eller user/repo@branch for en bestemt branch eller tag."
+
 msgid "Title"
 msgstr "Titel"
 
 msgid "Title or author metadata is missing or incomplete, so the AI result may be unreliable. Use Identify (AI) to set it first."
 msgstr "Metadata for titel eller forfatter mangler eller er ufuldstændige, så AI-resultatet kan være upålideligt. Brug Identificér (AI) til at angive dem først."
+
+msgid ""
+"To import in AnkiDroid, select the TSV file at:\n"
+"%1\n"
+"\n"
+"Set the separator to Tab, choose the Basic note type, map field 1 to Front and field 2 to Back, then choose a deck and import. The file has no header row; each row is one card."
+msgstr ""
+"For at importere i AnkiDroid skal du vælge TSV-filen her:\n"
+"%1\n"
+"\n"
+"Angiv separator til Tab, vælg notetypen Basic, knyt felt 1 til Front og felt 2 til Back, og vælg derefter et deck og importér. Filen har ingen header-række; hver række er ét kort."
 
 msgid "To-Do / Action Items"
 msgstr "To-do / handlingspunkter"
@@ -1617,6 +1694,12 @@ msgstr "Ordform og lemma"
 msgid "Word Origin"
 msgstr "Ordens oprindelse"
 
+msgid "Write a question"
+msgstr "Skriv et spørgsmål"
+
+msgid "Write an answer"
+msgstr "Skriv et svar"
+
 msgid "Write quick notes here"
 msgstr "Skriv hurtige noter her"
 
@@ -1626,14 +1709,20 @@ msgstr "X-Ray"
 msgid "Yes"
 msgstr "Ja"
 
+msgid "You have just started this book (less than 3% finished). It may be better to start reading first. Do you still want an AI recap?"
+msgstr "Du er lige begyndt på denne bog (mindre end 3 % læst). Det er måske bedre at begynde at læse først. Vil du stadig have en AI-recap?"
+
 msgid "Your API key"
 msgstr "Din API-nøgle"
 
 msgid "Your own prompts defined in the configuration file"
 msgstr "Dine egne prompter defineret i konfigurationsfilen"
 
-msgid "branch or tag name"
-msgstr "branch- eller tag-navn"
+msgid "archive is not a valid assistant.koplugin package"
+msgstr "arkivet er ikke en gyldig assistant.koplugin-pakke"
+
+msgid "branch, tag, user/repo or user/repo@branch"
+msgstr "branch, tag, user/repo eller user/repo@branch"
 
 msgid "configuration.lua: model providers are invalid."
 msgstr "configuration.lua: modeludbydere er ugyldige."
@@ -1643,3 +1732,6 @@ msgstr "f.eks. google/gemini-3.0-flash-exp:free"
 
 msgid "fetchJSON: failed to parse returned data"
 msgstr "fetchJSON: kunne ikke fortolke returnerede data"
+
+msgid "invalid repository or branch/tag"
+msgstr "ugyldigt repository eller branch/tag"
