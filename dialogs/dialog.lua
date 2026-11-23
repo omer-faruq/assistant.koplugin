@@ -29,7 +29,7 @@ local DocUtils = require("utils/doc")
 local NetUtils = require("utils/net")
 local Notebook = require("feature/notebook")
 local Annotate = require("feature/annotate")
-local Notification = require("ui/widget/notification")
+local QuickTranslate = require("dialogs/translate_quick")
 local Conversation = require("core/conversation")
 
 --[[
@@ -916,12 +916,23 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input, auto_
       and auto_annotate
       and highlightedText ~= nil and highlightedText ~= ""
       and self.assistant.settings:readSetting("auto_annotate_translation", false) then
-    if Annotate.auto_save_translation(self.assistant.ui, message_history) then
-      Notification:notify(_("Translation saved as an annotation."),
-          Notification.SOURCE_ALWAYS_SHOW)
+    local saved, note_text = Annotate.auto_save_translation(self.assistant.ui, message_history)
+    if saved then
+      local ui = self.assistant.ui
+      -- The selection rects must be read before the highlight close clears
+      -- them; the panel anchors itself above that spot.
+      local boxes
+      if ui and ui.highlight and ui.highlight.selected_text and ui.document then
+        local sel = ui.highlight.selected_text
+        boxes = ui.document:getScreenBoxesFromPositions(sel.pos0, sel.pos1, true)
+      end
+      UIManager:show(QuickTranslate.QuickTranslate:new{
+        text = note_text,
+        boxes = boxes,
+        assistant = self.assistant,
+      })
       -- The saved highlight is painted; drop the stale menu and the
       -- ephemeral selection the action was launched from.
-      local ui = self.assistant.ui
       if ui and ui.highlight then
         ui.highlight:onClose()
       end

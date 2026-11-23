@@ -710,12 +710,12 @@ local function genMenuSettings(assistant)
                         assistant.updated = true
                         if assistant.settings:readSetting("auto_annotate_translation") then
                             -- The switch arms a future action; say what it will do.
-                            Notification:notify(_("The built-in 'Translate' will save its result as an annotation without opening the result window."), Notification.SOURCE_ALWAYS_SHOW)
+                            Notification:notify(_("The built-in 'Translate' will save its result as an annotation and show it in a small overlay."), Notification.SOURCE_ALWAYS_SHOW)
                         end
                     end,
                     hold_callback = function ()
                         UIManager:show(InfoMessage:new{
-                            text = _([[Only the built-in 'Translate' action (the one replaced by "Use AI Assistant for 'Translate'") follows this switch: its result is saved as the note of a new highlight for the selection, without opening the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual.]])
+                            text = _([[Only the built-in 'Translate' action (the one replaced by "Use AI Assistant for 'Translate'") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual.]])
                         })
                     end
                 },

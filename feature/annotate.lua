@@ -55,6 +55,8 @@ end
 ---       is the answer to save
 ---@return boolean false when there is no answer to save or the save failed;
 ---        the caller then shows the result window
+---@return string|nil note_text when the save succeeded, so the caller can
+---        show exactly what was saved
 function M.auto_save_translation(ui, message_history)
     local last = message_history and message_history[#message_history]
     if type(last) ~= "table" or last.role ~= "assistant" then
@@ -62,7 +64,8 @@ function M.auto_save_translation(ui, message_history)
     end
     local note_text = TextUtils.formatAnswerOnly(last, {})
     note_text = note_text:gsub("^%s+", ""):gsub("%s+$", "")
-    return M.add_note(ui, note_text)
+    if not M.add_note(ui, note_text) then return false end
+    return true, note_text
 end
 
 return M

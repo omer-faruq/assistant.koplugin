@@ -135,9 +135,12 @@ local tests = {
         local ui = make_ui()
         local events = record_events(ui)
         local answer = "```reasoning\nthink think\n```\n\nThe Ring was forged in Mount Doom.\n\n<suggestions>\n- q1\n</suggestions>"
-        assert.isTrue(Annotate.auto_save_translation(ui, make_history(answer)))
+        local ok, note_text = Annotate.auto_save_translation(ui, make_history(answer))
+        assert.isTrue(ok)
         assert.equal(ui.annotation.annotations[1].note, "The Ring was forged in Mount Doom.",
             "the note must carry only the answer body")
+        assert.equal(note_text, ui.annotation.annotations[1].note,
+            "the returned text is what was saved, so the overlay shows the real note")
         assert.equal(#events, 1, "the save must fire its event")
     end),
 
@@ -202,6 +205,8 @@ assert.matches(gate, "and auto_annotate",
     "the gate must require the origin flag, so the Assistant's own translate buttons keep the result window")
 assert.matches(gate, "highlight:onClose%(%)",
     "a successful auto-save must close the highlight menu and clear the selection")
+assert.matches(gate, "QuickTranslate%.QuickTranslate:new",
+    "a successful auto-save shows the translation in the floating overlay")
 assert.matches(read("core/hooks.lua"), "showTranslateOrDictionary%(assistant, text, true%)",
     "only the built-in 'Translate' override passes the origin flag")
 
