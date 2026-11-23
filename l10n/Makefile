@@ -63,16 +63,16 @@ export RANDOM_SESSION_ID
 
 .DEFAULT_GOAL := all
 
-.PHONY: help all translate template update ai-translate check check-langs check-api list-models stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked
+.PHONY: help all translate template update ai-translate check-po check-langs check-api list-models stats clean init-dirs mo retranslate-fuzzy retranslate-msgid review-translations review-hooked
 
 help:
 	@echo "Usage: make [target]"
 	@echo ""
 	@echo "  mo              Compile .po -> .mo (offline, incremental)"
-	@echo "  translate       Full pipeline: template -> update -> ai-translate -> review -> check -> clean -> mo (needs .env)"
+	@echo "  translate       Full pipeline: template -> update -> ai-translate -> review -> check-po -> clean -> mo (needs .env)"
 	@echo "  template        Regenerate templates/assistant.pot"
 	@echo "  update          Merge pot into po"
-	@echo "  check           msgfmt --check"
+	@echo "  check-po        msgfmt --check"
 	@echo "  check-api       Ping configured API endpoint"
 	@echo "  list-models     List models available on the configured endpoint (or L10N_LANG=xx)"
 	@echo "  check-langs     Detect drift vs KOReader supported languages"
@@ -119,7 +119,7 @@ translate:
 	@echo "[4/7] Reviewing changed entries of note-hooked locales..."
 	@$(MAKE) review-translations
 	@echo "[5/7] Checking PO files..."
-	@$(MAKE) check
+	@$(MAKE) check-po
 	@echo "[6/7] Cleaning transient files..."
 	@$(MAKE) clean
 	@echo "[7/7] Compiling .mo files..."
@@ -185,7 +185,7 @@ update: init-dirs
 		mv "$$po_file.tmp" "$$po_file"; \
 	done
 
-check:
+check-po:
 	@echo "Checking syntax of existing .po files..."
 	@rc=0; has_fuzzy=0; \
 	for po_file in $(PO_FILES); do \
@@ -324,7 +324,7 @@ ai-translate:
 retranslate-fuzzy:
 	@echo "Re-translating fuzzy entries..."
 	@$(MAKE) ai-translate
-	@$(MAKE) check || true
+	@$(MAKE) check-po || true
 	@$(MAKE) clean
 
 # Empty one exact MSGID in every (or one L10N_LANG) .po file and run the
@@ -341,8 +341,8 @@ retranslate-msgid:
 		./helper/retranslate_msgid.py "$$lang" "$(MSGID)" || exit 1; \
 	done
 	@$(MAKE) ai-translate
-	@echo "Refilled; running 'make check'..."
-	@$(MAKE) check || true
+	@echo "Refilled; running 'make check-po'..."
+	@$(MAKE) check-po || true
 	@$(MAKE) clean
 	@echo "Compiling .mo files..."
 	@$(MAKE) mo

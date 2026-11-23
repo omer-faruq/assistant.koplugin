@@ -11,7 +11,7 @@ The localization process uses standard `gettext` tools (`.pot` template file and
 - `<LANG_CODE>/assistant.mo`: The compiled catalogue, committed alongside the `.po` and shipped in the release.
 
 The `Makefile` automates the gettext part of the pipeline (extract → merge → compile
-→ check). AI translation is handled by `helper/ai_translate.py`, which also
+→ check-po). AI translation is handled by `helper/ai_translate.py`, which also
 validates the static language tables offline; `helper/review_translations.py`
 runs the optional LLM review for every locale that ships a `review_note.txt`.
 See `Auditing the catalogues` below.
@@ -167,7 +167,7 @@ Translate a single language:
 entries; a locale with nothing pending is skipped. Run `make update` first (or
 `make translate`) so the catalogue reflects the current source.
 
-Run the full pipeline (template → update → translate → review → check → clean →
+Run the full pipeline (template → update → translate → review → check-po → clean →
 mo). `make` alone runs the same pipeline (`all` depends on `translate`):
 
     make translate
@@ -177,7 +177,7 @@ Bare `make` also reviews the entries changed by the run in every locale that
 ships a `review_note.txt`. The reviewer works on `<LANG_CODE>/assistant.po`,
 empties exactly the entries it confidently marks `repair`, and sends only those
 back through `helper/ai_translate.py`. A locale without a note is never reviewed
-or touched. `make check` never runs the reviewer. See `LLM review of the AI
+or touched. `make check-po` never runs the reviewer. See `LLM review of the AI
 output` below.
 
 Detect drift between this project and KOReader's supported languages, and
@@ -298,7 +298,7 @@ validation - only empty or fuzzy entries are filled, so good translations stay. 
    output. The review is best-effort: it hands the pipeline a better catalogue
    and never stops a translation run for its own problems.
 
-A locale is reviewed only when it ships a `review_note.txt`, so `make check` never
+A locale is reviewed only when it ships a `review_note.txt`, so `make check-po` never
 invokes the reviewer; the deterministic checks in `helper/ai_translate.py` and
 `make check-langs` keep working with no model, network or API account.
 
@@ -402,7 +402,7 @@ all language files:
 
 `make` (default goal `translate`) reviews the entries changed by the run in every
 locale that ships a `review_note.txt` after `ai-translate`; a locale without a note, or a run
-without a configured reviewer route, is skipped with a warning, and `make check`
+without a configured reviewer route, is skipped with a warning, and `make check-po`
 never runs the reviewer.
 
 If the run is interrupted (Ctrl-C, network failure, etc.), just re-run `make`;

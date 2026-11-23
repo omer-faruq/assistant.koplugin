@@ -21,7 +21,7 @@ Guidance for AI agents working in `assistant.koplugin` (KOReader AI assistant pl
 
 - No build step; Lua files run directly.
 - Syntax: `/usr/lib/koreader/luajit -e "assert(loadfile('main.lua'))"`. **Never** `luajit -bl` (stripped build lacks `jit.*`).
-- Tests: `./test/run.sh` (all) or `./test/run.sh <module>`. UI: `./test/runui.sh <name>`. Translation: `cd l10n && make check` (only when explicitly requested). Full detail: `docs/TESTING.md`.
+- Tests: `./test/run.sh` (all) or `./test/run.sh <module>`. UI: `./test/runui.sh <name>`. Translation: `cd l10n && make check-po` (only when explicitly requested). Full detail: `docs/TESTING.md`.
 - Before committing: `./test/run.sh`, then `./test/run_diagnose.sh` (lua-language-server scan; skips when absent) — CI ships without running tests.
 
 ## Architecture (map)
@@ -82,7 +82,7 @@ Full flow, handlers, config, key files: `docs/ARCHITECTURE.md`.
 
 ## Translation
 
-- Translation scripts are developer-run: **never** run `make template/update/translate/ai-translate`. Only `make check` when explicitly requested. `make stats` is read-only (per-language DONE%/FUZZY/UNTRANSLATED table) — after changing many user-facing strings, run it and report the pending load (languages affected, remaining entries) to the developer.
+- Translation scripts are developer-run: **never** run `make template/update/translate/ai-translate`. Only `make check-po` when explicitly requested. `make stats` is read-only (per-language DONE%/FUZZY/UNTRANSLATED table) — after changing many user-facing strings, run it and report the pending load (languages affected, remaining entries) to the developer.
 - **Never hand-edit a `.po` to correct a translation — empty the msgstr** and let the next `make` refill it. `translate_file()` only fills empty or fuzzy msgstr, so a hand-patched or wrong-language string counts as done forever; a wrong `sk` catalogue shipped Slovenian for 13 `l10n: update translate` runs. Wrong-slot answers (lost `<b>` markup or a ghost `%N` no source form has) are rejected at request time by `helper/ai_translate.py`; run `make check-langs` (offline static-table check via `./helper/ai_translate.py --check-data`) after changing msgids or language tables. Wrong-language or wrong-meaning entries are surfaced by the optional `sk`-only LLM reviewer, `helper/review_translations.py`.
 - Per-locale terminology, style and confusion warnings belong in `l10n/<lang>/ai_note.txt` (appended to the prompt), not in the helper scripts. An endonym alone is not a safe language identifier for a model: `LANG_MAP` said `Slovenčina` for `sk`, which is correct Slovak but reads as "Slovene", so Slovak came back in Slovenian. `LANG_EN` supplies the English name that anchors it.
 - Domain `assistant` (`assistant.pot`/`.po`/`.mo`); MO files are committed. See `l10n/Makefile` and `l10n/README.md`.

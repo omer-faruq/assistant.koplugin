@@ -10,7 +10,7 @@ The suite runs inside KOReader's LuaJIT runtime via `setupkoenv` with UI modules
 - Standard Lua: `luac -p file.lua` (basic errors only, not LuaJIT constructs)
 - UI widget test: `./test/runui.sh model_picker` (add `-w=1072 -h=1448 -d=300` or `-s=kobo-clara` to simulate a device)
 - Visual/screenshot test: `SDL_VIDEODRIVER=dummy ./test/runui.sh ui/<script>` (see [Visual verification](#visual-verification-preferred-over-source-scans))
-- Translation (only when explicitly requested): `cd l10n && make check`
+- Translation (only when explicitly requested): `cd l10n && make check-po`
 - Static diagnostics: `./test/run_diagnose.sh [level]` — run after the unit suite (see [Static diagnostics](#static-diagnostics-lua-language-server))
 - Before committing: `./test/run.sh`, then `./test/run_diagnose.sh` — CI ships without running tests.
 
