@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - elige una acción"
 
 msgid "%1 handler does not support connection testing"
 msgstr "El controlador %1 no admite pruebas de conexión"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Traducir' como anotación"
 
 msgid "(No response)"
 msgstr "(Sin respuesta)"
@@ -388,8 +392,8 @@ msgstr "Los ajustes del asistente no están disponibles."
 msgid "Attach Prior Text"
 msgstr "Adjuntar texto anterior"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Adjunta la respuesta como una nota del libro al subrayado actual"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Adjunta la respuesta como nota del libro al resaltado actual y cierra esta ventana"
 
 msgid "Author"
 msgstr "Autor"
@@ -1061,6 +1065,9 @@ msgstr "Error en la actualización OTA: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "Error en la actualización OTA: entrada no válida %1. Usa una rama, una etiqueta, usuario/repositorio o usuario/repositorio@rama."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Solo la acción integrada 'Traducir' (la sustituida por «Usar el Asistente de IA para 'Traducir'») sigue este ajuste: su resultado se guarda como nota de un nuevo resaltado para la selección y se muestra en una pequeña ventana flotante sobre él, en lugar de la ventana de resultados. Los propios botones Traducir del Asistente siempre abren la ventana de resultados. Si el guardado falla, la ventana de resultados se abre como de costumbre."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Solo lo usan las indicaciones que optan por el contexto del libro (de forma predeterminada: Explicar, Contexto histórico, Resumir, Puntos clave y ELI5). Cuando está activado, el texto de la página resaltada y de las páginas adyacentes se envía a la IA como referencia de contexto. Requiere seleccionar texto y aumenta el uso de tokens."
@@ -1279,6 +1286,9 @@ msgstr "Guardar"
 msgid "Save conversation to"
 msgstr "Guardar conversación en"
 
+msgid "Saved as Annotation"
+msgstr "Guardado como anotación"
+
 msgid "Saved to: %1"
 msgstr "Guardado en: %1"
 
@@ -1452,6 +1462,9 @@ msgstr "La respuesta de la IA no contenía ninguna tarjeta didáctica."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "La respuesta de la IA no contenía datos válidos de tarjetas didácticas."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "La opción integrada 'Traducir' guardará su resultado como anotación y lo mostrará en una pequeña ventana superpuesta."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "No se encontró el manejador para %1. Asegúrate de que el manejador exista en el directorio api_handlers."

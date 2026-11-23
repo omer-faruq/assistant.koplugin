@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 04:38+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ภาษาไทย (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - เลือกการดำเนินการ"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 ตัวจัดการไม่รองรับการทดสอบการเชื่อมต่อ"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Translate' เป็นคำอธิบายประกอบ"
 
 msgid "(No response)"
 msgstr "(ไม่มีคำตอบ)"
@@ -388,8 +392,8 @@ msgstr "ไม่มีการตั้งค่าผู้ช่วย"
 msgid "Attach Prior Text"
 msgstr "แนบข้อความก่อนหน้า"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "แนบคำตอบเป็นหมายเหตุหนังสือไว้กับไฮไลต์ปัจจุบัน"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "แนบคำตอบเป็นโน้ตหนังสือไว้กับไฮไลต์ปัจจุบัน แล้วปิดหน้าต่างนี้"
 
 msgid "Author"
 msgstr "ผู้เขียน"
@@ -1060,6 +1064,9 @@ msgstr "การอัปเดต OTA ล้มเหลว: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "การอัปเดต OTA ล้มเหลว: อินพุต %1 ไม่ถูกต้อง โปรดใช้ branch, tag, user/repo หรือ user/repo@branch"
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "เฉพาะการดำเนินการ 'Translate' ในตัว (รายการที่ถูกแทนที่ด้วย \"Use AI Assistant for 'Translate'\") เท่านั้นที่จะทำตามสวิตช์นี้: ผลลัพธ์จะถูกบันทึกเป็นโน้ตของไฮไลต์ใหม่สำหรับข้อความที่เลือก และแสดงในโอเวอร์เลย์ลอยขนาดเล็กเหนือข้อความนั้นแทนหน้าต่างผลลัพธ์ ปุ่ม Translate ของผู้ช่วยจะเปิดหน้าต่างผลลัพธ์เสมอ หากบันทึกไม่สำเร็จ หน้าต่างผลลัพธ์จะเปิดขึ้นตามปกติ"
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "ใช้เฉพาะกับพรอมต์ที่เลือกใช้บริบทของหนังสือ (ค่าเริ่มต้น: อธิบาย, บริบททางประวัติศาสตร์, สรุป, ประเด็นสำคัญ และ ELI5) เมื่อเปิดใช้งาน ข้อความของหน้าที่ไฮไลต์และหน้าถัดไปจะถูกส่งไปยัง AI เพื่อใช้อ้างอิงเป็นข้อมูลพื้นหลัง ต้องมีการเลือกข้อความ และจะทำให้การใช้โทเคนเพิ่มขึ้น"
@@ -1279,6 +1286,9 @@ msgstr "บันทึก"
 msgid "Save conversation to"
 msgstr "บันทึกบทสนทนาไปยัง"
 
+msgid "Saved as Annotation"
+msgstr "บันทึกเป็นคำอธิบายประกอบแล้ว"
+
 msgid "Saved to: %1"
 msgstr "บันทึกไปที่: %1"
 
@@ -1452,6 +1462,9 @@ msgstr "การตอบกลับของ AI ไม่มีแฟลช�
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "การตอบกลับของ AI ไม่มีข้อมูลแฟลชการ์ดที่ถูกต้อง"
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "'Translate' ในตัวจะบันทึกผลลัพธ์เป็นคำอธิบายประกอบและแสดงในโอเวอร์เลย์ขนาดเล็ก"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "ไม่พบ Handler สำหรับ %1 กรุณาตรวจสอบให้แน่ใจว่า Handler มีอยู่ในไดเรกทอรี api_handlers"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 03:58+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ქართული (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - აირჩიეთ მოქმედება"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 დამმუშავებელი არ უჭერს მხარს კავშირის ტესტირებას"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'თარგმნა' ანოტაციად"
 
 msgid "(No response)"
 msgstr "(პასუხი არ არის)"
@@ -388,8 +392,8 @@ msgstr "ასისტენტის პარამეტრები ხე�
 msgid "Attach Prior Text"
 msgstr "წინა ტექსტის მიმაგრება"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "პასუხს მიმდინარე ხაზგასმას წიგნის შენიშვნად მიამაგრებს"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "პასუხს მიმდინარე მონიშვნას წიგნის შენიშვნად ურთავს, შემდეგ კი ამ ფანჯარას ხურავს"
 
 msgid "Author"
 msgstr "ავტორი"
@@ -1061,6 +1065,9 @@ msgstr "OTA განახლება ვერ მოხერხდა: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA განახლება ვერ შესრულდა: არასწორი შეყვანა %1. გამოიყენეთ ტოტი, ტეგი, user/repo ან user/repo@branch."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "ამ გადამრთველს მხოლოდ ჩაშენებული მოქმედება 'თარგმნა' ემორჩილება (ის, რომელსაც ცვლის „ხელოვნური ინტელექტის ასისტენტის გამოყენება 'თარგმნისთვის'“): მისი შედეგი ინახება არჩეული ტექსტისთვის შექმნილი ახალი მონიშვნის შენიშვნად და შედეგების ფანჯრის ნაცვლად მის ზემოთ პატარა მცურავ ფანჯარაში გამოჩნდება. ასისტენტის საკუთარი თარგმნის ღილაკები ყოველთვის შედეგების ფანჯარას ხსნის. შენახვის ჩავარდნის შემთხვევაში შედეგების ფანჯარა ჩვეულებრივ გაიხსნება."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "გამოიყენება მხოლოდ იმ პრომპტებისთვის, რომლებსაც წიგნის კონტექსტი აქვთ ჩართული (ნაგულისხმევად: ახსნა, ისტორიული კონტექსტი, შეჯამება, ძირითადი პუნქტები და ELI5). ჩართვისას მონიშნული გვერდის და მიმდებარე გვერდების ტექსტი ეგზავნება AI-ს როგორც ფონური მითითება. საჭიროებს ტექსტის მონიშვნას და ზრდის token-ების მოხმარებას."
@@ -1280,6 +1287,9 @@ msgstr "შენახვა"
 msgid "Save conversation to"
 msgstr "საუბრის შენახვა"
 
+msgid "Saved as Annotation"
+msgstr "ანოტაციად შენახულია"
+
 msgid "Saved to: %1"
 msgstr "შენახულია: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "AI-ის პასუხი არ შეიცავდა არც�
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI-ის პასუხი არ შეიცავდა ვალიდურ ფლეშბარათების მონაცემებს."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "ჩაშენებული მოქმედება 'თარგმნა' თავის შედეგს ანოტაციად შეინახავს და მას პატარა მცურავ ფანჯარაში აჩვენებს."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "დამმუშავებელი %1-ისთვის ვერ მოიძებნა. გთხოვთ, დარწმუნდით, რომ დამმუშავებელი არსებობს api_handlers დირექტორიაში."

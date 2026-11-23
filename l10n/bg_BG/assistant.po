@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - изберете действие"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 обработчикът не поддържа тестване на връзката"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Превод' като анотация"
 
 msgid "(No response)"
 msgstr "(Няма отговор)"
@@ -388,8 +392,8 @@ msgstr "Настройките на асистента не са налични.
 msgid "Attach Prior Text"
 msgstr "Прикрепи предишен текст"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Прикачва отговора като бележка в книгата към текущия маркиран текст"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Прикрепя отговора като бележка към текущото маркиране в книгата, след което затваря този прозорец"
 
 msgid "Author"
 msgstr "Автор"
@@ -1061,6 +1065,9 @@ msgstr "Неуспешна OTA актуализация: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "Неуспешна OTA актуализация: невалиден вход %1. Използвайте клон, таг, потребител/репо или потребител/репо@клон."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Само вграденото действие 'Превод' (това, което се заменя от \"Използвай AI асистент за 'Превод'\") следва този превключвател: резултатът му се запазва като бележка на ново маркиране за селекцията и се показва в малко плаващо наслагване над него, вместо в прозореца с резултата. Собствените бутони за превод на асистента винаги отварят прозореца с резултата. При неуспешно запазване прозорецът с резултата се отваря както обикновено."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Използва се само от подканите, които са избрали да ползват контекст на книгата (по подразбиране: Explain, Historical Context, Summarize, Key Points и ELI5). Когато е включено, текстът на маркираната страница и на съседните страници се изпраща на AI като фонова справка. Изисква избрано съдържание и увеличава изразходването на токени."
@@ -1280,6 +1287,9 @@ msgstr "Запазване"
 msgid "Save conversation to"
 msgstr "Запазване на разговора в"
 
+msgid "Saved as Annotation"
+msgstr "Запазено като анотация"
+
 msgid "Saved to: %1"
 msgstr "Запазено в: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "Отговорът на AI не съдържаше никакви фла
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "Отговорът на AI не съдържаше валидни данни за флашкарти."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "Вграденото действие 'Превод' ще запази резултата си като анотация и ще го покаже в малко наслагване."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Обработчикът за %1 не беше намерен. Моля, уверете се, че обработчикът съществува в директорията api_handlers."

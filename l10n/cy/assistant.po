@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 03:45+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Cymraeg (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - dewiswch weithred"
 
 msgid "%1 handler does not support connection testing"
 msgstr "Nid yw'r triniwr %1 yn cefnogi profi cysylltiad"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Cyfieithu' fel Anodiad"
 
 msgid "(No response)"
 msgstr "(Dim ymateb)"
@@ -388,8 +392,8 @@ msgstr "Nid yw gosodiadau'r cynorthwyydd ar gael."
 msgid "Attach Prior Text"
 msgstr "Atodi Testun Blaenorol"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Yn atodi'r ateb fel nod llyfr i'r amlygiad cyfredol"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Yn atodi'r ateb fel nodyn llyfr i'r uchafbwynt cyfredol, yna'n cau'r ffenestr hon"
 
 msgid "Author"
 msgstr "Awdur"
@@ -1065,6 +1069,9 @@ msgstr "Methodd y diweddariad OTA: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "Methodd diweddariad OTA: mewnbwn annilys %1. Defnyddiwch gangen, tag, user/repo neu user/repo@branch."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Dim ond y weithred 'Cyfieithu' adeiledig (yr un a ddisodlir gan \"Defnyddio Cynorthwyydd AI ar gyfer 'Cyfieithu'\") sy'n dilyn y switsh hwn: cedwir ei chanlyniad fel nodyn uchafbwynt newydd ar gyfer y detholiad a'i ddangos mewn troshaen fach arnofiol uwch ei ben, yn lle ffenestr y canlyniad. Mae botymau Cyfieithu y Cynorthwyydd ei hun bob amser yn agor ffenestr y canlyniad. Pan fydd y cadw yn methu, mae ffenestr y canlyniad yn agor fel arfer."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Dim ond anogiadau sy'n dewis cynnwys cyd-destun y llyfr sy'n ei ddefnyddio (yn ddiofyn: Esbonio, Cyd-destun Hanesyddol, Crynodeb, Prif Bwyntiau ac ELI5). Pan gaiff ei alluogi, anfonir testun y dudalen a amlygwyd a'r tudalennau cyfagos at yr AI fel cyfeirnod cefndir. Mae angen detholiad testun ac mae'n cynyddu'r defnydd o docynnau."
@@ -1284,6 +1291,9 @@ msgstr "Cadw"
 msgid "Save conversation to"
 msgstr "Cadw sgwrs i"
 
+msgid "Saved as Annotation"
+msgstr "Wedi'i gadw fel Anodiad"
+
 msgid "Saved to: %1"
 msgstr "Wedi'i gadw i: %1"
 
@@ -1457,6 +1467,9 @@ msgstr "Nid oedd ymateb yr AI yn cynnwys unrhyw gardiau fflach."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "Nid oedd ymateb yr AI yn cynnwys data cardiau fflach dilys."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "Bydd y weithred 'Cyfieithu' adeiledig yn cadw'r canlyniad fel anodiad ac yn ei ddangos mewn troshaen fach."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ni chafwyd hyd i'r handler ar gyfer %1. Sicrhewch fod y handler yn bodoli yn y cyfeiriadur api_handlers."

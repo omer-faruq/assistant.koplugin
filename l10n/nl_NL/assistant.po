@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - kies een actie"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 handler ondersteunt geen verbindingstest"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Vertalen' als annotatie"
 
 msgid "(No response)"
 msgstr "(Geen antwoord)"
@@ -388,8 +392,8 @@ msgstr "Assistentinstellingen zijn niet beschikbaar."
 msgid "Attach Prior Text"
 msgstr "Eerdere tekst bijvoegen"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Voegt het antwoord als boeknotitie toe aan de huidige markering"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Voegt het antwoord als boeknotitie toe aan de huidige markering en sluit daarna dit venster"
 
 msgid "Author"
 msgstr "Auteur"
@@ -1061,6 +1065,9 @@ msgstr "OTA-update mislukt: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA-update mislukt: ongeldige invoer %1. Gebruik een branch, tag, user/repo of user/repo@branch."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Alleen de ingebouwde actie 'Vertalen' (die wordt vervangen door \"AI-assistent gebruiken voor 'Vertalen'\") volgt deze schakelaar: het resultaat wordt opgeslagen als de notitie van een nieuwe markering voor de selectie en getoond in een kleine zwevende overlay erboven, in plaats van in het resultaatvenster. De eigen Vertaal-knoppen van de Assistent openen altijd het resultaatvenster. Als het opslaan mislukt, wordt zoals gewoonlijk het resultaatvenster geopend."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Wordt alleen gebruikt door prompts die boekcontext inschakelen (standaard: Uitleg, Historische context, Samenvatten, Kernpunten en ELI5). Indien ingeschakeld wordt de tekst van de gemarkeerde pagina en de aangrenzende pagina's naar de AI gestuurd als achtergrondreferentie. Vereist een tekstselectie en verhoogt het tokenverbruik."
@@ -1280,6 +1287,9 @@ msgstr "Opslaan"
 msgid "Save conversation to"
 msgstr "Gesprek opslaan in"
 
+msgid "Saved as Annotation"
+msgstr "Opgeslagen als annotatie"
+
 msgid "Saved to: %1"
 msgstr "Opgeslagen in: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "De AI-reactie bevatte geen flashcards."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "De AI-reactie bevatte geen geldige flashcardgegevens."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "De ingebouwde 'Vertalen'-functie slaat het resultaat op als annotatie en toont het in een kleine overlay."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "De handler voor %1 is niet gevonden. Zorg ervoor dat de handler in de map api_handlers bestaat."

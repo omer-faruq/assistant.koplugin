@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - tria una acció"
 
 msgid "%1 handler does not support connection testing"
 msgstr "El gestor %1 no admet proves de connexió"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Tradueix' com a anotació"
 
 msgid "(No response)"
 msgstr "(Sense resposta)"
@@ -388,8 +392,8 @@ msgstr "La configuració de l'assistent no està disponible."
 msgid "Attach Prior Text"
 msgstr "Adjunta text anterior"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Adjunta la resposta com a nota del llibre al subratllat actual"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Adjunta la resposta com a nota del llibre al ressaltat actual i després tanca aquesta finestra"
 
 msgid "Author"
 msgstr "Autor"
@@ -1061,6 +1065,9 @@ msgstr "Ha fallat l'actualització OTA: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "L'actualització OTA ha fallat: entrada no vàlida %1. Utilitza una branca, una etiqueta, usuari/repo o usuari/repo@branca."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Només l'acció integrada 'Tradueix' (la substituïda per \"Utilitza l'assistent d'IA per a 'Tradueix'\") segueix aquest interruptor: el resultat es desa com a nota d'un ressaltat nou per a la selecció i es mostra en una petita superposició flotant a sobre, en comptes de la finestra de resultats. Els botons Tradueix propis de l'Assistent sempre obren la finestra de resultats. Si el desament falla, la finestra de resultats s'obre com de costum."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Només l'utilitzen els prompts que activen el context del llibre (per defecte: Explica, Context històric, Resumeix, Punts clau i ELI5). Quan s'activa, el text de la pàgina ressaltada i de les pàgines adjacents s'envia a la IA com a referència de fons. Requereix una selecció de text i augmenta el consum de tokens."
@@ -1278,6 +1285,9 @@ msgstr "Desa"
 msgid "Save conversation to"
 msgstr "Desa la conversa a"
 
+msgid "Saved as Annotation"
+msgstr "Desat com a anotació"
+
 msgid "Saved to: %1"
 msgstr "Desat a: %1"
 
@@ -1451,6 +1461,9 @@ msgstr "La resposta de la IA no contenia cap targeta."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "La resposta de la IA no contenia dades de targetes vàlides."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "La funció integrada 'Tradueix' desarà el resultat com a anotació i el mostrarà en una petita superposició."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "No s'ha trobat el gestor per a %1. Assegureu-vos que el gestor existeix al directori api_handlers."

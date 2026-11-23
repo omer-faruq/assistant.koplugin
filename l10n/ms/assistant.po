@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 04:11+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: Bahasa Melayu (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - pilih tindakan"
 
 msgid "%1 handler does not support connection testing"
 msgstr "Pengendali %1 tidak menyokong ujian sambungan"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Terjemah' sebagai Anotasi"
 
 msgid "(No response)"
 msgstr "(Tiada respons)"
@@ -388,8 +392,8 @@ msgstr "Tetapan pembantu tidak tersedia."
 msgid "Attach Prior Text"
 msgstr "Lampirkan Teks Sebelum"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Melampirkan jawapan sebagai nota buku pada sorotan semasa"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Lampirkan jawapan sebagai nota buku pada sorotan semasa, kemudian tutup tetingkap ini"
 
 msgid "Author"
 msgstr "Pengarang"
@@ -1060,6 +1064,9 @@ msgstr "Kemas kini OTA gagal: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "Kemas kini OTA gagal: input tidak sah %1. Gunakan cabang, tag, user/repo atau user/repo@cabang."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Hanya tindakan 'Terjemah' terbina dalam (yang digantikan oleh \"Gunakan Pembantu AI untuk 'Terjemah'\") mengikut suis ini: hasilnya disimpan sebagai nota sorotan baharu untuk pilihan teks dan ditunjukkan dalam tindanan terapung kecil di atasnya, bukannya tetingkap hasil. Butang Terjemah Pembantu sendiri sentiasa membuka tetingkap hasil. Jika penyimpanan gagal, tetingkap hasil dibuka seperti biasa."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Hanya digunakan oleh prompt yang memilih untuk menggunakan konteks buku (secara lalai: Jelaskan, Konteks Sejarah, Ringkaskan, Perkara Penting dan ELI5). Apabila diaktifkan, teks halaman yang disorot dan halaman bersebelahan dihantar kepada AI sebagai rujukan latar belakang. Memerlukan pemilihan teks dan meningkatkan penggunaan token."
@@ -1279,6 +1286,9 @@ msgstr "Simpan"
 msgid "Save conversation to"
 msgstr "Simpan perbualan ke"
 
+msgid "Saved as Annotation"
+msgstr "Disimpan sebagai Anotasi"
+
 msgid "Saved to: %1"
 msgstr "Disimpan ke: %1"
 
@@ -1452,6 +1462,9 @@ msgstr "Respons AI tidak mengandungi sebarang kad imbas."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "Respons AI tidak mengandungi data kad imbas yang sah."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "'Terjemah' terbina dalam akan menyimpan hasilnya sebagai anotasi dan memaparkannya dalam tindanan kecil."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Pengendali untuk %1 tidak ditemui. Sila pastikan pengendali tersebut wujud dalam direktori api_handlers."

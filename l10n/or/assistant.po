@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 04:21+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ଓଡ଼ିଆ (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - ଏକ କାର୍ଯ୍ୟ ବାଛନ୍ତୁ"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 ହ୍ୟାଣ୍ଡଲର ସଂଯୋଗ ପରୀକ୍ଷଣ ସମର୍ଥନ କରେ ନାହିଁ"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Translate' କୁ ଟୀକା ଭାବରେ"
 
 msgid "(No response)"
 msgstr "(କୌଣସି ଉତ୍ତର ନାହିଁ)"
@@ -388,8 +392,8 @@ msgstr "ସହାୟକ ସେଟିଂସ୍ ଉପଲବ୍ଧ ନାହିଁ
 msgid "Attach Prior Text"
 msgstr "ପୂର୍ବ ପାଠ୍ୟ ସଂଲଗ୍ନ କରନ୍ତୁ"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "ଉତ୍ତରଟିକୁ ବର୍ତ୍ତମାନ ହାଇଲାଇଟ୍ ସହିତ ଏକ ପୁସ୍ତକ ଟିପ୍ପଣୀ ଭାବରେ ସଂଲଗ୍ନ କରେ"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "ଉତ୍ତରକୁ ବର୍ତ୍ତମାନର ହାଇଲାଇଟ୍‌ର ବହି ନୋଟ୍ ଭାବରେ ସଂଲଗ୍ନ କରେ, ତା’ପରେ ଏହି ୱିଣ୍ଡୋ ବନ୍ଦ କରେ"
 
 msgid "Author"
 msgstr "ଲେଖକ"
@@ -1061,6 +1065,9 @@ msgstr "OTA ଅପଡେଟ୍ ବିଫଳ ହେଲା: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA ଅଦ୍ୟତନ ବିଫଳ ହେଲା: ଅବୈଧ ଇନପୁଟ %1। ଏକ branch, tag, user/repo କିମ୍ବା user/repo@branch ବ୍ୟବହାର କରନ୍ତୁ।"
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "କେବଳ ବିଲ୍ଟ-ଇନ୍ 'Translate' କାର୍ଯ୍ୟ (\"Use AI Assistant for 'Translate'\" ଦ୍ୱାରା ବଦଳାଯାଇଥିବାଟି) ଏହି ସ୍ୱିଚ୍ ଅନୁସରଣ କରେ: ଏହାର ଫଳାଫଳ ଚୟନ ପାଇଁ ଏକ ନୂଆ ହାଇଲାଇଟ୍‌ର ନୋଟ୍ ଭାବରେ ସେଭ୍ ହୁଏ ଏବଂ ଫଳାଫଳ ୱିଣ୍ଡୋ ବଦଳରେ ଏହା ଉପରେ ଏକ ଛୋଟ ଭାସମାନ ଓଭରଲେରେ ଦେଖାଯାଏ। ସହାୟକର ନିଜସ୍ୱ Translate ବଟନ୍‌ଗୁଡ଼ିକ ସବୁବେଳେ ଫଳାଫଳ ୱିଣ୍ଡୋ ଖୋଲେ। ସେଭ୍ ବିଫଳ ହେଲେ, ଫଳାଫଳ ୱିଣ୍ଡୋ ଯଥାରୀତି ଖୋଲେ।"
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "କେବଳ ଯେଉଁ ପ୍ରମ୍ପ୍ଟଗୁଡ଼ିକ ବହି ପ୍ରସଙ୍ଗକୁ ଅନ୍ତର୍ଭୁକ୍ତ କରିବାକୁ ବାଛନ୍ତି, ସେମାନଙ୍କ ଦ୍ୱାରା ହିଁ ଏହା ବ୍ୟବହୃତ ହୁଏ (ଡିଫଲ୍ଟ ଭାବରେ: ବ୍ୟାଖ୍ୟା କରନ୍ତୁ, ଐତିହାସିକ ପ୍ରସଙ୍ଗ, ସାରାଂଶ କରନ୍ତୁ, ମୁଖ୍ୟ ବିନ୍ଦୁ ଏବଂ ELI5)। ସକ୍ଷମ କରାଗଲେ, ହାଇଲାଇଟ୍ କରାଯାଇଥିବା ପୃଷ୍ଠା ଏବଂ ପାଖାପାଖି ପୃଷ୍ଠାଗୁଡ଼ିକର ପାଠ୍ୟ ପୃଷ୍ଠଭୂମି ସନ୍ଦର୍ଭ ଭାବରେ AI କୁ ପଠାଯାଏ। ଏଥିପାଇଁ ଏକ ପାଠ୍ୟ ଚୟନ ଆବଶ୍ୟକ ଏବଂ ଏହା ଟୋକନ୍ ବ୍ୟବହାର ବଢ଼ାଏ।"
@@ -1279,6 +1286,9 @@ msgstr "ସେଭ୍ କରନ୍ତୁ"
 msgid "Save conversation to"
 msgstr "ବାର୍ତ୍ତାଳାପ ସଞ୍ଚୟ କରନ୍ତୁ"
 
+msgid "Saved as Annotation"
+msgstr "ଟୀକା ଭାବରେ ସେଭ୍ ହେଲା"
+
 msgid "Saved to: %1"
 msgstr "ସଞ୍ଚୟ ହୋଇଛି: %1"
 
@@ -1452,6 +1462,9 @@ msgstr "AI ପ୍ରତିକ୍ରିୟାରେ କୌଣସି ଫ୍ଲା�
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI ପ୍ରତିକ୍ରିୟାରେ ବୈଧ ଫ୍ଲାସ୍‌କାର୍ଡ ତଥ୍ୟ ନଥିଲା।"
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "ବିଲ୍ଟ-ଇନ୍ 'Translate' ଏହାର ଫଳାଫଳକୁ ଏକ ଟୀକା ଭାବରେ ସେଭ୍ କରିବ ଏବଂ ଏହାକୁ ଏକ ଛୋଟ ଓଭରଲେରେ ଦେଖାଇବ।"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 ପାଇଁ ହ୍ୟାଣ୍ଡଲର ମିଳିଲା ନାହିଁ। ଦୟାକରି ନିଶ୍ଚିତ କରନ୍ତୁ ଯେ ହ୍ୟାଣ୍ଡଲରଟି api_handlers ଡିରେକ୍ଟରିରେ ଅଛି।"

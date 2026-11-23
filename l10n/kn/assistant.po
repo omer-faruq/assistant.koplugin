@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 03:59+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: ಕನ್ನಡ (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - ಕ್ರಿಯೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 ಹ್ಯಾಂಡ್ಲರ್ ಸಂಪರ್ಕ ಪರೀಕ್ಷೆಯನ್ನು ಬೆಂಬಲಿಸುವುದಿಲ್ಲ"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Translate' ಅನ್ನು ಟಿಪ್ಪಣಿಯಾಗಿ"
 
 msgid "(No response)"
 msgstr "(ಪ್ರತಿಕ್ರಿಯೆ ಇಲ್ಲ)"
@@ -388,8 +392,8 @@ msgstr "ಸಹಾಯಕ ಸೆಟ್ಟಿಂಗ್ಗಳು ಲಭ್ಯವಿ�
 msgid "Attach Prior Text"
 msgstr "ಹಿಂದಿನ ಪಠ್ಯವನ್ನು ಲಗತ್ತಿಸಿ"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "ಪ್ರಸ್ತುತ ಹೈಲೈಟ್‌ಗೆ ಉತ್ತರವನ್ನು ಪುಸ್ತಕ ಟಿಪ್ಪಣಿಯಾಗಿ ಲಗತ್ತಿಸುತ್ತದೆ"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "ಉತ್ತರವನ್ನು ಪ್ರಸ್ತುತ ಹೈಲೈಟ್‌ಗೆ ಪುಸ್ತಕ ಟಿಪ್ಪಣಿಯಾಗಿ ಲಗತ್ತಿಸಿ, ನಂತರ ಈ ವಿಂಡೋವನ್ನು ಮುಚ್ಚುತ್ತದೆ"
 
 msgid "Author"
 msgstr "ಲೇಖಕ"
@@ -1061,6 +1065,9 @@ msgstr "OTA ಅಪ್ಡೇಟ್ ವಿಫಲವಾಗಿದೆ: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA ನವೀಕರಣ ವಿಫಲವಾಗಿದೆ: ಅಮಾನ್ಯ ಇನ್‌ಪುಟ್ %1. ಶಾಖೆ, ಟ್ಯಾಗ್, user/repo ಅಥವಾ user/repo@branch ಬಳಸಿ."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "ಅಂತರ್ನಿರ್ಮಿತ 'Translate' ಕ್ರಿಯೆ ಮಾತ್ರ (\"Use AI Assistant for 'Translate'\" ನಿಂದ ಬದಲಾಯಿಸಲಾದದ್ದು) ಈ ಸ್ವಿಚ್ ಅನ್ನು ಅನುಸರಿಸುತ್ತದೆ: ಅದರ ಫಲಿತಾಂಶವನ್ನು ಆಯ್ಕೆಯ ಹೊಸ ಹೈಲೈಟ್‌ನ ಟಿಪ್ಪಣಿಯಾಗಿ ಉಳಿಸಲಾಗುತ್ತದೆ ಮತ್ತು ಫಲಿತಾಂಶ ವಿಂಡೋದ ಬದಲು ಅದರ ಮೇಲೆ ಸಣ್ಣ ತೇಲುವ ಮೇಲ್ಪದರದಲ್ಲಿ ತೋರಿಸಲಾಗುತ್ತದೆ. ಸಹಾಯಕನ ಸ್ವಂತ Translate ಗುಂಡಿಗಳು ಯಾವಾಗಲೂ ಫಲಿತಾಂಶ ವಿಂಡೋವನ್ನು ತೆರೆಯುತ್ತವೆ. ಉಳಿಸುವುದು ವಿಫಲವಾದರೆ, ಫಲಿತಾಂಶ ವಿಂಡೋ ಎಂದಿನಂತೆ ತೆರೆಯುತ್ತದೆ."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "ಪುಸ್ತಕ ಸಂದರ್ಭವನ್ನು ಆಯ್ಕೆ ಮಾಡುವ ಪ್ರಾಂಪ್ಟ್‌ಗಳಿಂದ ಮಾತ್ರ ಬಳಸಲಾಗುತ್ತದೆ (ಡೀಫಾಲ್ಟ್ ಆಗಿ: ವಿವರಿಸಿ, ಐತಿಹಾಸಿಕ ಸಂದರ್ಭ, ಸಾರಾಂಶ ಮಾಡಿ, ಪ್ರಮುಖ ಅಂಶಗಳು ಮತ್ತು ELI5). ಸಕ್ರಿಯಗೊಳಿಸಿದಾಗ, ಹೈಲೈಟ್ ಮಾಡಿದ ಪುಟದ ಮತ್ತು ಪಕ್ಕದ ಪುಟಗಳ ಪಠ್ಯವನ್ನು ಹಿನ್ನೆಲೆ ಉಲ್ಲೇಖವಾಗಿ AI ಗೆ ಕಳುಹಿಸಲಾಗುತ್ತದೆ. ಇದಕ್ಕೆ ಪಠ್ಯ ಆಯ್ಕೆಯ ಅಗತ್ಯವಿದೆ ಮತ್ತು ಇದು ಟೋಕನ್ ಬಳಕೆಯನ್ನು ಹೆಚ್ಚಿಸುತ್ತದೆ."
@@ -1280,6 +1287,9 @@ msgstr "ಉಳಿಸು"
 msgid "Save conversation to"
 msgstr "ಸಂಭಾಷಣೆಯನ್ನು ಇಲ್ಲಿ ಉಳಿಸಿ"
 
+msgid "Saved as Annotation"
+msgstr "ಟಿಪ್ಪಣಿಯಾಗಿ ಉಳಿಸಲಾಗಿದೆ"
+
 msgid "Saved to: %1"
 msgstr "ಇಲ್ಲಿ ಉಳಿಸಲಾಗಿದೆ: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "AI ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ಯಾವುದೇ �
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI ಪ್ರತಿಕ್ರಿಯೆಯಲ್ಲಿ ಮಾನ್ಯ ಫ್ಲ್ಯಾಶ್‌ಕಾರ್ಡ್ ಡೇಟಾ ಇರಲಿಲ್ಲ."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "ಅಂತರ್ನಿರ್ಮಿತ 'Translate' ತನ್ನ ಫಲಿತಾಂಶವನ್ನು ಟಿಪ್ಪಣಿಯಾಗಿ ಉಳಿಸಿ ಅದನ್ನು ಸಣ್ಣ ಮೇಲ್ಪದರದಲ್ಲಿ ತೋರಿಸುತ್ತದೆ."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 ಗಾಗಿ ಹ್ಯಾಂಡ್ಲರ್ ಕಂಡುಬಂದಿಲ್ಲ. ದಯವಿಟ್ಟು api_handlers ಡೈರೆಕ್ಟರಿಯಲ್ಲಿ ಹ್ಯಾಂಡ್ಲರ್ ಇದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ."

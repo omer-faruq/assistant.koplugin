@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - izvēlieties darbību"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 apstrādātājs neatbalsta savienojuma pārbaudi"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Tulkot' kā anotācija"
 
 msgid "(No response)"
 msgstr "(Nav atbildes)"
@@ -388,8 +392,8 @@ msgstr "Asistenta iestatījumi nav pieejami."
 msgid "Attach Prior Text"
 msgstr "Pievienot iepriekšējo tekstu"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Pievieno atbildi kā grāmatas piezīmi pašreizējam izcēlumam"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Pievieno atbildi kā grāmatas piezīmi pašreizējam iezīmējumam, pēc tam aizver šo logu"
 
 msgid "Author"
 msgstr "Autors"
@@ -1062,6 +1066,9 @@ msgstr "OTA atjaunināšana neizdevās: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA atjauninājums neizdevās: nederīga ievade %1. Izmantojiet zaru, tagu, lietotājs/repo vai lietotājs/repo@zars."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Tikai iebūvētā darbība 'Tulkot' (tā, ko aizstāj iestatījums \"Lietot MI asistentu darbībai 'Tulkot'\") ievēro šo slēdzi: tās rezultāts tiek saglabāts kā piezīme jaunam atlases iezīmējumam un rādīts mazā peldošā pārklājumā virs tā, nevis rezultātu logā. Asistenta paša tulkošanas pogas vienmēr atver rezultātu logu. Ja saglabāšana neizdodas, rezultātu logs tiek atvērts kā parasti."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "To izmanto tikai tās uzvednes, kas izvēlējušās izmantot grāmatas kontekstu (pēc noklusējuma: Paskaidrot, Vēsturiskais konteksts, Apkopot, Galvenie punkti un ELI5). Kad tas ir iespējots, iezīmētās lapas un blakus esošo lappušu teksts tiek nosūtīts AI kā fona informācija. Nepieciešama teksta atlase, un tas palielina tokenu patēriņu."
@@ -1280,6 +1287,9 @@ msgstr "Saglabāt"
 msgid "Save conversation to"
 msgstr "Saglabāt sarunu"
 
+msgid "Saved as Annotation"
+msgstr "Saglabāts kā anotācija"
+
 msgid "Saved to: %1"
 msgstr "Saglabāts: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "AI atbildē nebija nevienas kartītes."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI atbildē nebija derīgu kartīšu datu."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "Iebūvētā funkcija 'Tulkot' saglabās savu rezultātu kā anotāciju un rādīs to mazā pārklājumā."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Apstrādātājs %1 netika atrasts. Lūdzu, pārliecinieties, ka apstrādātājs atrodas api_handlers direktorijā."

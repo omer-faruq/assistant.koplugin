@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - επιλέξτε μια ενέργεια"
 
 msgid "%1 handler does not support connection testing"
 msgstr "Ο χειριστής %1 δεν υποστηρίζει δοκιμή σύνδεσης"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Μετάφραση' ως Σχολιασμός"
 
 msgid "(No response)"
 msgstr "(Καμία απάντηση)"
@@ -388,8 +392,8 @@ msgstr "Οι ρυθμίσεις του βοηθού δεν είναι διαθέ
 msgid "Attach Prior Text"
 msgstr "Επισύναψη προηγούμενου κειμένου"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Επισυνάπτει την απάντηση ως σημείωση βιβλίου στην τρέχουσα επισήμανση"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Επισυνάπτει την απάντηση ως σημείωση βιβλίου στην τρέχουσα επισήμανση και στη συνέχεια κλείνει αυτό το παράθυρο"
 
 msgid "Author"
 msgstr "Συγγραφέας"
@@ -1061,6 +1065,9 @@ msgstr "Η ενημέρωση OTA απέτυχε: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "Η ενημέρωση OTA απέτυχε: μη έγκυρη είσοδος %1. Χρησιμοποιήστε κλάδο, tag, user/repo ή user/repo@branch."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Μόνο η ενσωματωμένη ενέργεια 'Μετάφραση' (αυτή που αντικαθίσταται από την επιλογή \"Χρήση Βοηθού AI για το 'Μετάφραση'\") ακολουθεί αυτόν τον διακόπτη: το αποτέλεσμά της αποθηκεύεται ως σημείωση μιας νέας επισήμανσης για την επιλογή και εμφανίζεται σε μια μικρή αιωρούμενη επικάλυψη πάνω από αυτήν, αντί για το παράθυρο αποτελεσμάτων. Τα κουμπιά Μετάφραση του ίδιου του Βοηθού ανοίγουν πάντα το παράθυρο αποτελεσμάτων. Όταν η αποθήκευση αποτύχει, το παράθυρο αποτελεσμάτων ανοίγει ως συνήθως."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Χρησιμοποιείται μόνο από τις προτροπές που έχουν ενεργοποιήσει το πλαίσιο βιβλίου (από προεπιλογή: Εξήγηση, Ιστορικό Πλαίσιο, Σύνοψη, Βασικά Σημεία και ELI5). Όταν είναι ενεργό, το κείμενο της επισημασμένης σελίδας και των γειτονικών σελίδων αποστέλλεται στο AI ως υλικό αναφοράς. Απαιτεί επιλογή κειμένου και αυξάνει τη χρήση tokens."
@@ -1279,6 +1286,9 @@ msgstr "Αποθήκευση"
 msgid "Save conversation to"
 msgstr "Αποθήκευση συνομιλίας σε"
 
+msgid "Saved as Annotation"
+msgstr "Αποθηκεύτηκε ως Σχολιασμός"
+
 msgid "Saved to: %1"
 msgstr "Αποθηκεύτηκε σε: %1"
 
@@ -1452,6 +1462,9 @@ msgstr "Η απάντηση του AI δεν περιείχε καμία κάρ�
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "Η απάντηση του AI δεν περιείχε έγκυρα δεδομένα καρτών."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "Η ενσωματωμένη ενέργεια 'Μετάφραση' θα αποθηκεύσει το αποτέλεσμά της ως σχολιασμό και θα το εμφανίσει σε μια μικρή επικάλυψη."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Ο χειριστής για το %1 δεν βρέθηκε. Βεβαιωθείτε ότι ο χειριστής υπάρχει στον κατάλογο api_handlers."

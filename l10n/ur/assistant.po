@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 04:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: اردو (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - ایک عمل منتخب کریں"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 ہینڈلر کنکشن ٹیسٹنگ کی حمایت نہیں کرتا"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'ترجمہ' بطور حاشیہ"
 
 msgid "(No response)"
 msgstr "(کوئی جواب نہیں)"
@@ -388,8 +392,8 @@ msgstr "اسسٹنٹ کی ترتیبات دستیاب نہیں ہیں۔"
 msgid "Attach Prior Text"
 msgstr "پچھلا متن منسلک کریں"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "جواب کو موجودہ نمایاں متن پر کتابی نوٹ کے طور پر منسلک کرتا ہے"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "جواب کو موجودہ ہائی لائٹ سے کتاب کے نوٹ کے طور پر منسلک کرتا ہے، پھر یہ ونڈو بند کر دیتا ہے"
 
 msgid "Author"
 msgstr "مصنف"
@@ -1061,6 +1065,9 @@ msgstr "OTA اپ ڈیٹ ناکام رہا: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA اپ ڈیٹ ناکام: غلط ان پٹ %1۔ برانچ، ٹیگ، user/repo یا user/repo@branch استعمال کریں۔"
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "صرف بلٹ ان 'ترجمہ' عمل (وہی جسے \"'ترجمہ' کے لیے AI اسسٹنٹ استعمال کریں\" سے بدل دیا گیا ہے) اس سوئچ پر عمل کرتا ہے: اس کا نتیجہ منتخب متن کے لیے نئی ہائی لائٹ کے نوٹ کے طور پر محفوظ کیا جاتا ہے اور نتیجے والی ونڈو کے بجائے اس کے اوپر ایک چھوٹے تیرتے اوورلے میں دکھایا جاتا ہے۔ اسسٹنٹ کے اپنے ترجمے والے بٹن ہمیشہ نتیجے والی ونڈو کھولتے ہیں۔ محفوظ کرنے میں ناکامی پر نتیجے والی ونڈو معمول کے مطابق کھلتی ہے۔"
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "صرف ان پرامپٹس کے ذریعے استعمال ہوتا ہے جو کتاب کے سیاق و سباق کو شامل کرنے کا انتخاب کرتے ہیں (بطور ڈیفالٹ: وضاحت، تاریخی سیاق و سباق، خلاصہ، اہم نکات اور ELI5)۔ جب فعال ہو، تو ہائی لائٹ شدہ صفحے اور اس کے ملحقہ صفحات کا متن AI کو پس منظر کے حوالے کے طور پر بھیجا جاتا ہے۔ اس کے لیے متن کا انتخاب ضروری ہے اور یہ ٹوکن کے استعمال میں اضافہ کرتا ہے۔"
@@ -1279,6 +1286,9 @@ msgstr "محفوظ کریں"
 msgid "Save conversation to"
 msgstr "گفتگو محفوظ کریں"
 
+msgid "Saved as Annotation"
+msgstr "حاشیہ کے طور پر محفوظ کیا گیا"
+
 msgid "Saved to: %1"
 msgstr "محفوظ شدہ: %1"
 
@@ -1452,6 +1462,9 @@ msgstr "AI کے جواب میں کوئی فلیش کارڈ نہیں تھا۔"
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI کے جواب میں درست فلیش کارڈ ڈیٹا نہیں تھا۔"
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "بلٹ ان 'ترجمہ' اپنا نتیجہ حاشیہ کے طور پر محفوظ کرے گا اور اسے ایک چھوٹے اوورلے میں دکھائے گا۔"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "%1 کے لیے ہینڈلر نہیں ملا۔ براہ کرم یقینی بنائیں کہ ہینڈلر api_handlers ڈائریکٹری میں موجود ہے۔"

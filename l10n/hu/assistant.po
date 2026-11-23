@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - válasszon műveletet"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 kezelő nem támogatja a kapcsolat tesztelését"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Fordítás' jegyzetként"
 
 msgid "(No response)"
 msgstr "(Nincs válasz)"
@@ -388,8 +392,8 @@ msgstr "Az asszisztens beállításai nem érhetők el."
 msgid "Attach Prior Text"
 msgstr "Előző szöveg csatolása"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "A választ könyvjegyzetként csatolja a jelenlegi kiemeléshez"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "A választ könyvjegyzetként hozzáfűzi az aktuális kiemeléshez, majd bezárja ezt az ablakot"
 
 msgid "Author"
 msgstr "Szerző"
@@ -1061,6 +1065,9 @@ msgstr "OTA frissítés sikertelen: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "Az OTA-frissítés sikertelen: érvénytelen bemenet: %1. Használjon ágat, taget, felhasználó/tároló vagy felhasználó/tároló@ág formátumot."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Csak a beépített 'Fordítás' művelet (amelyet az \"AI Asszisztens használata a 'Fordítás'-hoz\" helyettesít) követi ezt a kapcsolót: az eredménye a kijelöléshez tartozó új kiemelés jegyzeteként mentődik, és az eredményablak helyett egy felette megjelenő kis lebegő fedvényben látható. Az Asszisztens saját Fordítás gombjai mindig az eredményablakot nyitják meg. Ha a mentés sikertelen, az eredményablak a szokásos módon nyílik meg."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Csak azok a promptok használják, amelyek igénylik a könyvkontextust (alapértelmezés szerint: Magyarázat, Történelmi háttér, Összefoglalás, Kulcspontok és ELI5). Ha engedélyezve van, a kijelölt oldal és a szomszédos oldalak szövege háttérreferenciaként kerül elküldésre az AI-nak. Szövegkijelölést igényel, és növeli a tokenhasználatot."
@@ -1280,6 +1287,9 @@ msgstr "Mentés"
 msgid "Save conversation to"
 msgstr "Beszélgetés mentése ide:"
 
+msgid "Saved as Annotation"
+msgstr "Jegyzetként mentve"
+
 msgid "Saved to: %1"
 msgstr "Mentve ide: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "Az AI válasza nem tartalmazott tanulókártyát."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "Az AI válasza nem tartalmazott érvényes tanulókártya-adatokat."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "A beépített 'Fordítás' az eredményét jegyzetként menti, és egy kis fedvényben jeleníti meg."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "A(z) %1 kezelő nem található. Győződjön meg róla, hogy a kezelő létezik az api_handlers könyvtárban."

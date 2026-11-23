@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 02:44+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: 简体中文 (AI translation)\n"
@@ -32,6 +32,10 @@ msgstr "%1 - 选择操作"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1 处理器不支持连接测试"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "“翻译”存为标注"
 
 msgid "(No response)"
 msgstr "（无回答）"
@@ -389,8 +393,8 @@ msgstr "助手设置不可用。"
 msgid "Attach Prior Text"
 msgstr "附加上文"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "将答案作为书籍笔记附加到当前高亮"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "将答案作为笔记附加到当前高亮，然后关闭此窗口"
 
 msgid "Author"
 msgstr "作者"
@@ -1061,6 +1065,9 @@ msgstr "OTA 更新失败：%1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA 更新失败：输入无效 %1。请使用分支、标签、user/repo 或 user/repo@branch。"
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "只有内置的“翻译”操作（即被“将 AI 助手用于‘翻译’”取代的那个）遵循此开关：其结果将保存为所选内容新建高亮的笔记，并显示在上方的小型悬浮窗中，而不是结果窗口。助手自带的翻译按钮始终会打开结果窗口。保存失败时，将照常打开结果窗口。"
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "仅由启用了书籍上下文的提示词使用（默认包括：解释、历史背景、总结、要点和 ELI5）。启用后，高亮所在页面及其相邻页面的文本会作为背景参考发送给 AI。需要先选中文本，并且会增加 token 消耗。"
@@ -1280,6 +1287,9 @@ msgstr "保存"
 msgid "Save conversation to"
 msgstr "将对话保存到"
 
+msgid "Saved as Annotation"
+msgstr "已存为标注"
+
 msgid "Saved to: %1"
 msgstr "已保存到：%1"
 
@@ -1453,6 +1463,9 @@ msgstr "AI 响应中不包含任何闪卡。"
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI 响应中不包含有效的闪卡数据。"
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "内置的“翻译”会将其结果保存为标注，并显示在小型悬浮窗中。"
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "未找到 %1 的处理程序。请确保处理程序存在于 api_handlers 目录中。"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 02:47+0000\n"
 "Last-Translator: AI (auto)\n"
 "Language-Team: عربى (AI translation)\n"
@@ -31,6 +31,10 @@ msgstr "%1 - اختر إجراءً"
 
 msgid "%1 handler does not support connection testing"
 msgstr "معالج %1 لا يدعم اختبار الاتصال"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'ترجمة' كحاشية"
 
 msgid "(No response)"
 msgstr "(لا يوجد رد)"
@@ -388,8 +392,8 @@ msgstr "إعدادات المساعد غير متاحة."
 msgid "Attach Prior Text"
 msgstr "إرفاق النص السابق"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "يُرفق الإجابة كملاحظة في الكتاب بالتظليل الحالي"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "يُرفق الإجابة كملاحظة في الكتاب على التظليل الحالي، ثم يغلق هذه النافذة"
 
 msgid "Author"
 msgstr "المؤلف"
@@ -1065,6 +1069,9 @@ msgstr "فشل تحديث OTA: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "فشل تحديث OTA: مُدخل غير صالح %1. استخدم فرعًا أو وسمًا أو user/repo أو user/repo@branch."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "فقط إجراء 'ترجمة' المدمج (الذي يستبدله خيار \"استخدام مساعد الذكاء الاصطناعي لـ 'ترجمة'\") يتبع هذا المفتاح: تُحفظ نتيجته كملاحظة لتظليل جديد للتحديد وتُعرض في تراكب عائم صغير فوقه، بدلًا من نافذة النتائج. أما أزرار الترجمة الخاصة بالمساعد فتفتح نافذة النتائج دائمًا. عند فشل الحفظ، تُفتح نافذة النتائج كالمعتاد."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "تُستخدم فقط من قبل المطالبات التي تختار تفعيل سياق الكتاب (افتراضيًا: الشرح، السياق التاريخي، التلخيص، النقاط الرئيسية وELI5). عند التفعيل، يُرسَل نص الصفحة المظلَّل عليها والصفحات المجاورة إلى الذكاء الاصطناعي كمرجع خلفي. يتطلب تحديد نص ويزيد من استهلاك الرموز."
@@ -1283,6 +1290,9 @@ msgstr "حفظ"
 msgid "Save conversation to"
 msgstr "حفظ المحادثة في"
 
+msgid "Saved as Annotation"
+msgstr "حُفظ كحاشية"
+
 msgid "Saved to: %1"
 msgstr "تم الحفظ في: %1"
 
@@ -1456,6 +1466,9 @@ msgstr "لم يحتوی رد الذكاء الاصطناعي على أي بطا�
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "لم يحتوی رد الذكاء الاصطناعي على بيانات بطاقات تعليمية صالحة."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "ستحفظ وظيفة 'ترجمة' المدمجة نتيجتها كحاشية وتعرضها في تراكب صغير."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "لم يتم العثور على المعالج لـ %1. يرجى التأكد من وجود المعالج في مجلد api_handlers."

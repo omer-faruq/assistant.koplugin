@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: assistant.koplugin 1.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 17:53+0800\n"
+"POT-Creation-Date: 2026-11-23 14:11+0800\n"
 "PO-Revision-Date: 2026-08-13 10:35+0800\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -31,6 +31,10 @@ msgstr "%1 - valitse toiminto"
 
 msgid "%1 handler does not support connection testing"
 msgstr "%1-käsittelijä ei tue yhteyden testausta"
+
+#. @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+msgid "'Translate' as Annotation"
+msgstr "'Käännä' merkintänä"
 
 msgid "(No response)"
 msgstr "(Ei vastausta)"
@@ -388,8 +392,8 @@ msgstr "Assistentin asetukset eivät ole käytettävissä."
 msgid "Attach Prior Text"
 msgstr "Liitä aiempi teksti"
 
-msgid "Attaches the answer as a book note to the current highlight"
-msgstr "Liittää vastauksen kirjamuistiinpanona nykyiseen korostukseen"
+msgid "Attaches the answer as a book note to the current highlight, then closes this window"
+msgstr "Liittää vastauksen kirjamuistiinpanona nykyiseen korostukseen ja sulkee sitten tämän ikkunan"
 
 msgid "Author"
 msgstr "Tekijä"
@@ -1061,6 +1065,9 @@ msgstr "OTA-päivitys epäonnistui: %1"
 msgid "OTA update failed: invalid input %1. Use a branch, tag, user/repo or user/repo@branch."
 msgstr "OTA-päivitys epäonnistui: virheellinen syöte %1. Käytä haaraa, tagia, user/repo tai user/repo@branch."
 
+msgid "Only the built-in 'Translate' action (the one replaced by \"Use AI Assistant for 'Translate'\") follows this switch: its result is saved as the note of a new highlight for the selection and shown in a small floating overlay above it, instead of the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual."
+msgstr "Vain sisäänrakennettu 'Käännä'-toiminto (se, jonka asetus \"Käytä tekoälyavustajaa 'Käännä'-toiminnolle\" korvaa) noudattaa tätä asetusta: sen tulos tallennetaan valinnan uuden korostuksen muistiinpanoksi ja näytetään sen yläpuolella pienessä kelluvassa ikkunassa tulosikkunan sijaan. Avustajan omat Käännä-painikkeet avaavat aina tulosikkunan. Jos tallennus epäonnistuu, tulosikkuna avataan normaalisti."
+
 #. @translators "ELI5" is the feature name used on the button (short for "Explain Like I'm 5"); translate it the same way as the "ELI5" button.
 msgid "Only used by prompts that opt in to book context (by default: Explain, Historical Context, Summarize, Key Points and ELI5). When enabled, the text of the highlighted page and the adjacent pages is sent to the AI as background reference. Requires a text selection and increases token usage."
 msgstr "Käytetään vain kehotteissa, jotka ottavat kirjakontekstin käyttöön (oletuksena: Selitä, Historiallinen konteksti, Tiivistä, Keskeiset kohdat ja ELI5). Kun tämä on käytössä, korostetun sivun ja viereisten sivujen teksti lähetetään tekoälylle taustatiedoksi. Vaatii tekstivalinnan ja lisää tokenien käyttöä."
@@ -1280,6 +1287,9 @@ msgstr "Tallenna"
 msgid "Save conversation to"
 msgstr "Tallenna keskustelu kohteeseen"
 
+msgid "Saved as Annotation"
+msgstr "Tallennettu merkintänä"
+
 msgid "Saved to: %1"
 msgstr "Tallennettu: %1"
 
@@ -1453,6 +1463,9 @@ msgstr "AI-vastaus ei sisältänyt yhtään oppikorttia."
 
 msgid "The AI response did not contain valid flashcard data."
 msgstr "AI-vastaus ei sisältänyt kelvollista oppikorttidataa."
+
+msgid "The built-in 'Translate' will save its result as an annotation and show it in a small overlay."
+msgstr "Sisäänrakennettu 'Käännä' tallentaa tuloksensa merkintänä ja näyttää sen pienessä kelluvassa ikkunassa."
 
 msgid "The handler for %1 was not found. Please ensure the handler exists in api_handlers directory."
 msgstr "Käsittelijää kohteelle %1 ei löytynyt. Varmista, että käsittelijä on olemassa api_handlers-hakemistossa."
