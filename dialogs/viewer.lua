@@ -132,10 +132,12 @@ local function createAddNoteButton(viewer)
                 text = _("Annotation added successfully"),
                 timeout = 2
             })
+            -- A second tap would only duplicate the highlight, so close.
+            viewer:onClose()
         end,
         hold_callback = function()
             UIManager:show(InfoMessage:new{
-                text = _("Attaches the answer as a book note to the current highlight"),
+                text = _("Attaches the answer as a book note to the current highlight, then closes this window"),
             })
         end
     }
