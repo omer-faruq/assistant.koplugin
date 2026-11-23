@@ -67,6 +67,15 @@ local function strip_comments(src)
             end
             out[#out + 1] = src:sub(i, stop):gsub("[^\n]", " ")
             i = stop + 1
+        elseif src:match("^%[(=*)%[", i) then
+            -- A long-bracket string is literal text: consume it whole so a
+            -- quote or comment marker inside it cannot desync the scan.
+            local eq = src:match("^%[(=*)%[", i)
+            local close = "]" .. eq .. "]"
+            local s = src:find(close, i + 2 + #eq + 2, true)
+            local stop = s and (s + #close - 1) or n
+            out[#out + 1] = src:sub(i, stop)
+            i = stop + 1
         else
             out[#out + 1] = c
             i = i + 1
@@ -135,6 +144,18 @@ local function collect_msgids(src)
                     local lit
                     lit, i = read_literal(src, i)
                     results[#results + 1] = { text = lit, pos = start }
+                elseif src:match("^%[(=*)%[", i) then
+                    -- Long-bracket literal: record it whole, so quotes and
+                    -- parens inside a msgid never desync the walk.
+                    local eq = src:match("^%[(=*)%[", i)
+                    local close = "]" .. eq .. "]"
+                    local s = src:find(close, i + 2 + #eq + 2, true)
+                    local stop = s and (s + #close - 1) or n
+                    results[#results + 1] = {
+                        text = src:sub(i + 2 + #eq, s and (s - 1) or n),
+                        pos = i,
+                    }
+                    i = stop + 1
                 else
                     i = i + 1
                 end
@@ -233,6 +254,16 @@ local tests = {
 
         -- Commented-out samples are ignored.
         assert.equal(#violations_in('-- _("bad — sample")'), 0)
+
+        -- Long-bracket msgids are one literal: inner quotes, apostrophes
+        -- and parens must not desync the scanner onto later strings.
+        assert.equal(#violations_in([=[local x = _([[The Assistant's own "Translate" buttons]])]=]), 0,
+            "an ASCII long-bracket msgid must pass")
+        local bad_lb = violations_in([=[local x = _([[The Assistant's own —]]) y = _("still scanned")]=])
+        assert.equal(#bad_lb, 1,
+            "a non-ASCII long-bracket msgid must be caught without hiding later msgids")
+        assert.equal(bad_lb[1].cps[1], "U+2014",
+            "the long-bracket content is the flagged msgid")
     end),
 
     test("shipped sources: all gettext msgids are US-ASCII", function()

@@ -166,7 +166,8 @@ function M.syncTranslateOverride(assistant)
             end
             NetUtils.runWhenOnlineFast(function()
                 Trapper:wrap(function()
-                    Lookup.showTranslateOrDictionary(assistant, text)
+                    -- true: the built-in action honors Translate as Annotation
+                    Lookup.showTranslateOrDictionary(assistant, text, true)
                 end)
             end)
         end

@@ -51,10 +51,12 @@ end
 --- first use. Callers must already be inside runWhenOnlineFast + Trapper:wrap.
 ---@param assistant table The Assistant instance
 ---@param text string Selection text
-function M.showTranslateOrDictionary(assistant, text)
+---@param auto_annotate boolean|nil honor the Translate-as-Annotation switch
+---       for this turn; passed by the built-in 'Translate' override
+function M.showTranslateOrDictionary(assistant, text, auto_annotate)
   local function open_translation()
     if not assistant.assistant_dialog then return end
-    assistant.assistant_dialog:runPrompt(text, "translate")
+    assistant.assistant_dialog:runPrompt(text, "translate", nil, auto_annotate)
   end
   local function open_dictionary()
     local showDictionaryDialog = require("dialogs/dict")

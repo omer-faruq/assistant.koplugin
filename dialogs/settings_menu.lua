@@ -701,6 +701,25 @@ local function genMenuSettings(assistant)
                     end
                 },
                 {
+                    -- @translators: 'Translate' is the built-in selection action; its result goes straight into the annotations.
+                    text = _("'Translate' as Annotation"),
+                    enabled_func = function () return assistant.settings:readSetting("ai_translate_override", false) end,
+                    checked_func = function () return assistant.settings:readSetting("auto_annotate_translation", false) end,
+                    callback = function ()
+                        assistant.settings:toggle("auto_annotate_translation")
+                        assistant.updated = true
+                        if assistant.settings:readSetting("auto_annotate_translation") then
+                            -- The switch arms a future action; say what it will do.
+                            Notification:notify(_("The built-in 'Translate' will save its result as an annotation without opening the result window."), Notification.SOURCE_ALWAYS_SHOW)
+                        end
+                    end,
+                    hold_callback = function ()
+                        UIManager:show(InfoMessage:new{
+                            text = _([[Only the built-in 'Translate' action (the one replaced by "Use AI Assistant for 'Translate'") follows this switch: its result is saved as the note of a new highlight for the selection, without opening the result window. The Assistant's own Translate buttons always open the result window. When saving fails, the result window opens as usual.]])
+                        })
+                    end
+                },
+                {
                     text = _("Smart Dictionary Lookup for 'Translate'"),
                     checked_func = function () return assistant.settings:readSetting("ai_smart_dictionary", false) end,
                     callback = function()

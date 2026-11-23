@@ -16,7 +16,6 @@ local ButtonDialog = require("ui/widget/buttondialog")
 local CenterContainer = require("ui/widget/container/centercontainer")
 local Device = require("device")
 local logger = require("logger")
-local Event = require("ui/event")
 local Font = require("ui/font")
 local Geom = require("ui/geometry")
 local FrameContainer = require("ui/widget/container/framecontainer")
@@ -47,6 +46,7 @@ local TextUtils = require("utils/text")
 local Trapper = require("ui/trapper")
 local ViewerCSS = require("dialogs/css")
 local SettingsMenu = require("dialogs/settings_menu")local Notebook = require("feature/notebook")
+local Annotate = require("feature/annotate")
 local CheckButton = require("ui/widget/checkbutton")
 
 -- Viewer CSS lives in dialogs/css.lua (shared with the notebook viewer);
@@ -65,17 +65,6 @@ local function createAddNoteButton(viewer)
     return {
         text = _("Annotate"),
         callback = function()
-            -- Check if ui is available in self
-            local ui = viewer.ui
-            if not ui or not ui.highlight then
-                UIManager:show(InfoMessage:new{
-                    icon = "notice-warning",
-                    text = _("Highlight functionality not available"),
-                    timeout = 2
-                })
-                return
-            end
-
             if not viewer.text or viewer.text == "" then
                 UIManager:show(InfoMessage:new{
                     icon = "notice-warning",
@@ -85,13 +74,9 @@ local function createAddNoteButton(viewer)
                 return
             end
 
-            -- Get the selected text
             local selected_text = viewer.highlighted_text or ""
-
-            -- Remove the selected text from the full text with multiple strategies
             local note_text = viewer.text
 
-            -- First, try to remove only if the selected text is after "Highlighted text: "
             local highlighted_start, highlighted_end = note_text:find('Highlighted text: "([^"]*)"')
             if highlighted_start then
                 local highlighted_part = note_text:sub(highlighted_start, highlighted_end)
@@ -102,38 +87,14 @@ local function createAddNoteButton(viewer)
                 end
             end
 
-            -- Trim whitespace
-            note_text = note_text:gsub("^%s+", ""):gsub("%s+$", "")
-
-            if note_text == "" then
+            if Annotate.add_note(viewer.ui, note_text) then
                 UIManager:show(InfoMessage:new{
-                    icon = "notice-warning",
-                    text = _("No text left to annotate"),
+                    text = _("Annotation added successfully"),
                     timeout = 2
                 })
-                return
+                -- A second tap would only duplicate the highlight, so close.
+                viewer:onClose()
             end
-
-            local index = ui.highlight:saveHighlight(true)
-            local a = index and ui.annotation and ui.annotation.annotations[index]
-            if not a then
-                UIManager:show(InfoMessage:new{
-                    icon = "notice-warning",
-                    text = _("No highlight to annotate"),
-                    timeout = 2,
-                })
-                return
-            end
-            a.note = note_text
-            ui:handleEvent(Event:new("AnnotationsModified",
-                                    { a, nb_highlights_added = -1, nb_notes_added = 1 }))
-
-            UIManager:show(InfoMessage:new{
-                text = _("Annotation added successfully"),
-                timeout = 2
-            })
-            -- A second tap would only duplicate the highlight, so close.
-            viewer:onClose()
         end,
         hold_callback = function()
             UIManager:show(InfoMessage:new{

@@ -28,6 +28,8 @@ local TextUtils = require("utils/text")
 local DocUtils = require("utils/doc")
 local NetUtils = require("utils/net")
 local Notebook = require("feature/notebook")
+local Annotate = require("feature/annotate")
+local Notification = require("ui/widget/notification")
 local Conversation = require("core/conversation")
 
 --[[
@@ -818,7 +820,15 @@ end
 
 -- Process main select popup buttons
 -- ( prompts from configuration )
-function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
+--- Run a prompt against the current selection and show the answer.
+---@param highlightedText string selection text; newlines are doubled
+---       for the model's markdown input
+---@param prompt_id string key from Prompts.getMergedPrompts
+---@param user_input string|nil typed add-on text
+---@param auto_annotate boolean|nil honor the Translate-as-Annotation
+---       switch for this translate turn; only the built-in 'Translate'
+---       override passes it
+function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input, auto_annotate)
 
   local user_prompts = self.assistant.config:getFeature("prompts")
   local prompt_config = Prompts.getMergedPrompts(user_prompts)[prompt_id]
@@ -898,6 +908,25 @@ function AssistantDialog:runPrompt(highlightedText, prompt_id, user_input)
         icon = "notice-warning"
     })
     return
+  end
+
+  -- Translate as Annotation: only the built-in 'Translate' override may
+  -- save the answer instead of opening the viewer; failures fall back.
+  if prompt_id == "translate"
+      and auto_annotate
+      and highlightedText ~= nil and highlightedText ~= ""
+      and self.assistant.settings:readSetting("auto_annotate_translation", false) then
+    if Annotate.auto_save_translation(self.assistant.ui, message_history) then
+      Notification:notify(_("Translation saved as an annotation."),
+          Notification.SOURCE_ALWAYS_SHOW)
+      -- The saved highlight is painted; drop the stale menu and the
+      -- ephemeral selection the action was launched from.
+      local ui = self.assistant.ui
+      if ui and ui.highlight then
+        ui.highlight:onClose()
+      end
+      return
+    end
   end
 
   -- Built-in prompts already carry their book context; do not repeat it on follow-up.
