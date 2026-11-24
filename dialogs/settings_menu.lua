@@ -36,6 +36,7 @@ local Prompts = require("core/prompts")
 local Event = require("ui/event")
 local Device = require("device")
 local ProviderDialog = require("dialogs/provider")
+local WordWiseMenu = require("dialogs/wordwise_menu")
 local ffiutil = require("ffi/util")
 
 local showProviderDialog, showHelpDialog, showAboutDialog
@@ -849,6 +850,9 @@ File configuration.lua will be preserved.]]),
             keep_menu_open = true,
         },
     }
+
+    -- after "Dictionary Settings"
+    table.insert(sub_item_table, 4, WordWiseMenu.gen(assistant))
 
     table.insert(sub_item_table, 1, Registry.getAddProviderMenuItem(assistant))
     table.insert(sub_item_table, 2, SearchRegistry.getAddWebSearchMenuItem(assistant))

@@ -53,6 +53,14 @@ The switch is read at two points on purpose: when the result is **assembled** (t
 
 Flipping a display switch calls `ResultViewer:_refreshText()`, which re-assembles the reply through the caller's `rebuild_text` and repaints — so the change is immediate instead of waiting for the next answer. The rebuilt widget keeps the current page, clamped by `scrollToPage` when the text shrinks.
 
+## Word Wise (`dialogs/wordwise_menu.lua`, `feature/wordwise.lua`)
+
+- **Menu.** "Word Wise" is a `TouchMenu` sub-menu in the plugin's Settings, right after "Dictionary Settings". Toggles keep the menu open (`keep_menu_open`); openers (`Hint Language`, `Hint Appearance`, the dictionary pages) are sub-menus or dialogs. While the menu is open the feature holds new requests (up to a limit) so a series of changes causes one refetch.
+- **Hint overlay.** Hints are drawn by the `ReaderView` view module, not by widgets: the text is in the book font at a percentage of its size, optionally bold, with an optional rule and V-notch pointing at the word. Tapping a hint (when "Tap on a Hint for Explanation" is on) opens an explanation; the tap zone is registered once and only reacts on a hint.
+- **Dictionary result viewer extra button.** For a word Word Wise can hint, the AI dictionary result (`dialogs/dict.lua`) gets an extra button (`id = "wordwise_known"`) labelled "Word Wise: known" / "Word Wise: unknown"; tapping it flips the word in the known list and swaps the label in place. Hold shows what it does.
+- **Messages.** Failures and acknowledgements (no dictionary, English-only dictionary, PDF Reflow, waiting for the network, preparing stopped, AI errors) are `InfoMessage`s with a timeout; only "on/off", the chosen source and "preparing/ready" are `Notification`s.
+- **Long operations.** "Use Kindle's Word Wise Data" converts in a forked process behind a non-dismissable `InfoMessage` that closes itself; the reader stays responsive.
+
 ## MuPDF CSS support (viewer constraint)
 
 The viewer HTML goes through MuPDF's own engine (`source/html/` in ArtifexSoftware/mupdf), whose entire property table is `css-properties.gperf` — **85 entries, no more**. `ScrollHtmlWidget` embeds our CSS in a `<head><style>`, so anything absent from that table is silently dropped. Design viewer CSS against that list, not against a browser's.

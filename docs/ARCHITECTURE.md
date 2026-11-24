@@ -54,6 +54,27 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 - `dialogs/viewer.lua` (`ResultViewer`) — scrollable result viewer.
 - `dialogs/quicknote.lua` — quick-note capture; `core/updater.lua` — GitHub release check; `dialogs/mdparser.lua` — hoedown → markdown.lua fallback.
 
+## Word Wise (`feature/wordwise.lua` + `utils/wordwise_*.lua`)
+
+Short hints printed above hard words while reading. It is a `ReaderView` **view module** (painted over the page, no widget hacking) owned by `assistant.wordwise` and driven by thin `on*` events in `main.lua` (`ReaderReady`, `CloseDocument`, `PageUpdate`, `DocumentRerendered`, `ViewRecalculate`, `NetworkConnected`, `Suspend`/`Resume`; gestures call `WordWise.gesture*`).
+
+| Module | Role |
+|---|---|
+| `feature/wordwise.lua` | Orchestration: settings, planning, request queue, painting, cache I/O |
+| `dialogs/wordwise_menu.lua` | Settings menu (`WordWiseMenu.gen`), inserted after "Dictionary Settings" |
+| `utils/wordwise_core.lua` | Headless logic: tokenizer, phrase matching, level/density resolution, AI-answer parser, prompt, hint placement |
+| `utils/wordwise_store.lua` | Hints keyed by document position + coverage ranges (`addRange`, `covers`, `query`, `evict`, `trim`) |
+| `utils/wordwise_pdf.lua` | PDF pages: position keys, words from the text layer, room above a line |
+| `utils/wordwise_dict.lua`, `utils/wordwise_kindle.lua`, `data/wordwise_offline.db` | Offline dictionary (optional source) and the one-time conversion of Kindle's own Word Wise data |
+
+**Request path.** `plan()` decides what is missing near the reader → `startJob` extracts the page text and forks a subprocess (`ffiutil.runInSubProcess` with a pipe) that sends the prompt through the configured provider handler → `poll` drains the pipe on a timer → `finishJob` parses the answer (`Core.parseResponse`, tolerant of fences, reasoning blocks and truncated JSON), walks the page words in slices of 250 per UI tick (`walkAsync`), resolves picks onto words (`Core.resolve`) and `applyResult` stores them. Limits: 30 requests/minute, back-off on errors, and planning is held while a menu is open. The system prompt lives in `Core.buildMessages` (not in `core/prompts.lua`): it is built from the same level/density tables that `Core.resolve` filters with, and `Core.PROMPT_VERSION` is part of the cache key.
+
+**Sources** (`source` setting): `ai`, `offline` (dictionary only) and `auto` (AI first; the dictionary takes over while the AI cannot answer — offline, no provider, or backing off). In `auto` and `ai`, going offline reaches `handleOffline()` (Wi-Fi prompt) whenever the dictionary cannot serve the book.
+
+**Cache.** One `LuaSettings` file per book, holding only the variant in use. The cache key is `WordWise:signature()` = level, hint language, density, style, max length, occurrences, `PROMPT_VERSION` and model; any change fetches again. Hints are keyed by xpointer (reflowable) or `page:line:word` (PDF), so they survive re-rendering. `MAX_HINTS_PER_BOOK` bounds the store: `Store:trim` forgets hints *and* their coverage far from the reader, so that span is requested again later and nothing near the reader disappears. Writes happen from a forked process (`flushCacheAsync`, one writer at a time); closing the book, suspending and clearing use the synchronous `flushCache`.
+
+**Painting.** Hints are laid out once per page (`Core.placeHints`) and painted by `paintHint`; PDFs cannot make room, so they use the gap above a line (`PDF.gapAbove`/`PDF.hintBottom`), reflowable books can raise line spacing. Errors and acknowledgements are `InfoMessage`s; only transient successes are `Notification`s.
+
 ## Config
 
 `core/config.lua` (`Config` at `assistant.config`) owns the effective `CONFIGURATION`, built from `configuration.lua` + UI registries via `config:buildEffectiveConfig()`. Getters: `getFeature` / `getProvider` / `getProviderSettings` / `getFeatures` / `isProviderEnabled` / `getActiveProviderId`; mutators: `setProvider` / `deleteProvider` / `setSearchTool` / `deleteSearchTool`; errors: `getLoadError`/`setLoadError`/`clearLoadError`; statics: `loadRawConfig`/`getConfigPath`/`getMetaPath`/`testConfigFile`. Access rules: `docs/REGISTRIES.md`.
@@ -77,6 +98,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 | Path | Purpose |
 |---|---|
 | `main.lua` | Slim plugin entry, dispatcher actions, init, delegates |
+| `feature/wordwise.lua` | Word Wise hints (see the Word Wise section) |
 | `feature/book_actions.lua` | Book features, identification flow, FileManager row |
 | `core/querier.lua` | Core query engine, handler loading, SSE parsing, tool loop |
 | `api_handlers/base.lua` | Handler base class |

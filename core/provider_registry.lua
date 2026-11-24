@@ -833,9 +833,10 @@ end
 --- saving anything; only OK persists the overlay.
 ---@param assistant table The Assistant instance
 ---@param provider_id string The provider ID (file key or UI "custom:N")
+---@param on_saved function|nil Called after OK has saved the selection
 ---@return table|nil dialog The shown dialog widget, or nil when the provider
 ---                        is unknown or has no common parameters
-function Registry.showParametersDialog(assistant, provider_id)
+function Registry.showParametersDialog(assistant, provider_id, on_saved)
     local ps = assistant.config:getProvider(provider_id)
     if not ps then return end
 
@@ -915,6 +916,8 @@ function Registry.showParametersDialog(assistant, provider_id)
                     end
                     assistant.updated = true
                     UIManager:close(dialog)
+                    -- Optional hook for callers that must react to a saved change.
+                    if on_saved then pcall(on_saved) end
                 end,
         },
     }}

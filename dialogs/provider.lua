@@ -154,6 +154,7 @@ function ProviderDialog:init()
             self.settings:saveSetting("provider", btn.provider)
             self.assistant.updated = true
             self.assistant.querier:load_model(btn.provider)
+            if self.assistant.wordwise then self.assistant.wordwise:onModelChanged() end
             self:updateSelectModelButton()
             self:updateReasoningButton()
         end
