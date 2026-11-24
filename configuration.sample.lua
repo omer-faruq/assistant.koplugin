@@ -185,6 +185,8 @@ local CONFIGURATION = {
         -- The `show_on_main_popup` determines if the prompt is shown in the main popup
         -- The `show_on_dictionary_popup` determines if the prompt is shown in the dictionary popup ( max 3 including the built-in ones)
         -- Set `visible = false` to hide the prompt from all popups.
+        -- Prompts can also be created in the UI (Settings -> Custom Prompts); those are stored in the plugin settings,
+        -- not in this file, and a prompt defined here wins when both use the same key.
         -- Available placeholders to use in the prompts: {user_input},{highlight},{title},{author},{language},{progress},{chapter},{koreader_version}
         -- Per-prompt override `use_book_context = true/false` (deep-merged over the built-in defaults below).
         -- When true, book metadata (title, author, current reading position incl. chapter) is prepended to the

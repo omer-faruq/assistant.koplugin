@@ -33,6 +33,7 @@ local Registry = require("core/provider_registry")
 local SearchRegistry = require("core/search_registry")
 local Notebook = require("feature/notebook")
 local Prompts = require("core/prompts")
+local CustomPrompts = require("dialogs/custom_prompts")
 local Event = require("ui/event")
 local Device = require("device")
 local ProviderDialog = require("dialogs/provider")
@@ -627,6 +628,7 @@ local function genMenuSettings(assistant)
                 return genDictionaryOutputMenu(assistant)
             end,
         },
+        CustomPrompts.getMenuItem(assistant),
         {
             text = _("AI Notes Settings"),
             hold_callback = function ()

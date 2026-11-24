@@ -36,7 +36,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Registries
 
-`core/provider_registry.lua` (`Registry`) and `core/search_registry.lua` (`SearchRegistry`) manage UI-configured providers and web-search tools stored as JSON in settings. Lifecycle, storage keys, validation and config rules: **`docs/REGISTRIES.md`**.
+`core/provider_registry.lua` (`Registry`), `core/search_registry.lua` (`SearchRegistry`) and `core/prompt_registry.lua` (`PromptRegistry`) manage UI-configured providers, web-search tools and custom prompts stored as JSON in settings. Lifecycle, storage keys, validation and config rules: **`docs/REGISTRIES.md`**.
 
 ## Term X-Ray (anchor-based)
 
@@ -56,7 +56,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 
 ## Config
 
-`core/config.lua` (`Config` at `assistant.config`) owns the effective `CONFIGURATION`, built from `configuration.lua` + UI registries via `config:buildEffectiveConfig()`. Getters: `getFeature` / `getProvider` / `getProviderSettings` / `getFeatures` / `isProviderEnabled` / `getActiveProviderId`; mutators: `setProvider` / `deleteProvider` / `setSearchTool` / `deleteSearchTool`; errors: `getLoadError`/`setLoadError`/`clearLoadError`; statics: `loadRawConfig`/`getConfigPath`/`getMetaPath`/`testConfigFile`. Access rules: `docs/REGISTRIES.md`.
+`core/config.lua` (`Config` at `assistant.config`) owns the effective `CONFIGURATION`, built from `configuration.lua` + UI registries via `config:buildEffectiveConfig()`. Getters: `getFeature` / `getProvider` / `getProviderSettings` / `getFeatures` / `isProviderEnabled` / `getActiveProviderId`; mutators: `setProvider` / `deleteProvider` / `setSearchTool` / `deleteSearchTool` / `setPrompt` / `deletePrompt`; errors: `getLoadError`/`setLoadError`/`clearLoadError`; statics: `loadRawConfig`/`getConfigPath`/`getMetaPath`/`testConfigFile`. Access rules: `docs/REGISTRIES.md`.
 
 ## Shared utils & gettext
 
@@ -83,6 +83,7 @@ KOReader plugin adding AI assistant features: 10+ providers, OpenAI Responses AP
 | `core/provider_registry.lua` | UI provider add/edit/merge/validate |
 | `core/search_registry.lua` | UI search-tool add/merge/validate |
 | `core/config.lua` | Effective `CONFIGURATION` |
+| `core/prompt_registry.lua` | UI-created custom prompts |
 | `configuration.sample.lua` | Config template — update this, not `configuration.lua` |
 | `core/gettext.lua` | MO shim (assistant domain) |
 | `utils/base.lua` | Slim core: `PLUGIN_DIR`, attrs, JSON default |

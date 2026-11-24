@@ -253,6 +253,37 @@ function Config:deleteProvider(id)
     return true
 end
 
+--- Insert or replace a UI prompt in the effective features.prompts.
+--- Mutates only the in-memory CONFIGURATION; configuration.lua is never written.
+--- @param id string Prompt ID (e.g. "custom_1").
+--- @param record table Stored prompt record.
+function Config:setPrompt(id, record)
+    if not id or id == "" then return nil, "invalid id" end
+    local copy = {}
+    koutil.tableMerge(copy, record)
+    copy.source = "ui"
+    self._data.features = self._data.features or {}
+    self._data.features.prompts = self._data.features.prompts or {}
+    self._data.features.prompts[id] = copy
+    require("core/prompts").invalidateCache()
+    self._assistant.updated = true
+    return true
+end
+
+--- Remove a UI prompt from the effective features.prompts.
+--- Mutates only the in-memory CONFIGURATION; configuration.lua is never written.
+--- @param id string Prompt ID.
+function Config:deletePrompt(id)
+    if not id or id == "" then return nil, "invalid id" end
+    local prompts = koutil.tableGetValue(self._data, "features", "prompts")
+    if prompts then
+        prompts[id] = nil
+        require("core/prompts").invalidateCache()
+        self._assistant.updated = true
+    end
+    return true
+end
+
 --- Thin wrapper: search tools share the provider_settings table under fixed
 --- keys (serpapi, tavilyapi, …). Delegates to setProvider.
 --- @param tool_key string Fixed search-tool key (e.g. "serpapi"), not an API key.
@@ -295,6 +326,7 @@ function Config:buildEffectiveConfig(rawConfig)
     rawConfig = rawConfig or self._data
     local Registry = require("core/provider_registry")
     local SearchRegistry = require("core/search_registry")
+    local PromptRegistry = require("core/prompt_registry")
     local assistant = self._assistant
 
     local ui_data = Registry.load(assistant.settings)
@@ -305,14 +337,22 @@ function Config:buildEffectiveConfig(rawConfig)
     local merged_search = SearchRegistry.merge(rawConfig, ui_search_data)
     assistant._ui_search_data = ui_search_data
 
+    local ui_prompt_data = PromptRegistry.load(assistant.settings)
+    assistant._ui_prompt_data = ui_prompt_data
+
     local effective = {}
     if rawConfig then
         for k, v in pairs(rawConfig) do
             effective[k] = v
         end
     end
-    -- shallow-copy features sharing is intentional; provider_settings is rebuilt
+    -- features is copied one level so prompts can be merged; provider_settings is rebuilt
     effective.provider_settings = merged_ps or {}
+    effective.features = {}
+    for k, v in pairs(koutil.tableGetValue(rawConfig, "features") or {}) do
+        effective.features[k] = v
+    end
+    effective.features.prompts = PromptRegistry.merge(effective.features.prompts, ui_prompt_data)
     if merged_search then
         for key, record in pairs(merged_search) do
             effective.provider_settings[key] = record
