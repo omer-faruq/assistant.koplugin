@@ -1,6 +1,6 @@
 # Registries & Config
 
-Two registries own everything configured from the UI. Both store JSON in `LuaSettings` and are merged with file-based config into the effective `CONFIGURATION`.
+Three registries own everything configured from the UI. Each stores JSON in `LuaSettings` and is merged with file-based config into the effective `CONFIGURATION`.
 
 ## Hard rules
 
@@ -25,6 +25,13 @@ Two registries own everything configured from the UI. Both store JSON in `LuaSet
 - `load`/`save`/`merge`/`validate`/`upsert`/`installSearchTool`/`delete`/`is_deletable` mirror the provider registry's `source`/`immutable` pattern (file tools `source="file"`, immutable; only UI tools are deletable). `merge` keys by tool key.
 - `upsert` validates and then stores from the normalized record; `installSearchTool` reuses that record.
 - `ToolExecutor` loads enabled (non-empty `api_key`) tools at query time and passes them into the handler's tool definitions.
+
+## Prompt Registry (`core/prompt_registry.lua`, `PromptRegistry`)
+
+- Storage: `ui_prompts` JSON. `load`/`save`/`merge`/`validate`/`add`/`update`/`delete`/`is_editable` mirror the provider registry; UI prompts get stable IDs `custom_N` and `source="ui"`. `merge(file_prompts, ui_data)` builds `CONFIGURATION.features.prompts`, so `config:getFeature("prompts")` returns file and UI prompts alike; a file prompt wins on an ID collision.
+- Fields: `text` (button title), `user_prompt`, `use_book_context`, `show_on_main_popup`, `order` (200 + N, after the built-ins). `validate` trims the fields, requires name and text, and appends `{highlight}` when the prompt lacks it so the selection always reaches the model.
+- `installPrompt` / `updatePrompt` / `deletePrompt` validate, save, then call `config:setPrompt` / `config:deletePrompt`, which update the effective `features.prompts` and flush the `Prompts` cache.
+- UI: `dialogs/custom_prompts.lua` (Settings -> Custom Prompts). New prompts appear in the highlight menu; the existing long-press add/remove of prompt buttons still applies.
 
 ## Credential input
 
